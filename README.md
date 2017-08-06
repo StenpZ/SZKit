@@ -1,2 +1,2 @@
 # SZKit
-一套常用的UI控件和便利方法
+一套通用的UI及Foundation便捷方法和常用的控件
