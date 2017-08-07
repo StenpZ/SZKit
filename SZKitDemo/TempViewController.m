@@ -8,12 +8,15 @@
 
 #import "TempViewController.h"
 #import "SZKit.h"
+#import <Masonry.h>
 
-@interface TempViewController ()<SZScrollRadioDataSource, SZScrollRadioDelegate>
+@interface TempViewController ()<SZScrollRadioProtocol, SZScrollBannerProtocol>
 
 @property(nonatomic, weak) UILabel *label;
 
 @property(nonatomic, strong) SZScrollRadio *scrollRadio;
+@property(nonatomic, strong) SZStarView *starView;
+@property(nonatomic, strong) SZScrollBanner *banner;
 
 @end
 
@@ -26,6 +29,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    [[SZTimer shareInstance] setLogEnabled:NO];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth(), 20)];
     label.backgroundColor = [UIColor redColor];
@@ -49,7 +54,36 @@
     self.scrollRadio = ({
        
         SZScrollRadio *scrollRadio = [[SZScrollRadio alloc] initWithFrame:CGRectMake(20, 100, kScreenWidth() - 40, kRealLength(60))];
-        scrollRadio.dataSource = self;
+        
+        scrollRadio.backgroundColor = [UIColor whiteColor];
+        
+        UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kRealLength(50), kRealLength(20))];
+        
+        UIView *line = [[UIView alloc] init];
+        line.backgroundColor = [UIColor lightGrayColor];
+        [rightView addSubview:line];
+        [line mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.top.bottom.offset(0);
+            make.width.offset(1);
+        }];
+        
+        UIButton *moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        moreBtn.titleLabel.font = [UIFont systemFontOfSize:kRealFontSize(12)];
+        [moreBtn setTitle:@"更多" forState:UIControlStateNormal];
+        [moreBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [moreBtn addTarget:self
+                    action:@selector(moreAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [rightView addSubview:moreBtn];
+        [moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(line.mas_right);
+            make.top.bottom.offset(0);
+            make.right.offset(-kRealLength(10));
+        }];
+        
+        scrollRadio.rightView = rightView;
+        
         scrollRadio.delegate = self;
         [scrollRadio registerClass:[SZScrollRadioCell class] forCellReuseIdentifier:@"reuseCell"];
         [scrollRadio reloadData];
@@ -59,15 +93,52 @@
     
     [self.view addSubview:self.scrollRadio];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
-    [self.view addGestureRecognizer:tap];
+    self.starView = ({
+       
+        SZStarView *starView = [[SZStarView alloc] initWithFrame:CGRectMake(100, 200, kRealLength(100), kRealLength(20))];
+        
+        starView.slideEnabled = YES;
+        
+        starView;
+    });
+    [self.view addSubview:self.starView];
+    
+    self.banner = ({
+       
+        SZScrollBanner *banner = [[SZScrollBanner alloc] initWithFrame:CGRectMake(0, 300, kScreenWidth(), kRealLength(90))];
+        banner.delegate = self;
+        
+        banner;
+    });
+    [self.view addSubview:self.banner];
+    [self.banner reloadData];
+    
     // Do any additional setup after loading the view.
+}
+
+- (NSUInteger)numbersofPageAtScrollBanner:(SZScrollBanner *)scrollBanner {
+    return 10;
+}
+
+- (SZScrollBannerCell *)scrollBanner:(SZScrollBanner *)scrollBanner cellForPageAtIndex:(NSUInteger)index {
+    SZScrollBannerCell *cell = [scrollBanner dequeueReusableCellWithIdentifier:scrollBanner.defaultCellIdentifier forIndex:index];
+    cell.backgroundColor = [UIColor lightGrayColor];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld", index];
+    return cell;
+}
+
+- (void)scrollBanner:(SZScrollBanner *)scrollBanner didSelectedAtIndex:(NSUInteger)index {
+    NSLog(@"点击:%ld", index);
 }
 
 - (void)changeColor {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.label.backgroundColor = [UIColor sz_randomColor];
     });
+}
+
+- (void)moreAction:(UIButton *)sender {
+    NSLog(@"更多");
 }
 
 - (void)didReceiveMemoryWarning {
@@ -97,7 +168,7 @@
     return cell;
 }
 
-- (void)scrollRadioDidSelectedAtIndex:(NSUInteger)index {
+- (void)scrollRadio:(SZScrollRadio *)scrollRadio didSelectedAtIndex:(NSUInteger)index {
     NSLog(@"选择了:%ld", index);
 }
 

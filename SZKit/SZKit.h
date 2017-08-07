@@ -21,3 +21,5 @@
 #import "SZScrollMenu.h"
 #import "SZScrollRadio.h"
 #import "SZFPSLabel.h"
+#import "SZScrollBanner.h"
+#import "SZStarView.h"

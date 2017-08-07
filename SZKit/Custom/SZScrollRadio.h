@@ -8,28 +8,39 @@
 @class SZScrollRadio;
 @class SZScrollRadioCell;
 
-@protocol SZScrollRadioDataSource <NSObject>
+@protocol SZScrollRadioProtocol <NSObject>
 
+@required
+/*! 同时显示行数 */
 - (NSUInteger)numbersOfRowAtScrollRadio:(SZScrollRadio *)scrollRadio;
 
+/*! 消息总条数 */
 - (NSUInteger)countsOfItemAtScrollRadio:(SZScrollRadio *)scrollRadio;
 
 - (SZScrollRadioCell *)scrollRadio:(SZScrollRadio *)scrollRadio cellForRowAtIndex:(NSUInteger)index;
 
-@end
-
-@protocol SZScrollRadioDelegate <NSObject>
-
-- (void)scrollRadioDidSelectedAtIndex:(NSUInteger)index;
+@optional
+- (void)scrollRadio:(SZScrollRadio *)scrollRadio didSelectedAtIndex:(NSUInteger)index;
 
 @end
+
 
 /*! 上下滚动广告视图 */
 @interface SZScrollRadio : UIView
 
-@property(nonatomic, weak) id<SZScrollRadioDataSource> dataSource;
-@property(nonatomic, weak) id<SZScrollRadioDelegate> delegate;
+@property(nonatomic, weak) id<SZScrollRadioProtocol> delegate;
 
+/*! leftView
+ *  frame.orgin 无效
+ *  无需调addSubView: */
+@property(nonatomic, strong) UIView *leftView;
+
+/*! rightView
+ *  frame.orgin 无效
+ *  无需调addSubView: */
+@property(nonatomic, strong) UIView *rightView;
+
+/*! 滚动一次的时间 default：2 */
 @property(nonatomic) NSTimeInterval changeInterval;
 
 - (void)registerClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier;
@@ -48,6 +59,6 @@
 @property(nonatomic, strong) UIImageView *imageView;
 @property(nonatomic, strong) UILabel *textLabel;
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
+- (instancetype)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
 
 @end

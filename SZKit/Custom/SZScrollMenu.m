@@ -360,7 +360,7 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
     
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView  cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
     SZMenuItem *item = [collectionView dequeueReusableCellWithReuseIdentifier:[SZMenuItem identifier] forIndexPath:indexPath];
     

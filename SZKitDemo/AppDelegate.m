@@ -21,7 +21,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    UIViewController *vc = [[NSClassFromString(@"ViewController") alloc] init];
+    UIViewController *vc = [[NSClassFromString(@"TempViewController") alloc] init];
     self.window.rootViewController = vc;
     
     return YES;

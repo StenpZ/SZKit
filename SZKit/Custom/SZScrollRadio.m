@@ -23,17 +23,12 @@
 
 @implementation SZScrollRadioCell
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super init];
+- (instancetype)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
+    
+    self = [super initWithFrame:frame];
     if (self) {
         self.reuseIdentifier = reuseIdentifier;
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button addTarget:self action:@selector(tapAction) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:button];
-        [button mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self);
-        }];
-#warning - 用手势的方式存在问题，存疑？
+        [self sz_addTapTarget:self action:@selector(tapAction)];
     }
     return self;
 }
@@ -118,6 +113,8 @@
 
 @end
 
+static NSUInteger initIndex = 0;
+
 @implementation SZScrollRadio
 
 - (void)dealloc {
@@ -152,10 +149,33 @@
     _finalIndex = finalIndex;
 }
 
+- (void)setLeftView:(UIView *)leftView {
+    _leftView = leftView;
+    [self addSubview:_leftView];
+    [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.offset(0);
+        make.centerY.mas_equalTo(self);
+        make.width.offset(CGRectGetWidth(leftView.frame));
+        make.height.offset(CGRectGetHeight(leftView.frame));
+    }];
+}
+
+- (void)setRightView:(UIView *)rightView {
+    _rightView = rightView;
+    [self addSubview:_rightView];
+    [_rightView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.offset(0);
+        make.centerY.mas_equalTo(self);
+        make.width.offset(CGRectGetWidth(rightView.frame));
+        make.height.offset(CGRectGetHeight(rightView.frame));
+    }];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.scrollRadioTimerName = @"kSZTimerScrollRadio";
+        initIndex ++;
+        self.scrollRadioTimerName = [NSString stringWithFormat:@"kSZTimerScrollRadio_%ld", (unsigned long)initIndex];
         self.finalIndex = 0;
         self.changeInterval = 2;
         self.clipsToBounds = YES;
@@ -174,7 +194,7 @@
 
 - (SZScrollRadioCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier {
     if (![self.reuseCells objectForKey:identifier]) {
-        SZScrollRadioCell *cell = [[SZScrollRadioCell alloc] initWithReuseIdentifier:identifier];
+        SZScrollRadioCell *cell = [[self.cellRegisterInfo[identifier] alloc] initWithFrame:CGRectZero reuseIdentifier:identifier];
         [self.reuseCells setObject:cell forKey:identifier];
     }
     return [self.reuseCells objectForKey:identifier];
@@ -183,34 +203,40 @@
 
 - (void)reloadData {
     
-    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    for (UIView *view in self.visualCells) {
+        [view removeFromSuperview];
+    }
     [self.visualCells removeAllObjects];
     
-    if ([self.dataSource respondsToSelector:@selector(numbersOfRowAtScrollRadio:)]) {
-        self.numbersOfRow = [self.dataSource numbersOfRowAtScrollRadio:self];
+    if ([self.delegate respondsToSelector:@selector(numbersOfRowAtScrollRadio:)]) {
+        self.numbersOfRow = [self.delegate numbersOfRowAtScrollRadio:self];
     }
     
-    if ([self.dataSource respondsToSelector:@selector(countsOfItemAtScrollRadio:)]) {
-        self.countsOfItem = [self.dataSource countsOfItemAtScrollRadio:self];
+    if ([self.delegate respondsToSelector:@selector(countsOfItemAtScrollRadio:)]) {
+        self.countsOfItem = [self.delegate countsOfItemAtScrollRadio:self];
     }
     
-    if (![self.dataSource respondsToSelector:@selector(scrollRadio:cellForRowAtIndex:)]) {
+    if (![self.delegate respondsToSelector:@selector(scrollRadio:cellForRowAtIndex:)]) {
         return;
     }
     for (NSInteger index = 0; index < self.numbersOfRow * 2; index ++) {
         self.finalIndex = index;
-        SZScrollRadioCell *cell = [self.dataSource scrollRadio:self
+        SZScrollRadioCell *cell = [self.delegate scrollRadio:self
                                              cellForRowAtIndex:self.finalIndex];
         cell.index = self.finalIndex;
         __weak typeof(self)weakSelf = self;
         [cell setTapBlock:^(NSUInteger selectedIndex){
             __strong typeof(self)strongSelf = weakSelf;
-            if ([strongSelf.delegate respondsToSelector:@selector(scrollRadioDidSelectedAtIndex:)]) {
-                [strongSelf.delegate scrollRadioDidSelectedAtIndex:selectedIndex];
+            if ([strongSelf.delegate respondsToSelector:@selector(scrollRadio:didSelectedAtIndex:)]) {
+                [strongSelf.delegate scrollRadio:strongSelf didSelectedAtIndex:selectedIndex];
             }
         }];
         self.itemHeight = CGRectGetHeight(self.bounds)/self.numbersOfRow;
-        cell.frame = CGRectMake(0, self.finalIndex * self.itemHeight, CGRectGetWidth(self.bounds), self.itemHeight);
+        CGFloat orginX = self.leftView ? CGRectGetWidth(self.leftView.frame): 0;
+        CGFloat marginR = self.rightView ? CGRectGetWidth(self.rightView.frame): 0;
+        CGFloat width = CGRectGetWidth(self.frame) - orginX - marginR;
+
+        cell.frame = CGRectMake(orginX, self.finalIndex * self.itemHeight, width, self.itemHeight);
         [self addSubview:cell];
         [self.visualCells addObject:cell];
         [self.reuseCells removeObjectForKey:cell.reuseIdentifier];
@@ -245,8 +271,8 @@
                 self.finalIndex ++;
                 [self.visualCells removeObject:cell];
                 [self.reuseCells setObject:cell forKey:cell.reuseIdentifier];
-                if ([self.dataSource respondsToSelector:@selector(scrollRadio:cellForRowAtIndex:)]) {
-                    SZScrollRadioCell *cell = [self.dataSource scrollRadio:self cellForRowAtIndex:self.finalIndex];
+                if ([self.delegate respondsToSelector:@selector(scrollRadio:cellForRowAtIndex:)]) {
+                    SZScrollRadioCell *cell = [self.delegate scrollRadio:self cellForRowAtIndex:self.finalIndex];
                     cell.index = self.finalIndex;
                     [self addSubview:cell];
                     [self.visualCells addObject:cell];
