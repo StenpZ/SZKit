@@ -30,6 +30,8 @@
 
 @property(nonatomic, weak) id<SZScrollRadioProtocol> delegate;
 
+@property(nonatomic, copy, readonly) NSString *defaultCellIdentifier;
+
 /*! leftView
  *  frame.orgin 无效
  *  无需调addSubView: */
@@ -43,6 +45,7 @@
 /*! 滚动一次的时间 default：2 */
 @property(nonatomic) NSTimeInterval changeInterval;
 
+/*! 默认注册SZScrollRadioCell identifier = self.defaultCellIdentifier */
 - (void)registerClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier;
 - (__kindof SZScrollRadioCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier;
 

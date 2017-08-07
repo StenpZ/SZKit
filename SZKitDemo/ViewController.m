@@ -28,17 +28,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(nextAction)];
+    
     // Do any additional setup after loading the view, typically from a nib.
     NSArray *list = @[@"http://img2.woyaogexing.com/2017/07/06/3ddbfdc42a6563a9!400x400_big.jpg",
                       @"http://img2.woyaogexing.com/2017/07/06/78d64b63b5f5523f!400x400_big.jpg",
                       @"http://img2.woyaogexing.com/2017/07/06/a6c39a9359e70b0c!400x400_big.jpg",
                       @"http://img2.woyaogexing.com/2017/07/06/aaf3e93151f97c48!400x400_big.jpg",
                       @"http://img2.woyaogexing.com/2017/07/06/ffc067fe968dfd7d!400x400_big.jpg"];
-    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kRealLength(200), kRealLength(200))];
+    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, kRealLength(100), kRealLength(100))];
     [view sz_setImageWithUrls:list];
     [self.view addSubview:view];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth(), 20)];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(view.frame), kScreenWidth(), 20)];
     label.backgroundColor = [UIColor redColor];
     label.sz_lineSpace = 5;
     label.sz_characterSpace = 5;
@@ -56,7 +60,7 @@
     self.maxColumnCount = 5;
     
     self.menuList = [NSMutableArray array];
-    for (NSInteger index = 0; index < 10; index ++) {
+    for (NSInteger index = 0; index < 15; index ++) {
         SZScrollMenuItemModel *model = [[SZScrollMenuItemModel alloc] init];
         model.image = [UIImage sz_imageWithRandomColor];
         model.text = @"测试标题";
@@ -84,19 +88,10 @@
     }];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+#pragma mark - Action
+- (void)nextAction {
     UIViewController *vc = [[NSClassFromString(@"TempViewController") alloc] init];
-    [self presentViewController:vc animated:true completion:nil];
-
-//    if (self.presentedViewController) {
-//        //要先dismiss结束后才能重新present否则会出现Warning: Attempt to present <UINavigationController: 0x7fdd22262800> on <UITabBarController: 0x7fdd21c33a60> whose view is not in the window hierarchy!就会present不出来登录页面
-//        [self.presentedViewController dismissViewControllerAnimated:false completion:^{
-//            [self presentViewController:vc animated:true completion:nil];
-//        }];
-//    } else {
-//        [self presentViewController:vc animated:true completion:nil];
-//    }
-
+    [self sz_pushViewController:vc animated:YES];
 }
 
 - (void)changeColor {
@@ -105,6 +100,7 @@
     });
 }
 
+#pragma mark - SZScrollMenuProtocol
 - (NSUInteger)numberOfRowsForEachPageInScrollMenu:(SZScrollMenu *)scrollMenu {
     return self.maxRowCount;
 }

@@ -30,29 +30,37 @@
 
 @property(nonatomic, readonly) NSUInteger numbersofPage;
 
+/*! 间隔时间 default：3s */
 @property(nonatomic) NSTimeInterval scrollInterval;
 
 @property(nonatomic, strong, readonly) UIPageControl *pageControl;
 
+/*! 是否显示PageControl default：Yes */
 @property(nonatomic) BOOL showPageControl;
 
+/*! 单页数据时是否隐藏PageControl default：Yes */
 @property(nonatomic) BOOL hidePageControlForSinglePage;
 
-
+/*! 注册Cell 默认注册了SZScrollBannerCell，identifier：self.defaultCellIdentifier */
 - (void)registerClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier;
+/*! 如果不自定义SZScrollBannerCell 可传入self.defaultCellIdentifier */
 - (__kindof SZScrollBannerCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier forIndex:(NSUInteger)index;
 
 - (void)reloadData;
-
-- (void)beginScroll;
-- (void)stopScroll;
 
 @end
 
 
 @interface SZScrollBannerCell : UICollectionViewCell
 
-@property(nonatomic, strong) UIImageView *imageView;
-@property(nonatomic, strong) UILabel *textLabel;
+@property(nonatomic, strong, readonly) UIImageView *imageView;
+@property(nonatomic, strong, readonly) UILabel *textLabel;
+
+/*! default：[UIColor blackColor] */
+@property(nonatomic, strong) UIColor *textBackgroundColor;
+/*! default: 0.5 */
+@property(nonatomic) CGFloat textBackgroundAlpha;
+/*! default: NO */
+@property(nonatomic) BOOL textHidden;
 
 @end

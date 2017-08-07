@@ -28,9 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    [[SZTimer shareInstance] setLogEnabled:NO];
+    self.view.backgroundColor = [UIColor lightGrayColor];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth(), 20)];
     label.backgroundColor = [UIColor redColor];
@@ -53,7 +51,8 @@
     
     self.scrollRadio = ({
        
-        SZScrollRadio *scrollRadio = [[SZScrollRadio alloc] initWithFrame:CGRectMake(20, 100, kScreenWidth() - 40, kRealLength(60))];
+        SZScrollRadio *scrollRadio = [[SZScrollRadio alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.label.frame) + 20, kScreenWidth() - 40, kRealLength(30))];
+        scrollRadio.layer.cornerRadius = kRealLength(15);
         
         scrollRadio.backgroundColor = [UIColor whiteColor];
         
@@ -81,12 +80,8 @@
             make.top.bottom.offset(0);
             make.right.offset(-kRealLength(10));
         }];
-        
         scrollRadio.rightView = rightView;
-        
         scrollRadio.delegate = self;
-        [scrollRadio registerClass:[SZScrollRadioCell class] forCellReuseIdentifier:@"reuseCell"];
-        [scrollRadio reloadData];
         
         scrollRadio;
     });
@@ -105,19 +100,30 @@
     
     self.banner = ({
        
-        SZScrollBanner *banner = [[SZScrollBanner alloc] initWithFrame:CGRectMake(0, 300, kScreenWidth(), kRealLength(90))];
+        SZScrollBanner *banner = [[SZScrollBanner alloc] initWithFrame:CGRectMake(0, 300, kScreenWidth(), kRealLength(190))];
         banner.delegate = self;
         
         banner;
     });
     [self.view addSubview:self.banner];
-    [self.banner reloadData];
     
     // Do any additional setup after loading the view.
 }
 
+#pragma mark - Action
+- (void)changeColor {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.label.backgroundColor = [UIColor sz_randomColor];
+    });
+}
+
+- (void)moreAction:(UIButton *)sender {
+    NSLog(@"更多");
+}
+
+#pragma mark - SZScrollBannerProtocol
 - (NSUInteger)numbersofPageAtScrollBanner:(SZScrollBanner *)scrollBanner {
-    return 10;
+    return 6;
 }
 
 - (SZScrollBannerCell *)scrollBanner:(SZScrollBanner *)scrollBanner cellForPageAtIndex:(NSUInteger)index {
@@ -131,29 +137,9 @@
     NSLog(@"点击:%ld", index);
 }
 
-- (void)changeColor {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.label.backgroundColor = [UIColor sz_randomColor];
-    });
-}
-
-- (void)moreAction:(UIButton *)sender {
-    NSLog(@"更多");
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)dismiss {
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
+#pragma mark - SZScrollRadioProtocol
 - (NSUInteger)numbersOfRowAtScrollRadio:(SZScrollRadio *)scrollRadio {
-    return 3;
+    return 1;
 }
 
 - (NSUInteger)countsOfItemAtScrollRadio:(SZScrollRadio *)scrollRadio {
@@ -161,7 +147,7 @@
 }
 
 - (SZScrollRadioCell *)scrollRadio:(SZScrollRadio *)scrollRadio cellForRowAtIndex:(NSUInteger)index {
-    SZScrollRadioCell *cell = [scrollRadio dequeueReusableCellWithIdentifier:@"reuseCell"];
+    SZScrollRadioCell *cell = [scrollRadio dequeueReusableCellWithIdentifier:scrollRadio.defaultCellIdentifier];
     
     cell.textLabel.text = [NSString stringWithFormat:@"测试数据：%ld", (unsigned long)index];
     
@@ -171,15 +157,5 @@
 - (void)scrollRadio:(SZScrollRadio *)scrollRadio didSelectedAtIndex:(NSUInteger)index {
     NSLog(@"选择了:%ld", index);
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

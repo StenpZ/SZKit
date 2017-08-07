@@ -7,8 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "SZKit.h"
 
 @interface AppDelegate ()
+
+@property(nonatomic, strong) SZFPSLabel *fpsLabel;
+@property(nonatomic, strong) UIWindow *fpsWindow;
 
 @end
 
@@ -21,12 +25,30 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    UIViewController *vc = [[NSClassFromString(@"TempViewController") alloc] init];
-    self.window.rootViewController = vc;
+    UIViewController *vc = [[NSClassFromString(@"ViewController") alloc] init];
+    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    self.window.rootViewController = navi;
+    
+#ifdef DEBUG
+    [self performSelector:@selector(addFPSLabel) withObject:nil afterDelay:1.f];
+#endif
     
     return YES;
 }
 
+- (void)addFPSLabel {
+    self.fpsWindow = [[UIWindow alloc] initWithFrame:CGRectMake(50, 0, 100, 20)];
+    self.fpsWindow.windowLevel = UIWindowLevelAlert + 1;
+    self.fpsLabel = [[SZFPSLabel alloc] initWithFrame:self.fpsWindow.bounds];
+    self.fpsWindow.backgroundColor = [UIColor clearColor];
+    self.fpsLabel.backgroundColor = [UIColor clearColor];
+    self.fpsLabel.textColor = [UIColor sz_randomColor];
+    self.fpsLabel.font = [UIFont systemFontOfSize:12.f];
+    [self.fpsWindow addSubview:self.fpsLabel];
+    [self.fpsWindow makeKeyAndVisible];
+    [self.window makeKeyAndVisible];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

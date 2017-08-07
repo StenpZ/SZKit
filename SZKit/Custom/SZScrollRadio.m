@@ -150,6 +150,7 @@ static NSUInteger initIndex = 0;
 }
 
 - (void)setLeftView:(UIView *)leftView {
+    [_leftView removeFromSuperview];
     _leftView = leftView;
     [self addSubview:_leftView];
     [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -161,6 +162,7 @@ static NSUInteger initIndex = 0;
 }
 
 - (void)setRightView:(UIView *)rightView {
+    [_rightView removeFromSuperview];
     _rightView = rightView;
     [self addSubview:_rightView];
     [_rightView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -171,11 +173,18 @@ static NSUInteger initIndex = 0;
     }];
 }
 
+- (void)setDelegate:(id<SZScrollRadioProtocol>)delegate {
+    _delegate = nil;
+    _delegate = delegate;
+    [self reloadData];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         initIndex ++;
         self.scrollRadioTimerName = [NSString stringWithFormat:@"kSZTimerScrollRadio_%ld", (unsigned long)initIndex];
+        _defaultCellIdentifier = @"SZScrollRadioCell_default";
         self.finalIndex = 0;
         self.changeInterval = 2;
         self.clipsToBounds = YES;
@@ -186,6 +195,7 @@ static NSUInteger initIndex = 0;
 
 - (void)prepareUI {
     self.backgroundColor = [UIColor lightGrayColor];
+    [self registerClass:[SZScrollRadioCell class] forCellReuseIdentifier:self.defaultCellIdentifier];
 }
 
 - (void)registerClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier {
