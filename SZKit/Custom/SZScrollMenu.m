@@ -617,7 +617,7 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
         
         self.itemHeight = height;
         
-        CGFloat fullHeight = rows * (self.itemHeight - SZCollectionItemHeightComplexity) + _pageControlHeight;
+        CGFloat fullHeight = rows * (self.itemHeight - SZCollectionItemHeightComplexity) + _pageControlHeight - SZCollectionItemHeightComplexity;
         
         self.sz_height = MAX(fullHeight, self.bounds.size.height);
         

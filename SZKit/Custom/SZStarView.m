@@ -92,7 +92,7 @@
     if (score > 1) {
         score = 1;
     }
-    CGPoint point = CGPointMake(score * self.frame.size.width, 0);
+    CGPoint point = CGPointMake(score * self.starBackgroundView.sz_width, 0);
     
     if(self.animated){
         [UIView animateWithDuration:0.2 animations:^{
@@ -126,7 +126,7 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
     if (!self.slideEnabled) return;
-
+    
     UITouch *touch = [touches anyObject];
     
     CGPoint point = [touch locationInView:self];
@@ -165,14 +165,14 @@
     if (p.x < 0) {
         p.x = 0;
     }
-    if (p.x > self.frame.size.width) {
-        p.x = self.frame.size.width;
+    if (p.x > self.starBackgroundView.sz_width) {
+        p.x = self.starBackgroundView.sz_width;
     }
     
-    NSString * str = [NSString stringWithFormat:@"%0.2f",p.x / self.frame.size.width];
+    NSString * str = [NSString stringWithFormat:@"%0.2f",p.x / self.starBackgroundView.sz_width];
     float score = [str floatValue];
-    p.x = score * self.frame.size.width;
-    self.starForegroundView.frame = CGRectMake(0, 0, p.x, self.frame.size.height);
+    p.x = score * self.starBackgroundView.sz_width;
+    self.starForegroundView.frame = CGRectMake(0, 0, p.x, self.starBackgroundView.sz_height);
     
     if(self.delegate && [self.delegate respondsToSelector:@selector(starView:didSelectedAtScore:)]) {
         [self.delegate starView:self didSelectedAtScore:score];
