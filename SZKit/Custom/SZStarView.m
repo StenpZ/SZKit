@@ -4,12 +4,15 @@
 // 用着顺手还望给个Star。Thank you！
 
 #import "SZStarView.h"
+#import "UIView+SZKit.h"
+
+#if __has_include(<Masonry/Masonry.h>)
+#import <Masonry/Masonry.h>
+#else
+#import "Masonry.h"
+#endif
 
 @interface SZStarView ()
-
-@property(nonatomic, copy) NSString *normalStarName;
-
-@property(nonatomic, copy) NSString *selectedStarName;
 
 @property(nonatomic, readwrite) NSUInteger starsCount;
 
@@ -20,33 +23,57 @@
 
 @implementation SZStarView
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    return [self initWithFrame:frame normalStar:@"img_star_normal" selectedStar:@"img_star_selected" starsCount:5];
-}
-
-- (instancetype)initWithFrame:(CGRect)frame normalStar:(NSString *)normalStar selectedStar:(NSString *)selectedStar starsCount:(NSUInteger)starsCount {
-    
-    self = [super initWithFrame:frame];
+- (instancetype)initWithStarSize:(CGSize)starSize starInsets:(UIEdgeInsets)starInsets starsCount:(NSUInteger)starsCount {
+    self = [super init];
     if (self) {
-        self.normalStarName = normalStar;
-        self.selectedStarName = selectedStar;
-        self.starsCount = starsCount;
-        self.animated = YES;
+        _starSize = starSize;
+        _starInsets = starInsets;
+        _starsCount = starsCount;
         [self prepareUI];
+        self.normalStarImageName = @"img_star_normal";
+        self.selectedStarImageName = @"img_star_selected";
     }
     return self;
 }
 
 - (void)prepareUI {
-    self.starBackgroundView = [self buidlStarViewWithImageName:self.normalStarName];
-    self.starForegroundView = [self buidlStarViewWithImageName:self.selectedStarName];
+    self.clipsToBounds = YES;
+    self.starBackgroundView = [self buidlStarView];
+    self.starForegroundView = [self buidlStarView];
     [self addSubview:self.starBackgroundView];
     [self addSubview:self.starForegroundView];
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (!self.sz_width) {
+        [self mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.offset(self.starBackgroundView.sz_width);
+        }];
+    }
+    if (!self.sz_height) {
+        [self mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.offset(self.starBackgroundView.sz_height);
+        }];
+    }
+}
+
+- (void)setNormalStarImageName:(NSString *)normalStarImageName {
+    _normalStarImageName = normalStarImageName;
+    for (UIImageView *v in self.starBackgroundView.subviews) {
+        v.image = [UIImage imageNamed:_normalStarImageName];
+    }
+}
+
+- (void)setSelectedStarImageName:(NSString *)selectedStarImageName {
+    _selectedStarImageName = selectedStarImageName;
+    for (UIImageView *v in self.starForegroundView.subviews) {
+        v.image = [UIImage imageNamed:_selectedStarImageName];
+    }
+}
+
 - (void)setScore:(float)score {
     _score = score;
-    [self layoutIfNeeded];
     [self setScore:_score completion:nil];
 }
 
@@ -111,20 +138,16 @@
 }
 
 #pragma mark - Buidl Star View
-/**
- *  通过图片构建星星视图
- *
- *  @param imageName 图片名称
- *
- *  @return 星星视图
- */
-- (UIView *)buidlStarViewWithImageName:(NSString *)imageName {
-    CGRect frame = self.bounds;
+
+- (UIView *)buidlStarView {
+    CGFloat wid = _starsCount * (_starSize.width + _starInsets.left) + _starInsets.right;
+    CGFloat hig = _starInsets.top + _starSize.height + _starInsets.bottom;
+    CGRect frame = CGRectMake(0, 0, wid, hig);
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.clipsToBounds = YES;
     for (int i = 0; i < self.starsCount; i ++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-        imageView.frame = CGRectMake(i * frame.size.width / self.starsCount, 0, frame.size.width / self.starsCount, frame.size.height);
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.frame = CGRectMake(_starInsets.left + (_starInsets.left + _starSize.width) * i, _starInsets.top, _starSize.width, _starSize.height);
         [view addSubview:imageView];
     }
     return view;

@@ -33,12 +33,14 @@
 @property(nonatomic, copy, readonly) NSString *defaultCellIdentifier;
 
 /*! leftView
- *  frame.orgin 无效
+ *  orgin.x 左边距
+ *  orgin.y 竖直中心的偏移值
  *  无需调addSubView: */
 @property(nonatomic, strong) UIView *leftView;
 
 /*! rightView
- *  frame.orgin 无效
+ *  orgin.x 右边距 需要设置负数
+ *  orgin.y 竖直中心的偏移值
  *  无需调addSubView: */
 @property(nonatomic, strong) UIView *rightView;
 

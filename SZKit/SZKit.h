@@ -12,6 +12,8 @@
 #import "UIView+SZKit.h"
 #import "UIViewController+SZKit.h"
 #import "UILabel+SZKit.h"
+#import "UIButton+SZKit.h"
+#import "UISearchBar+SZKit.h"
 
 #import "SZUnicodeLog.h"
 #import "SZAdapter.h"

@@ -90,13 +90,17 @@
     
     self.starView = ({
        
-        SZStarView *starView = [[SZStarView alloc] initWithFrame:CGRectMake(100, 200, kRealLength(100), kRealLength(20))];
+        SZStarView *starView = [[SZStarView alloc] initWithStarSize:CGSizeMake(17, 17) starInsets:UIEdgeInsetsZero starsCount:5];
         
         starView.slideEnabled = YES;
         
         starView;
     });
     [self.view addSubview:self.starView];
+    [self.starView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.offset(10);
+        make.top.equalTo(self.scrollRadio.mas_bottom);
+    }];
     
     self.banner = ({
        

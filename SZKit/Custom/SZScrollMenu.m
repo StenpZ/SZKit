@@ -478,26 +478,20 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
     
     [self addSubview:self.collectionView];
     [self addSubview:self.pageControl];
-    
-}
-
-- (void)layoutSubviews {
-    
-    [super layoutSubviews];
-    [self.pageControl mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.offset(0);
         make.height.mas_equalTo(self.pageControlHeight);
     }];
     
-    [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.offset(0);
-        make.bottom.equalTo(self.pageControl.mas_top);
     }];
 }
 
+
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(CGRectGetWidth(self.frame), self.itemHeight);
+    return CGSizeMake(CGRectGetWidth(self.frame), self.itemHeight - SZCollectionItemHeightComplexity);
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -623,11 +617,16 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
         
         self.itemHeight = height;
         
-        self.sz_height = rows * (self.itemHeight + 1) + self.pageControlHeight;
+        CGFloat fullHeight = rows * (self.itemHeight - SZCollectionItemHeightComplexity) + _pageControlHeight;
+        
+        self.sz_height = MAX(fullHeight, self.bounds.size.height);
+        
+        [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.offset(self.sz_height - _pageControlHeight);
+        }];
     }
     
     if (self.collectionView) {
-        
         [self.collectionView reloadData];
     }
 }

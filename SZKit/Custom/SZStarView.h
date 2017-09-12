@@ -21,12 +21,25 @@
 
 @property(nonatomic) BOOL slideEnabled;
 
+@property(nonatomic, readonly) CGSize starSize;
+
+@property(nonatomic, readonly) UIEdgeInsets starInsets;
+
 @property(nonatomic, readonly) NSUInteger starsCount;
 
 @property(nonatomic) BOOL animated;
 
 @property(nonatomic) float score;
 
-- (instancetype)initWithFrame:(CGRect)frame normalStar:(NSString *)normalStar selectedStar:(NSString *)selectedStar starsCount:(NSUInteger)starsCount;
+/*! default img_star_normal */
+@property(nonatomic, copy) NSString *normalStarImageName;
+/*! default img_star_selected */
+@property(nonatomic, copy) NSString *selectedStarImageName;
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
+- (instancetype)initWithStarSize:(CGSize)starSize starInsets:(UIEdgeInsets)starInsets starsCount:(NSUInteger)starsCount;
 
 @end

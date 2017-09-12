@@ -58,3 +58,5 @@ CGFloat const SCREEN_HEIGHT_6p = 736.f;
 }
 
 @end
+
+CGFloat const SZCollectionItemHeightComplexity = -0.5f;

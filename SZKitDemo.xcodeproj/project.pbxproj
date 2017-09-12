@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00022EDA1F41D2C30018749D /* UIButton+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00022ED91F41D2C30018749D /* UIButton+SZKit.m */; };
+		00022EDD1F41D2D30018749D /* UISearchBar+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00022EDC1F41D2D30018749D /* UISearchBar+SZKit.m */; };
 		001514DE1F162469008314CB /* UIViewController+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 001514DD1F162469008314CB /* UIViewController+SZKit.m */; };
 		001514E41F162E41008314CB /* SZUnicodeLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 001514E31F162E41008314CB /* SZUnicodeLog.m */; };
 		004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 004D0C731F1764CF0040090E /* UILabel+SZKit.m */; };
@@ -34,6 +36,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00022ED81F41D2C30018749D /* UIButton+SZKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+SZKit.h"; sourceTree = "<group>"; };
+		00022ED91F41D2C30018749D /* UIButton+SZKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+SZKit.m"; sourceTree = "<group>"; };
+		00022EDB1F41D2D30018749D /* UISearchBar+SZKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchBar+SZKit.h"; sourceTree = "<group>"; };
+		00022EDC1F41D2D30018749D /* UISearchBar+SZKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+SZKit.m"; sourceTree = "<group>"; };
 		001514DC1F162469008314CB /* UIViewController+SZKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SZKit.h"; sourceTree = "<group>"; };
 		001514DD1F162469008314CB /* UIViewController+SZKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SZKit.m"; sourceTree = "<group>"; };
 		001514E21F162E41008314CB /* SZUnicodeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZUnicodeLog.h; sourceTree = "<group>"; };
@@ -203,6 +209,10 @@
 				0052BF4D1F164FAB0032793E /* UIImageView+SZKit.m */,
 				004D0C721F1764CF0040090E /* UILabel+SZKit.h */,
 				004D0C731F1764CF0040090E /* UILabel+SZKit.m */,
+				00022ED81F41D2C30018749D /* UIButton+SZKit.h */,
+				00022ED91F41D2C30018749D /* UIButton+SZKit.m */,
+				00022EDB1F41D2D30018749D /* UISearchBar+SZKit.h */,
+				00022EDC1F41D2D30018749D /* UISearchBar+SZKit.m */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -346,6 +356,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				007135DA1F36070E00E8EB03 /* TempViewController.m in Sources */,
+				00022EDD1F41D2D30018749D /* UISearchBar+SZKit.m in Sources */,
+				00022EDA1F41D2C30018749D /* UIButton+SZKit.m in Sources */,
 				0B505EBD1F3827870079AC8D /* SZStarView.m in Sources */,
 				001514E41F162E41008314CB /* SZUnicodeLog.m in Sources */,
 				00DC149C1F34948B000F707A /* SZScrollMenuItemModel.m in Sources */,

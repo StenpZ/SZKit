@@ -154,10 +154,10 @@ static NSUInteger initIndex = 0;
     _leftView = leftView;
     [self addSubview:_leftView];
     [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.offset(0);
-        make.centerY.mas_equalTo(self);
-        make.width.offset(CGRectGetWidth(leftView.frame));
-        make.height.offset(CGRectGetHeight(leftView.frame));
+        make.left.offset(leftView.sz_orgin_x);
+        make.centerY.equalTo(self.mas_centerY).offset(leftView.sz_orgin_y);
+        make.width.offset(leftView.sz_width);
+        make.height.offset(leftView.sz_height);
     }];
 }
 
@@ -166,10 +166,10 @@ static NSUInteger initIndex = 0;
     _rightView = rightView;
     [self addSubview:_rightView];
     [_rightView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.offset(0);
-        make.centerY.mas_equalTo(self);
-        make.width.offset(CGRectGetWidth(rightView.frame));
-        make.height.offset(CGRectGetHeight(rightView.frame));
+        make.right.offset(rightView.sz_orgin_x);
+        make.centerY.equalTo(self.mas_centerY).offset(rightView.sz_orgin_y);
+        make.width.offset(rightView.sz_width);
+        make.height.offset(rightView.sz_height);
     }];
 }
 

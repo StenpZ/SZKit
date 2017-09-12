@@ -8,6 +8,10 @@
 @implementation UIColor (SZKit)
 
 + (UIColor *)sz_colorWithHexString:(NSString *)hexString {
+    return [self sz_colorWithHexString:hexString alpha:1.0];
+}
+
++ (UIColor *)sz_colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha {
     NSString *cString = [[hexString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
     if ([cString hasPrefix:@"#"]) {
         cString = [cString substringFromIndex:1];
@@ -35,10 +39,14 @@
     return [UIColor colorWithRed:r/255.f
                            green:g/255.f
                             blue:b/255.f
-                           alpha:1.0];
+                           alpha:alpha];
 }
 
 + (UIColor *)sz_colorWithRGBValue:(NSUInteger)rgbValue {
+    return [self sz_colorWithRGBValue:rgbValue alpha:1.0];
+}
+
++ (UIColor *)sz_colorWithRGBValue:(NSUInteger)rgbValue alpha:(CGFloat)alpha {
     NSString *string = [NSString stringWithFormat:@"%ld", (long)rgbValue];
     if (string.length != 9) {
         return [UIColor blackColor];
@@ -59,7 +67,18 @@
     return [UIColor colorWithRed:r/255.f
                            green:g/255.f
                             blue:b/255.f
-                           alpha:1.0];
+                           alpha:alpha];
+}
+
++ (UIColor *)sz_colorWithHex:(NSInteger)hex {
+    return [self sz_colorWithHex:hex alpha:1.0];
+}
+
++ (UIColor *)sz_colorWithHex:(NSInteger)hex alpha:(CGFloat)alpha {
+    return [UIColor colorWithRed:((CGFloat)((hex & 0xFF0000) >> 16)) / 255.0
+                           green:((CGFloat)((hex & 0xFF00) >> 8)) / 255.0
+                            blue:((CGFloat)(hex & 0xFF)) / 255.0
+                           alpha:alpha];
 }
 
 + (UIColor *)sz_randomColor {

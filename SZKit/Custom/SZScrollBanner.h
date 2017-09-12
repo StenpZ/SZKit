@@ -48,6 +48,9 @@
 
 - (void)reloadData;
 
+/*! 解决在显示时不在正确的位置 */
+- (void)adjustToFitWhenWillAppear;
+
 @end
 
 

@@ -40,6 +40,7 @@
 
 - (void)prepareUI {
     
+    self.clipsToBounds = YES;
     self.imageView = ({
         
         UIImageView *imageView = [[UIImageView alloc] init];
@@ -112,6 +113,8 @@
 @property(nonatomic, copy) NSString *scrollBannerTimerName;
 
 @property(nonatomic, readwrite) NSUInteger numbersofPage;
+
+@property(nonatomic) NSInteger currentIndex;
 
 @end
 
@@ -226,10 +229,26 @@ static NSUInteger initIndex = 0;
     [self beginScroll];
 }
 
+- (void)adjustToFitWhenWillAppear {
+    if (!self.numbersofPage) return;
+    
+    float index = self.collectionView.contentOffset.x / self.layout.itemSize.width;
+    if (index != self.currentIndex) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+        [self configPageControl];
+    }
+}
+
 - (void)layoutSubviews {
     
     [super layoutSubviews];
-    self.layout.itemSize = self.frame.size;
+    self.layout.itemSize = ({
+        CGSize size = self.bounds.size;
+        
+        size.height += SZCollectionItemHeightComplexity;
+        
+        size;
+    });
     self.collectionView.contentOffset = CGPointMake(self.frame.size.width, 0);
 }
 
@@ -260,6 +279,10 @@ static NSUInteger initIndex = 0;
     
     NSUInteger index = self.collectionView.contentOffset.x / self.layout.itemSize.width;
     
+    if (index > self.numbersofPage) {
+        index = self.numbersofPage;
+    }
+    
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
     
     __weak typeof(self)weakSelf = self;
@@ -280,7 +303,6 @@ static NSUInteger initIndex = 0;
         });
     }
 }
-
 
 - (void)stopScroll {
     
@@ -304,11 +326,14 @@ static NSUInteger initIndex = 0;
     return index;
 }
 
+- (NSInteger)currentIndex {
+    NSIndexPath *visibleIndexPath = self.collectionView.indexPathsForVisibleItems.firstObject;
+    return [self indexFromIndexPath:visibleIndexPath];
+}
+
 - (void)configPageControl {
     
-    NSIndexPath *visibleIndexPath = self.collectionView.indexPathsForVisibleItems.firstObject;
-    
-    self.pageControl.currentPage = [self indexFromIndexPath:visibleIndexPath];
+    self.pageControl.currentPage = self.currentIndex;
 }
 
 #pragma - mark UICollectionViewDataSource

@@ -10,7 +10,7 @@
 #import "SZKit.h"
 #import "SZScrollMenuItemModel.h"
 
-@interface ViewController ()<SZScrollMenuProtocol>
+@interface ViewController ()<SZScrollMenuProtocol, SZScrollBannerProtocol>
 
 @property(nonatomic, weak) UILabel *label;
 @property(nonatomic, strong) SZScrollMenu *scrollMenu;
@@ -18,12 +18,19 @@
 @property(nonatomic) NSInteger maxRowCount;
 @property(nonatomic) NSInteger maxColumnCount;
 
+@property(nonatomic, strong) SZScrollBanner *banner;
+
 @end
 
 @implementation ViewController
 
 - (void)dealloc {
     [[SZTimer shareInstance] cancelAllTimer];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.banner adjustToFitWhenWillAppear];
 }
 
 - (void)viewDidLoad {
@@ -86,6 +93,15 @@
     [[SZTimer shareInstance] scheduledDispatchTimerWithName:@"SZ" timeInterval:1 queue:nil repeats:YES actionOption:SZTaskOptionAbandonPrevious action:^{
         [weakSelf changeColor];
     }];
+    
+    self.banner = ({
+        
+        SZScrollBanner *banner = [[SZScrollBanner alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.scrollMenu.frame), kScreenWidth(), kRealLength(100))];
+        banner.delegate = self;
+        
+        banner;
+    });
+    [self.view addSubview:self.banner];
 }
 
 #pragma mark - Action
@@ -137,6 +153,22 @@
     
     [alert addAction:action];
     [self.navigationController presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - SZScrollBannerProtocol
+- (NSUInteger)numbersofPageAtScrollBanner:(SZScrollBanner *)scrollBanner {
+    return 6;
+}
+
+- (SZScrollBannerCell *)scrollBanner:(SZScrollBanner *)scrollBanner cellForPageAtIndex:(NSUInteger)index {
+    SZScrollBannerCell *cell = [scrollBanner dequeueReusableCellWithIdentifier:scrollBanner.defaultCellIdentifier forIndex:index];
+    cell.backgroundColor = [UIColor lightGrayColor];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld", index];
+    return cell;
+}
+
+- (void)scrollBanner:(SZScrollBanner *)scrollBanner didSelectedAtIndex:(NSUInteger)index {
+    NSLog(@"点击:%ld", index);
 }
 
 @end
