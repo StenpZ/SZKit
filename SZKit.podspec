@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
     s.name          = "SZKit"
-    s.version       = "1.0.5"
+    s.version       = "1.0.6"
     s.summary       = "a set for convenient develop."
 
     s.homepage      = "https://github.com/StenpZ/SZKit"
@@ -13,11 +13,11 @@ Pod::Spec.new do |s|
     s.public_header_files = 'SZKit/**/*.{h}'
     s.source_files  = "SZKit/**/*.{h,m}"
     s.frameworks    = 'UIKit'
-    s.platform      = :ios,'7.0'
+    s.platform      = :ios,'8.0'
     s.requires_arc = true
 
-    s.dependency 'SDWebImage', '~> 4.1.0'
-    s.dependency 'Masonry', '~> 1.0.2'
+    s.dependency 'SDWebImage', '~> 4.1.2'
+    s.dependency 'Masonry', '~> 1.1.0'
 
 
 end

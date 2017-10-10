@@ -29,7 +29,7 @@
     
     self = [super init];
     if (self) {
-        self.logEnabled = YES;
+        self.logEnabled = NO;
         NSLog(@"SZTimer初始化成功！");
     }
     return self;

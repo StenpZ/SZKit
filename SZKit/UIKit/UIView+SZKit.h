@@ -18,6 +18,4 @@
 - (void)sz_addTapTarget:(id)target action:(SEL)action;
 - (void)sz_removeTapTarget:(id)target action:(SEL)action;
 
-
-
 @end

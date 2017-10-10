@@ -30,7 +30,7 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        
+        self.backgroundColor = [UIColor whiteColor];
         [self prepareUI];
         self.textBackgroundAlpha = 0.5;
         self.textBackgroundColor = [UIColor blackColor];
@@ -46,7 +46,6 @@
         UIImageView *imageView = [[UIImageView alloc] init];
         
         imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.image = [UIImage sz_imageWithRandomColor];
         
         imageView;
     });
@@ -108,7 +107,7 @@
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) UICollectionViewFlowLayout *layout;
 
-@property(nonatomic, strong, readwrite) UIPageControl *pageControl;
+@property(nonatomic, strong) UIPageControl *pageControl;
 
 @property(nonatomic, copy) NSString *scrollBannerTimerName;
 
@@ -135,10 +134,12 @@ static NSUInteger initIndex = 0;
         initIndex ++;
         self.scrollBannerTimerName = [NSString stringWithFormat:@"kSZTimerScrollBanner_%ld", (unsigned long)initIndex];
         self.scrollInterval = 3;
+        self.pageControlHeight = kRealLength(25);
         _defaultCellIdentifier = @"SZScrollBannerCell_default";
         [self prepareUI];
-        self.showPageControl =
-        self.hidePageControlForSinglePage = YES;
+        self.showPageControl = YES;
+        self.currentPageIndicatorTintColor = [UIColor darkTextColor];
+        self.pageIndicatorTintColor = [UIColor groupTableViewBackgroundColor];
     }
     return self;
 }
@@ -149,6 +150,28 @@ static NSUInteger initIndex = 0;
     self.pageControl.hidden = !_showPageControl;
 }
 
+- (void)setCurrentPageIndicatorTintColor:(UIColor *)currentPageIndicatorTintColor {
+    
+    _currentPageIndicatorTintColor = currentPageIndicatorTintColor;
+    if (self.pageControl) {
+        
+        self.pageControl.currentPageIndicatorTintColor = currentPageIndicatorTintColor;
+    }
+}
+
+- (void)setPageIndicatorTintColor:(UIColor *)pageIndicatorTintColor {
+    
+    _pageIndicatorTintColor = pageIndicatorTintColor;
+    if (_pageIndicatorTintColor) {
+        
+        self.pageControl.pageIndicatorTintColor = pageIndicatorTintColor;
+    }
+}
+
+- (void)setPageControlHeight:(CGFloat)pageControlHeight {
+    _pageControlHeight = (NSInteger)pageControlHeight;
+}
+
 - (void)setNumbersofPage:(NSUInteger)numbersofPage {
     
     _numbersofPage = numbersofPage;
@@ -157,7 +180,7 @@ static NSUInteger initIndex = 0;
     
     BOOL isSingle = self.numbersofPage > 1 ? NO: YES;
     
-    self.pageControl.hidden = (self.showPageControl && !isSingle && self.hidePageControlForSinglePage) ? NO: YES;
+    self.pageControl.hidden = (self.showPageControl && !isSingle) ? NO: YES;
 }
 
 - (void)setDelegate:(id<SZScrollBannerProtocol>)delegate {
@@ -198,8 +221,6 @@ static NSUInteger initIndex = 0;
     self.pageControl = ({
        
         UIPageControl *pageControl = [[UIPageControl alloc] init];
-        pageControl.currentPageIndicatorTintColor = [UIColor sz_randomColor];
-        pageControl.pageIndicatorTintColor = [UIColor sz_randomColor];
         pageControl.userInteractionEnabled = NO;
         pageControl.currentPage = 0;
 
@@ -208,7 +229,7 @@ static NSUInteger initIndex = 0;
     [self addSubview:self.pageControl];
     [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self);
-        make.height.offset(kRealLength(25));
+        make.height.offset(self.pageControlHeight);
         make.bottom.offset(0);
     }];
 }
@@ -225,6 +246,10 @@ static NSUInteger initIndex = 0;
 
 - (void)reloadData {
     
+    if ([self.delegate respondsToSelector:@selector(numbersofPageAtScrollBanner:)]) {
+        
+        self.numbersofPage = [self.delegate numbersofPageAtScrollBanner:self];
+    }
     [self.collectionView reloadData];
     [self beginScroll];
 }
@@ -245,7 +270,7 @@ static NSUInteger initIndex = 0;
     self.layout.itemSize = ({
         CGSize size = self.bounds.size;
         
-        size.height += SZCollectionItemHeightComplexity;
+        size.height = (NSInteger)size.height;
         
         size;
     });
@@ -253,7 +278,9 @@ static NSUInteger initIndex = 0;
 }
 
 - (void)beginScroll {
-    
+    if (self.numbersofPage <= 1) {
+        return;
+    }
     __weak typeof(self)weakSelf = self;
     [[SZTimer shareInstance] scheduledDispatchTimerWithName:self.scrollBannerTimerName
                                                timeInterval:self.scrollInterval
@@ -272,10 +299,6 @@ static NSUInteger initIndex = 0;
 }
 
 - (void)automaticScroll {
-    
-    if (!self.numbersofPage) return;
-    
-    if (self.numbersofPage == 1) return;
     
     NSUInteger index = self.collectionView.contentOffset.x / self.layout.itemSize.width;
     
@@ -339,12 +362,7 @@ static NSUInteger initIndex = 0;
 #pragma - mark UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    if ([self.delegate respondsToSelector:@selector(numbersofPageAtScrollBanner:)]) {
-        
-        self.numbersofPage = [self.delegate numbersofPageAtScrollBanner:self];
-    }
     if (self.numbersofPage) {
-        
         return self.numbersofPage + 2;
     }
     return 1;
@@ -356,7 +374,9 @@ static NSUInteger initIndex = 0;
         
         return [self.delegate scrollBanner:self cellForPageAtIndex:[self indexFromIndexPath:indexPath]];
     }
-    return [collectionView dequeueReusableCellWithReuseIdentifier:self.defaultCellIdentifier forIndexPath:indexPath];
+    SZScrollBannerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.defaultCellIdentifier forIndexPath:indexPath];
+    cell.imageView.image = [UIImage sz_imageWithColor:[UIColor groupTableViewBackgroundColor]];
+    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

@@ -18,7 +18,6 @@
 
 + (UIImage *)sz_imageWithRandomColor;
 
-
 + (UIImage *)sz_imageWithImages:(NSArray <UIImage *>*)images;
 
 /**

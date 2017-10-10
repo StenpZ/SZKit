@@ -5,154 +5,101 @@
 
 #import <UIKit/UIKit.h>
 
-// 参考自YANScrollMenu git:https://github.com/yanff/YANScrollMenu
-
-@protocol SZMenuItemObject <NSObject>
-
-@property(nonatomic, copy) NSString *text;
-
-@property(nonatomic, strong) id image;
-
-@property(nonatomic, strong) UIImage *placeholderImage;
-
-@end
-
-/****************************  SZEdgeInsets ***************************/
-
-/**
- *  @brief  The edgeInsets of SZMenuItem.
- */
-typedef struct SZEdgeInsets{
-    
-    CGFloat top;        //The top margin of icon
-    CGFloat left;       //The left margin of label
-    CGFloat middle;     //The margin between label and icon
-    CGFloat right;      //The right margin of label
-    CGFloat bottom;     //The bottom margin of label
-    
-}SZEdgeInsets;
-
-/**
- Make SZEdgeInsets
- 
- @param top       The top margin of icon
- @param left      The left margin of label
- @param middle    The margin between label and icon
- @param right     The right margin of label
- @param bottom    The bottom margin of label
- @return SZEdgeInsets
- */
-UIKIT_STATIC_INLINE SZEdgeInsets SZEdgeInsetsMake(CGFloat top, CGFloat left, CGFloat middle, CGFloat right, CGFloat bottom) {
-    SZEdgeInsets insets = {top, left, middle, right,bottom};
-    return insets;
-}
-
-UIKIT_STATIC_INLINE SZEdgeInsets SZEdgeInsetsZero() {
-    SZEdgeInsets insets = {0.f, 0.f, 0.f, 0.f, 0.f};
-    return insets;
-}
 
 @interface SZMenuItem : UICollectionViewCell
-/**
- *  The size of icon.
- */
-@property (nonatomic, assign) CGFloat iconSize  UI_APPEARANCE_SELECTOR ; //defaul is 36;
-/**
- *  The cornerRadius of icon.
- */
-@property (nonatomic, assign) CGFloat iconCornerRadius UI_APPEARANCE_SELECTOR; //defaul is 18;
-/**
- *  The color of label.
- */
-@property (nonatomic, strong) UIColor *textColor UI_APPEARANCE_SELECTOR ; //defaul is [UIColor darkTextColor];
-/**
- *  The font of label.
- */
-@property (nonatomic, strong) UIFont *textFont UI_APPEARANCE_SELECTOR; //defaul is [UIFont systemFontOfSize:11];
 
-/**
- The height of label
- */
-@property(nonatomic, assign) CGFloat textHeight UI_APPEARANCE_SELECTOR; //defaul is 20;
+@property(nonatomic, strong) UIImageView *imageView;
+@property(nonatomic, strong) UILabel *textLabel;
 
 @end;
 
-/**********************  SZScrollMenuProtocol ***************************/
 
 @class SZScrollMenu;
-/**
- *  @brief  SZScrollMenuProtocol(protocol)
- */
+
 @protocol SZScrollMenuProtocol <NSObject>
+
 /**
- Number of rows for each page.
- 
+ 显示的行数
+
  @param scrollMenu SZScrollMenu
- @return NSUInteger
+ @return 行数
  */
-- (NSUInteger)numberOfRowsForEachPageInScrollMenu:(SZScrollMenu *)scrollMenu;
+- (NSUInteger)numberOfRowsInScrollMenu:(SZScrollMenu *)scrollMenu;
+
 /**
- Number of items for each row.
- 
+ 显示的列数
+
  @param scrollMenu SZScrollMenu
- @return NSUInteger
+ @return 列数
  */
-- (NSUInteger)numberOfItemsForEachRowInScrollMenu:(SZScrollMenu *)scrollMenu;
+- (NSUInteger)numberOfColumnsInScrollMenu:(SZScrollMenu *)scrollMenu;
+
 /**
- Number of menus (total).
- 
+ 菜单选项的总数
+
  @param scrollMenu SZScrollMenu
- @return NSUInteger
+ @return 总数
  */
 - (NSUInteger)numberOfMenusInScrollMenu:(SZScrollMenu *)scrollMenu;
+
 /**
- Object at index.
- 
+ SZMenuItem
+
  @param scrollMenu SZScrollMenu
  @param indexPath NSIndexPath
- @return id<YANMenuObject>
+ @return SZMenuItem
  */
-- (id<SZMenuItemObject>)scrollMenu:(SZScrollMenu *)scrollMenu objectAtIndexPath:(NSIndexPath *)indexPath;
+- (SZMenuItem *)scrollMenu:(SZScrollMenu *)scrollMenu menuItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @optional
 
 /**
- Did select at index.
- 
+ 菜单选项选中事件
+
  @param scrollMenu SZScrollMenu
  @param indexPath NSIndexPath
  */
 - (void)scrollMenu:(SZScrollMenu *)scrollMenu didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 
-
 @end
 
-/**********************  SZScrollMenu ***************************/
+
+/// 类似淘宝、美团的多行多列滑动翻页菜单
+@interface SZScrollMenu : UIView
+
+@property(nonatomic, weak) id<SZScrollMenuProtocol> delegate;
+
+/// default is [UIColor darkTextColor]
+@property(nonatomic, strong) UIColor *currentPageIndicatorTintColor;
+
+/// default is [UIColor groupTableViewBackgroundColor]
+@property(nonatomic, strong) UIColor *pageIndicatorTintColor;
+
+/// default is 16 in ip5
+@property(nonatomic, assign) CGFloat pageControlHeight;
+
+/// default is 64 in ip5
+@property(nonatomic) CGFloat menuItemHeight;
+
+@property(nonatomic, readonly) NSUInteger numberOfMenus;
+
 
 /**
- *  @brief  SZScrollMenu 类似美团、淘宝的首页菜单
- */
-NS_CLASS_AVAILABLE_IOS(8_0) @interface SZScrollMenu : UIView
-/**
- *  The delegate of SZScrollMenu
- */
-@property (nonatomic, weak) id<SZScrollMenuProtocol> delegate;
-/**
- *  The currentPageIndicatorTintColor of pageControl.
- */
-@property (nonatomic, strong) UIColor *currentPageIndicatorTintColor;  //default is  [UIColor darkTextColor]
-/**
- *  The pageIndicatorTintColor of pageControl.
- */
-@property (nonatomic, strong) UIColor *pageIndicatorTintColor; //default is  [UIColor groupTableViewBackgroundColor]
+ 注册复用SZMenuItem的Class
 
-@property(nonatomic, assign) CGFloat pageControlHeight; //default is  16
-
-@property(nonatomic, assign) SZEdgeInsets itemEdgeInsets;  //default is  {5, 0, 5, 0, 0}
+ @param itemClass SZMenuItem
+ */
+- (void)registerMenuItemClass:(Class)itemClass;
 
 /**
- Use to reload datasource and refresh UI.
+ 获取复用的SZMenuItem
+
+ @param indexPath indexPath
+ @return SZMenuItem
  */
+- (SZMenuItem *)dequeueReusableItemForIndexPath:(NSIndexPath *)indexPath;
+
+/// 刷新数据
 - (void)reloadData;
 
 @end

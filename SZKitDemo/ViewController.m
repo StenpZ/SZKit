@@ -8,15 +8,11 @@
 
 #import "ViewController.h"
 #import "SZKit.h"
-#import "SZScrollMenuItemModel.h"
 
 @interface ViewController ()<SZScrollMenuProtocol, SZScrollBannerProtocol>
 
 @property(nonatomic, weak) UILabel *label;
 @property(nonatomic, strong) SZScrollMenu *scrollMenu;
-@property(nonatomic, strong) NSMutableArray<SZScrollMenuItemModel *> *menuList;
-@property(nonatomic) NSInteger maxRowCount;
-@property(nonatomic) NSInteger maxColumnCount;
 
 @property(nonatomic, strong) SZScrollBanner *banner;
 
@@ -63,31 +59,15 @@
     [self.view addSubview:label];
     self.label = label;
     
-    self.maxRowCount = 2;
-    self.maxColumnCount = 5;
-    
-    self.menuList = [NSMutableArray array];
-    for (NSInteger index = 0; index < 15; index ++) {
-        SZScrollMenuItemModel *model = [[SZScrollMenuItemModel alloc] init];
-        model.image = [UIImage sz_imageWithRandomColor];
-        model.text = @"测试标题";
-        [self.menuList addObject:model];
-    }
-    
     self.scrollMenu = ({
        
-        SZScrollMenu *menu = [[SZScrollMenu alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(label.frame), kScreenWidth(), 0)];
-        [SZMenuItem appearance].iconSize = kRealLength(60);
-        [SZMenuItem appearance].iconCornerRadius = kRealLength(30);
-        [SZMenuItem appearance].textFont = [UIFont systemFontOfSize:kRealFontSize(11)];
-        [SZMenuItem appearance].textColor = [UIColor grayColor];
+        SZScrollMenu *menu = [[SZScrollMenu alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(label.frame), kScreenWidth(), 100)];
         
         menu.delegate = self;
         
         menu;
     });
     [self.view addSubview:self.scrollMenu];
-    [self.scrollMenu reloadData];
     
     __weak typeof(self)weakSelf = self;
     [[SZTimer shareInstance] scheduledDispatchTimerWithName:@"SZ" timeInterval:1 queue:nil repeats:YES actionOption:SZTaskOptionAbandonPrevious action:^{
@@ -108,6 +88,7 @@
 - (void)nextAction {
     UIViewController *vc = [[NSClassFromString(@"TempViewController") alloc] init];
     [self sz_pushViewController:vc animated:YES];
+//    [self.scrollMenu reloadData];
 }
 
 - (void)changeColor {
@@ -117,42 +98,28 @@
 }
 
 #pragma mark - SZScrollMenuProtocol
-- (NSUInteger)numberOfRowsForEachPageInScrollMenu:(SZScrollMenu *)scrollMenu {
-    return self.maxRowCount;
+- (NSUInteger)numberOfRowsInScrollMenu:(SZScrollMenu *)scrollMenu {
+    return 2;
 }
 
-- (NSUInteger)numberOfItemsForEachRowInScrollMenu:(SZScrollMenu *)scrollMenu {
-    return self.maxColumnCount;
+- (NSUInteger)numberOfColumnsInScrollMenu:(SZScrollMenu *)scrollMenu {
+    return 5;
 }
 
 - (NSUInteger)numberOfMenusInScrollMenu:(SZScrollMenu *)scrollMenu {
-    return self.menuList.count;
+    return 50;
 }
 
-- (id<SZMenuItemObject>)scrollMenu:(SZScrollMenu *)scrollMenu objectAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSUInteger index = indexPath.section * self.maxColumnCount + indexPath.row;
-
-    SZScrollMenuItemModel *model = self.menuList[index];
-    
-    return model;
+- (SZMenuItem *)scrollMenu:(SZScrollMenu *)scrollMenu menuItemAtIndexPath:(NSIndexPath *)indexPath {
+    SZMenuItem *menuItem = [scrollMenu dequeueReusableItemForIndexPath:indexPath];
+    menuItem.imageView.image = [UIImage sz_imageWithRandomColor];
+    NSUInteger index = indexPath.section * [self numberOfColumnsInScrollMenu:scrollMenu] + indexPath.row;
+    menuItem.textLabel.text = [NSString stringWithFormat:@"item_%02ld", (unsigned long)index];
+    return menuItem;
 }
 
 - (void)scrollMenu:(SZScrollMenu *)scrollMenu didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSUInteger idx = indexPath.section * self.maxColumnCount + indexPath.row;
-    
-    NSString *tips = [NSString stringWithFormat:@"IndexPath: [ %ld - %ld ]\nTitle:   %@", indexPath.section,indexPath.row,self.menuList[idx].text];
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Tips" message:tips preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        [alert dismissViewControllerAnimated:YES completion:nil];
-    }];
-    
-    [alert addAction:action];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
+    NSLog(@"%@", indexPath);
 }
 
 #pragma mark - SZScrollBannerProtocol

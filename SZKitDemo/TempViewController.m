@@ -40,7 +40,7 @@
     label.sz_keywordsBackGroundColor = [UIColor yellowColor];
     label.font = [UIFont systemFontOfSize:kRealFontSize(14)];
     label.numberOfLines = 0;
-    label.sz_text = @"ashfaifoadsfntextasjkfnjksdfnkatext";
+    label.sz_text = @"ashfaifoadsfntextasjkfnjksdfnkatextsafdsfdsfsdfas";
     [self.view addSubview:label];
     self.label = label;
     
@@ -132,7 +132,7 @@
 
 - (SZScrollBannerCell *)scrollBanner:(SZScrollBanner *)scrollBanner cellForPageAtIndex:(NSUInteger)index {
     SZScrollBannerCell *cell = [scrollBanner dequeueReusableCellWithIdentifier:scrollBanner.defaultCellIdentifier forIndex:index];
-    cell.backgroundColor = [UIColor lightGrayColor];
+//    cell.backgroundColor = [UIColor lightGrayColor];
     cell.textLabel.text = [NSString stringWithFormat:@"%ld", index];
     return cell;
 }
@@ -153,7 +153,7 @@
 - (SZScrollRadioCell *)scrollRadio:(SZScrollRadio *)scrollRadio cellForRowAtIndex:(NSUInteger)index {
     SZScrollRadioCell *cell = [scrollRadio dequeueReusableCellWithIdentifier:scrollRadio.defaultCellIdentifier];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"测试数据：%ld", (unsigned long)index];
+    cell.textLabel.text = [NSString stringWithFormat:@"测试eqwfowoefqwiofqwoifjqoiwjfeiqwjeiofjqwifjiqwfjeiqowfeqwefqwefqw数据：%ld", (unsigned long)index];
     
     return cell;
 }

@@ -28,7 +28,6 @@
 		007135E01F36102100E8EB03 /* SZWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135DF1F36102100E8EB03 /* SZWeakProxy.m */; };
 		009977FD1F1708FF00846923 /* SZAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 009977FC1F1708FF00846923 /* SZAdapter.m */; };
 		00DC14991F34936B000F707A /* SZScrollMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DC14981F34936B000F707A /* SZScrollMenu.m */; };
-		00DC149C1F34948B000F707A /* SZScrollMenuItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DC149B1F34948B000F707A /* SZScrollMenuItemModel.m */; };
 		00DC149F1F34AF9C000F707A /* SZScrollRadio.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DC149E1F34AF9C000F707A /* SZScrollRadio.m */; };
 		0B505EBA1F38271D0079AC8D /* SZScrollBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B505EB91F38271D0079AC8D /* SZScrollBanner.m */; };
 		0B505EBD1F3827870079AC8D /* SZStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B505EBC1F3827870079AC8D /* SZStarView.m */; };
@@ -78,8 +77,6 @@
 		009977FC1F1708FF00846923 /* SZAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZAdapter.m; sourceTree = "<group>"; };
 		00DC14971F34936B000F707A /* SZScrollMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZScrollMenu.h; sourceTree = "<group>"; };
 		00DC14981F34936B000F707A /* SZScrollMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZScrollMenu.m; sourceTree = "<group>"; };
-		00DC149A1F34948B000F707A /* SZScrollMenuItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZScrollMenuItemModel.h; sourceTree = "<group>"; };
-		00DC149B1F34948B000F707A /* SZScrollMenuItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZScrollMenuItemModel.m; sourceTree = "<group>"; };
 		00DC149D1F34AF9C000F707A /* SZScrollRadio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZScrollRadio.h; sourceTree = "<group>"; };
 		00DC149E1F34AF9C000F707A /* SZScrollRadio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZScrollRadio.m; sourceTree = "<group>"; };
 		0B505EB81F38271D0079AC8D /* SZScrollBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZScrollBanner.h; sourceTree = "<group>"; };
@@ -133,8 +130,6 @@
 				0064DC721F161A65003130E1 /* LaunchScreen.storyboard */,
 				0064DC751F161A65003130E1 /* Info.plist */,
 				0064DC641F161A65003130E1 /* Supporting Files */,
-				00DC149A1F34948B000F707A /* SZScrollMenuItemModel.h */,
-				00DC149B1F34948B000F707A /* SZScrollMenuItemModel.m */,
 				007135D81F36070E00E8EB03 /* TempViewController.h */,
 				007135D91F36070E00E8EB03 /* TempViewController.m */,
 			);
@@ -360,7 +355,6 @@
 				00022EDA1F41D2C30018749D /* UIButton+SZKit.m in Sources */,
 				0B505EBD1F3827870079AC8D /* SZStarView.m in Sources */,
 				001514E41F162E41008314CB /* SZUnicodeLog.m in Sources */,
-				00DC149C1F34948B000F707A /* SZScrollMenuItemModel.m in Sources */,
 				007135D71F35FE8500E8EB03 /* SZTimer.m in Sources */,
 				001514DE1F162469008314CB /* UIViewController+SZKit.m in Sources */,
 				0B505EBA1F38271D0079AC8D /* SZScrollBanner.m in Sources */,

@@ -19,80 +19,22 @@
 #import "Masonry.h"
 #endif
 
-/**********************  SZMenuItem ***************************/
-@interface SZMenuItem ()
-/**
- *  The icon.
- */
-@property (nonatomic, strong) UIImageView *icon;
-/**
- *  The label.
- */
-@property (nonatomic, strong) UILabel *label;
-/**
- *  The edge of item.
- */
-@property (nonatomic, assign) SZEdgeInsets edgeInsets; //default is {5,0,5,0,5}
-
-@end
-
 @implementation SZMenuItem
-#pragma mark - Life Cycle
-+ (void)initialize {
-    
-    SZMenuItem *item = [self appearance];
-    
-    item.iconSize = kRealLength(36);
-    item.iconCornerRadius = kRealLength(18);
-    item.textColor = [UIColor darkTextColor];
-    item.textFont = [UIFont systemFontOfSize:kRealLength(11)];
-    item.textHeight = kRealLength(20);
-}
 
+
+- (void)dealloc {
+    NSLog(@"dealloc menuItem");
+}
+#pragma mark - Life Cycle
 - (instancetype)initWithFrame:(CGRect)frame {
     
-    if (self = [super initWithFrame:frame]) {
+    self = [super initWithFrame:frame];
+    
+    if (self) {
         [self prepareUI];
     }
     
     return self;
-}
-
-#pragma mark - Getter&Setter
-- (void)setIconSize:(CGFloat)iconSize {
-    
-    if (iconSize >= 0) {
-        
-        _iconSize = iconSize;
-        [self updateIconConstraints];
-    }
-}
-
-- (void)setIconCornerRadius:(CGFloat)iconCornerRadius {
-    
-    if (iconCornerRadius >= 0) {
-        
-        _iconCornerRadius = iconCornerRadius;
-        self.icon.layer.cornerRadius = iconCornerRadius;
-    }
-}
-
-- (void)setTextColor:(UIColor *)textColor {
-    
-    _textColor = textColor;
-    self.label.textColor = textColor;
-}
-
-- (void)setTextFont:(UIFont *)textFont {
-    
-    _textFont = textFont;
-    self.label.font = textFont;
-}
-
-- (void)setEdgeInsets:(SZEdgeInsets)edgeInsets {
-    
-    _edgeInsets = edgeInsets;
-    [self updateItemEdgeInsets];
 }
 
 #pragma mark - Prepare UI
@@ -100,114 +42,46 @@
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    self.icon = ({
+    self.imageView = ({
         
         UIImageView *imageView = [[UIImageView alloc] init];
         
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.clipsToBounds = YES;
-        imageView.layer.masksToBounds = YES;
-        imageView.layer.cornerRadius = self.iconCornerRadius;
+        [self.contentView addSubview:imageView];
         
         imageView;
     });
     
-    self.label = ({
+    self.textLabel = ({
         
         UILabel *label = [[UILabel alloc] init];
         
-        label.textColor = self.textColor;
-        label.font = self.textFont;
         label.textAlignment = NSTextAlignmentCenter;
-        label.numberOfLines = 0;
+        label.text = @"text";
+        
+        [self.contentView addSubview:label];
         
         label;
     });
-    
-    [self.contentView addSubview:self.icon];
-    [self.contentView addSubview:self.label];
-}
-
-- (void)layoutSubviews {
-    
-    [super layoutSubviews];
-    //The constraint of icon.
-    [self.icon mas_updateConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.mas_equalTo(self.edgeInsets.top);
+    [self.textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.contentView);
-        make.height.width.mas_equalTo(self.iconSize);
+        make.bottom.offset(-kRealLength(10));
+        make.height.offset(kRealLength(16));
+        make.left.mas_greaterThanOrEqualTo(0).priorityHigh();
+        make.right.mas_lessThanOrEqualTo(0).priorityHigh();
     }];
     
-    //The constraint of label.
-    [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(self.icon.mas_bottom).offset(self.edgeInsets.middle);
-        make.left.mas_equalTo(self.edgeInsets.left);
-        make.right.mas_equalTo(- self.edgeInsets.right);
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.contentView);
+        make.top.offset(kRealLength(10));
+        make.bottom.equalTo(self.textLabel.mas_top);
+        make.width.equalTo(self.imageView.mas_height);
     }];
-}
-
-- (void)updateIconConstraints {
-    
-    if (self.icon) {
-        
-        [self.icon mas_updateConstraints:^(MASConstraintMaker *make) {
-            
-            make.height.width.mas_equalTo(self.iconSize);
-        }];
-    }
-}
-
-- (void)updateItemEdgeInsets {
-    
-    if (self.icon && self.label) {
-        
-        [self.icon mas_updateConstraints:^(MASConstraintMaker *make) {
-            
-            make.top.mas_equalTo(self.edgeInsets.top);
-        }];
-        
-        [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
-            
-            make.top.equalTo(self.icon.mas_bottom).offset(self.edgeInsets.middle);
-            make.left.mas_equalTo(self.edgeInsets.left);
-            make.right.mas_equalTo(- self.edgeInsets.right);
-        }];
-    }
-}
-
-#pragma mark - Customize
-- (void)customizeItemWithObject:(id<SZMenuItemObject>)object {
-    
-    if (object == nil) return;
-    
-    self.label.text = object.text;
-    if ([object.image isKindOfClass:[NSString class]]) {
-        
-        NSURL *url = [NSURL URLWithString:(NSString *)object.image];
-        [self.icon sd_setImageWithURL:url placeholderImage:object.placeholderImage];
-    }else if ([object.image isKindOfClass:[NSURL class]]){
-        
-        [self.icon sd_setImageWithURL:(NSURL *)object.image placeholderImage:object.placeholderImage];
-    }else if ([object.image isKindOfClass:[UIImage class]]){
-        
-        self.icon.image = (UIImage *)object.image;
-    }
-}
-
-#pragma mark - Identifier
-+ (NSString *)identifier {
-    
-    return NSStringFromClass([self class]);
 }
 
 @end
 
 
-/**********************  SZMenuSectionProtocol ***************************/
 @class SZMenuSection;
-
 
 @protocol SZMenuSectionProtocol <NSObject>
 
@@ -228,13 +102,13 @@
 - (NSUInteger)numberOfItemsInMenuSection:(SZMenuSection *)menuSection;
 
 /**
- Object at indexPath.
- 
+ SZMenuItem
+
  @param menuSection SZMenuSection
  @param indexPath NSIndexPath
- @return id<SZMenuItemObject>
+ @return SZMenuItem
  */
-- (id<SZMenuItemObject>)menuSection:(SZMenuSection *)menuSection objectAtIndexPath:(NSIndexPath *)indexPath;
+- (SZMenuItem *)menuSection:(SZMenuSection *)menuSection menuItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @optional
 
@@ -246,36 +120,44 @@
  */
 - (void)menuSection:(SZMenuSection *)menuSection didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 
+@end
+
+
+@interface SZScrollMenu (Getter)
+
+@property(nonatomic, copy, readonly) NSString *itemIdentifier;
+@property(nonatomic, strong, readonly) Class itemClass;
 
 @end
 
 
 /**********************  SZMenuSection ***************************/
-NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
-/**
- *  The collectionView.
- */
-@property (nonatomic, strong) UICollectionView *collectionView;
-/**
- *  The delegate.
- */
-@property (nonatomic, weak) id<SZMenuSectionProtocol> delegate;
-/**
- *  The section.
- */
-@property (nonatomic, assign) NSUInteger section;
+@interface SZMenuSection : UICollectionViewCell<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
-@property(nonatomic, assign) SZEdgeInsets itemEdgeInsets;
+@property(nonatomic, strong) UICollectionView *collectionView;
+
+@property(nonatomic, weak) id<SZMenuSectionProtocol> delegate;
+
+@property(nonatomic, copy, readonly) NSString *itemIdentifier;
+
+@property(nonatomic, assign) NSUInteger section;
+
+@property(nonatomic, weak) SZScrollMenu *scrollMenu;
 
 @end
 
 @implementation SZMenuSection
 
+
+- (void)dealloc {
+    NSLog(@"dealloc menuSection");
+}
+
 #pragma mark - Life Cycle
 - (instancetype)initWithFrame:(CGRect)frame {
     
     if (self = [super initWithFrame:frame]) {
-        
+        _itemIdentifier = @"reuseItem";
         [self prepareUI];
     }
     
@@ -310,8 +192,6 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
         collectionView.showsHorizontalScrollIndicator = NO;
         collectionView.pagingEnabled = YES;
         
-        [collectionView registerClass:[SZMenuItem class] forCellWithReuseIdentifier:[SZMenuItem identifier]];
-        
         collectionView.delegate = self;
         collectionView.dataSource = self;
         
@@ -319,22 +199,14 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
     });
     
     [self.contentView addSubview:self.collectionView];
-    
-}
-
-- (void)layoutSubviews {
-    
-    [super layoutSubviews];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.edges.equalTo(self);
     }];
 }
 
-#pragma mark - Identifier
-+ (NSString *)identifier {
-    
-    return NSStringFromClass([self class]);
+- (void)setScrollMenu:(SZScrollMenu *)scrollMenu {
+    _scrollMenu = scrollMenu;
+    [self.collectionView registerClass:_scrollMenu.itemClass forCellWithReuseIdentifier:_scrollMenu.itemIdentifier];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -355,26 +227,16 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
         
         return [self.delegate numberOfItemsInMenuSection:self];
     }
-    
     return 0;
-    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    
-    SZMenuItem *item = [collectionView dequeueReusableCellWithReuseIdentifier:[SZMenuItem identifier] forIndexPath:indexPath];
-    
-    item.edgeInsets = self.itemEdgeInsets;
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(menuSection:objectAtIndexPath:)]) {
-        
-        id<SZMenuItemObject> object = [self.delegate menuSection:self objectAtIndexPath:indexPath];
-        [item customizeItemWithObject:object];
+    if ([self.delegate respondsToSelector:@selector(menuSection:menuItemAtIndexPath:)]) {
+        return [self.delegate menuSection:self menuItemAtIndexPath:indexPath];
     }
-    
-    return item;
-    
+    return nil;
 }
+
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -398,26 +260,46 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
  */
 @property (nonatomic, strong) UIPageControl *pageControl;
 
-@property(nonatomic, assign) CGFloat itemHeight;
+@property (nonatomic, copy, readonly) NSString *cellIdentifier;
+
+@property (nonatomic) NSUInteger maxRow;
+@property (nonatomic) NSUInteger maxColumn;
+
+@property(nonatomic, copy, readonly) NSString *itemIdentifier;
+@property(nonatomic, strong) Class itemClass;
+@property(nonatomic, strong) NSMutableDictionary *reuseCellList;
 
 @end
 
 @implementation SZScrollMenu
 
+- (void)dealloc {
+    NSLog(@"dealloc menu");
+}
+
 #pragma mark - Life Cycle
 - (instancetype)initWithFrame:(CGRect)frame {
-    
-    if (self = [super initWithFrame:frame]) {
-        
-        self.pageControlHeight = 16;
-        self.itemEdgeInsets = SZEdgeInsetsMake(kRealLength(5), 0.f, kRealLength(5), 0.f, 0.f);
+    self = [super initWithFrame:frame];
+    if (self) {
+        _cellIdentifier = @"reuseSection";
+        _itemIdentifier = @"reuseItem";
+        _pageControlHeight = (NSInteger)kRealLength(16);
+        _menuItemHeight = (NSInteger)kRealLength(64);
         [self prepareUI];
+        self.currentPageIndicatorTintColor = [UIColor darkTextColor];
+        self.pageIndicatorTintColor = [UIColor groupTableViewBackgroundColor];
     }
-    
     return self;
 }
 
 #pragma mark - Getter&Setter
+- (NSMutableDictionary *)reuseCellList {
+    if (!_reuseCellList) {
+        _reuseCellList = [NSMutableDictionary dictionary];
+    }
+    return _reuseCellList;
+}
+
 - (void)setCurrentPageIndicatorTintColor:(UIColor *)currentPageIndicatorTintColor {
     
     _currentPageIndicatorTintColor = currentPageIndicatorTintColor;
@@ -430,10 +312,23 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
 - (void)setPageIndicatorTintColor:(UIColor *)pageIndicatorTintColor {
     
     _pageIndicatorTintColor = pageIndicatorTintColor;
-    if (self.pageIndicatorTintColor) {
+    if (_pageIndicatorTintColor) {
         
-        self.pageIndicatorTintColor = pageIndicatorTintColor;
+        self.pageControl.pageIndicatorTintColor = pageIndicatorTintColor;
     }
+}
+
+- (void)setMenuItemHeight:(CGFloat)menuItemHeight {
+    _menuItemHeight = (NSInteger)menuItemHeight;
+}
+
+- (void)setPageControlHeight:(CGFloat)pageControlHeight {
+    _pageControlHeight = (NSInteger)pageControlHeight;
+}
+
+- (void)setDelegate:(id<SZScrollMenuProtocol>)delegate {
+    _delegate = delegate;
+    [self reloadData];
 }
 
 #pragma mark - Prepare UI
@@ -456,8 +351,7 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
         collectionView.showsHorizontalScrollIndicator = NO;
         collectionView.pagingEnabled = YES;
         
-        [collectionView registerClass:[SZMenuSection class] forCellWithReuseIdentifier:[SZMenuSection identifier]];
-        [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"log"];
+        [collectionView registerClass:[SZMenuSection class] forCellWithReuseIdentifier:self.cellIdentifier];
         
         collectionView.delegate = self;
         collectionView.dataSource = self;
@@ -468,9 +362,7 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
     self.pageControl = ({
         
         UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectZero];
-        
-        pageControl.currentPageIndicatorTintColor = [UIColor darkTextColor];
-        pageControl.pageIndicatorTintColor =  [UIColor groupTableViewBackgroundColor];
+
         [pageControl addTarget:self action:@selector(pageTurn:) forControlEvents:UIControlEventValueChanged];
         
         pageControl;
@@ -485,49 +377,41 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
     
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.offset(0);
+        make.bottom.equalTo(self.pageControl.mas_top);
     }];
+    [self registerMenuItemClass:[SZMenuItem class]];
 }
 
+- (void)registerMenuItemClass:(Class)itemClass {
+    self.itemClass = itemClass;
+}
+
+- (SZMenuItem *)dequeueReusableItemForIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *idx = [NSIndexPath indexPathForItem:0 inSection:indexPath.section];
+    SZMenuSection *section = self.reuseCellList[idx];
+    return [section.collectionView dequeueReusableCellWithReuseIdentifier:self.itemIdentifier forIndexPath:[NSIndexPath indexPathForItem:indexPath.item inSection:0]];
+}
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(CGRectGetWidth(self.frame), self.itemHeight - SZCollectionItemHeightComplexity);
+    return CGSizeMake(CGRectGetWidth(self.frame), self.menuItemHeight);
 }
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(numberOfItemsForEachRowInScrollMenu:)] && [self.delegate respondsToSelector:@selector(numberOfMenusInScrollMenu:)]) {
-        
-        NSUInteger total = [self.delegate numberOfMenusInScrollMenu:self];
-        
-        NSUInteger items = [self.delegate numberOfItemsForEachRowInScrollMenu:self];
-        
-        CGFloat rows = (CGFloat)total * 1.f /items;
-        
-        if ([self.delegate respondsToSelector:@selector(numberOfRowsForEachPageInScrollMenu:)]) {
-            
-            NSUInteger rows = [self.delegate numberOfRowsForEachPageInScrollMenu:self];
-            
-            NSUInteger numberOfPages = ceil(total*1.f/(rows * items));
-            
-            self.pageControl.numberOfPages = numberOfPages;
-            self.pageControl.hidden = numberOfPages < 2;
-        }
-        
-        return ceil(rows);
-    }
-    
-    return 0;
+    CGFloat rows = (CGFloat)_numberOfMenus / _maxColumn;
+
+    return ceil(rows);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-    SZMenuSection *section = [collectionView dequeueReusableCellWithReuseIdentifier:[SZMenuSection identifier] forIndexPath:indexPath];
-    
-    section.itemEdgeInsets = self.itemEdgeInsets;
-    section.section = indexPath.row;
+    SZMenuSection *section = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
+    section.scrollMenu = self;
+    section.section = indexPath.item;
     section.delegate = self;
+    NSIndexPath *idx = [NSIndexPath indexPathForItem:0 inSection:section.section];
+    self.reuseCellList[idx] = section;
     
     return section;
 }
@@ -535,43 +419,23 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
 #pragma mark - SZMenuSectionProtocol
 - (CGSize)sizeOfItemsInMenuSection:(SZMenuSection *)menuSection {
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(numberOfRowsForEachPageInScrollMenu:)] && [self.delegate respondsToSelector:@selector(numberOfItemsForEachRowInScrollMenu:)]) {
-
-        NSUInteger items = [self.delegate numberOfItemsForEachRowInScrollMenu:self];
-        
-        CGFloat width =  CGRectGetWidth(self.frame)/items;
-        
-        return CGSizeMake(width, self.itemHeight);
-    }
+    CGFloat width =  CGRectGetWidth(self.frame)/_maxColumn;
     
-    return CGSizeZero;
+    return CGSizeMake(width, self.menuItemHeight);
 }
 
 - (NSUInteger)numberOfItemsInMenuSection:(SZMenuSection *)menuSection {
+
+    NSUInteger number = _numberOfMenus - _maxColumn * menuSection.section;
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(numberOfMenusInScrollMenu:)] && [self.delegate respondsToSelector:@selector(numberOfRowsForEachPageInScrollMenu:)]) {
-        
-        NSUInteger total = [self.delegate numberOfMenusInScrollMenu:self];
-        
-        NSUInteger items = [self.delegate numberOfItemsForEachRowInScrollMenu:self];
-        
-        NSUInteger number = total - items * menuSection.section;
-        
-        return MIN(number, items);
-    }
-    
-    return 0;
+    return MIN(number, _maxColumn);
 }
 
-- (id<SZMenuItemObject>)menuSection:(SZMenuSection *)menuSection objectAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(scrollMenu:objectAtIndexPath:)]) {
-        
+- (SZMenuItem *)menuSection:(SZMenuSection *)menuSection menuItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.delegate respondsToSelector:@selector(scrollMenu:menuItemAtIndexPath:)]) {
         NSIndexPath *idx = [NSIndexPath indexPathForRow:indexPath.row inSection:menuSection.section];
-        
-        return [self.delegate scrollMenu:self objectAtIndexPath:idx];
+        return [self.delegate scrollMenu:self menuItemAtIndexPath:idx];
     }
-    
     return nil;
 }
 
@@ -607,30 +471,21 @@ NS_CLASS_AVAILABLE_IOS(8_0) @interface SZMenuSection : UICollectionViewCell<UICo
 
 #pragma mark - Public
 - (void)reloadData {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(numberOfRowsForEachPageInScrollMenu:)]) {
-        
-        NSUInteger rows = [self.delegate numberOfRowsForEachPageInScrollMenu:self];
-        
-        SZMenuItem *menuItem = [SZMenuItem appearance];
-        
-        CGFloat height = menuItem.iconSize + menuItem.textHeight + self.itemEdgeInsets.top + self.itemEdgeInsets.bottom + self.itemEdgeInsets.middle;
-        
-        self.itemHeight = height;
-        
-        CGFloat fullHeight = rows * (self.itemHeight - SZCollectionItemHeightComplexity) + _pageControlHeight - SZCollectionItemHeightComplexity;
-        
-        self.sz_height = MAX(fullHeight, self.bounds.size.height);
-        
-        [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.offset(self.sz_height - _pageControlHeight);
-        }];
+    if ([self.delegate respondsToSelector:@selector(numberOfMenusInScrollMenu:)] &&
+        [self.delegate respondsToSelector:@selector(numberOfRowsInScrollMenu:)] &&
+        [self.delegate respondsToSelector:@selector(numberOfColumnsInScrollMenu:)]) {
+        _numberOfMenus = [self.delegate numberOfMenusInScrollMenu:self];
+        _maxRow = [self.delegate numberOfRowsInScrollMenu:self];
+        _maxColumn = [self.delegate numberOfColumnsInScrollMenu:self];
     }
+    NSUInteger numberOfPages = ceil((CGFloat)_numberOfMenus / (_maxRow * _maxColumn));
     
-    if (self.collectionView) {
-        [self.collectionView reloadData];
-    }
+    self.pageControl.numberOfPages = numberOfPages;
+    self.pageControl.hidden = numberOfPages < 2;
+    CGFloat height = _maxRow * self.menuItemHeight + self.pageControlHeight;
+    self.sz_height = height;
+    [self.collectionView reloadData];
 }
-
 
 @end
 

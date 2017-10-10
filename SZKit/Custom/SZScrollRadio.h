@@ -61,7 +61,6 @@
 
 @interface SZScrollRadioCell : UIView
 
-@property(nonatomic, strong) UIImageView *imageView;
 @property(nonatomic, strong) UILabel *textLabel;
 
 - (instancetype)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;

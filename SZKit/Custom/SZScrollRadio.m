@@ -28,63 +28,26 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.reuseIdentifier = reuseIdentifier;
+        [self prepareUI];
+        
         [self sz_addTapTarget:self action:@selector(tapAction)];
     }
     return self;
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    if (_imageView) {
-        [_imageView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.top.bottom.offset(0);
-            make.width.equalTo(_imageView.mas_height);
-        }];
-    }
-    
-    if (_textLabel) {
-        if (_imageView) {
-            [_textLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_imageView.mas_right);
-                make.centerY.mas_equalTo(self);
-            }];
-        } else {
-            [_textLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.left.offset(10);
-                make.centerY.mas_equalTo(self);
-            }];
-        }
-    }
-}
-
-- (UIImageView *)imageView {
-    
-    if (!_imageView) {
-        _imageView = ({
-            
-            UIImageView *imageView = [[UIImageView alloc] init];
-            
-            [self addSubview:imageView];
-            
-            imageView;
-        });
-    }
-    return _imageView;
-}
-
-- (UILabel *)textLabel {
-    if (!_textLabel) {
-        _textLabel = ({
-            
-            UILabel *label = [[UILabel alloc] init];
-            label.text = @"测试数据测试数据";
-            [self addSubview:label];
-            
-            label;
-        });
-    }
-    return _textLabel;
+- (void)prepareUI {
+    self.textLabel = ({
+        UILabel *label = [[UILabel alloc] init];
+        
+        label.font = [UIFont systemFontOfSize:12];
+        [self addSubview:label];
+        label;
+    });
+    [self.textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.offset(10);
+        make.centerY.mas_equalTo(self);
+        make.right.offset(0);
+    }];
 }
 
 - (void)tapAction {
@@ -183,7 +146,7 @@ static NSUInteger initIndex = 0;
     self = [super initWithFrame:frame];
     if (self) {
         initIndex ++;
-        self.scrollRadioTimerName = [NSString stringWithFormat:@"kSZTimerScrollRadio_%ld", (unsigned long)initIndex];
+        _scrollRadioTimerName = [NSString stringWithFormat:@"kSZTimerScrollRadio_%ld", (unsigned long)initIndex];
         _defaultCellIdentifier = @"SZScrollRadioCell_default";
         self.finalIndex = 0;
         self.changeInterval = 2;
@@ -255,6 +218,9 @@ static NSUInteger initIndex = 0;
 }
 
 - (void)beginScroll {
+    if (self.countsOfItem <= self.numbersOfRow) {
+        return;
+    }
     __weak typeof(self)weakSelf = self;
     [[SZTimer shareInstance] scheduledDispatchTimerWithName:self.scrollRadioTimerName timeInterval:self.changeInterval queue:nil repeats:YES actionOption:SZTaskOptionAbandonPrevious action:^{
         dispatch_async(dispatch_get_main_queue(), ^{

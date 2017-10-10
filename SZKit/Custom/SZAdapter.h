@@ -82,6 +82,3 @@ static inline CGFloat kRealLength(CGFloat defaultLength) {
     
     return kScreenWidth() / [SZAdapter shareAdapter].defaultScreenWidth * defaultLength;
 }
-
-/*! 在UICollection中解决高度问题的补偿量 default -0.5 */
-UIKIT_EXTERN CGFloat const SZCollectionItemHeightComplexity;

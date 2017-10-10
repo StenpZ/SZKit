@@ -14,7 +14,7 @@
 @required
 - (NSUInteger)numbersofPageAtScrollBanner:(SZScrollBanner *)scrollBanner;
 
-- (__kindof SZScrollBannerCell *)scrollBanner:(SZScrollBanner *)scrollBanner cellForPageAtIndex:(NSUInteger)index;
+- (SZScrollBannerCell *)scrollBanner:(SZScrollBanner *)scrollBanner cellForPageAtIndex:(NSUInteger)index;
 
 @optional
 - (void)scrollBanner:(SZScrollBanner *)scrollBanner didSelectedAtIndex:(NSUInteger)index;
@@ -33,18 +33,22 @@
 /*! 间隔时间 default：3s */
 @property(nonatomic) NSTimeInterval scrollInterval;
 
-@property(nonatomic, strong, readonly) UIPageControl *pageControl;
+/// default is [UIColor darkTextColor]
+@property(nonatomic, strong) UIColor *currentPageIndicatorTintColor;
+
+/// default is [UIColor groupTableViewBackgroundColor]
+@property(nonatomic, strong) UIColor *pageIndicatorTintColor;
+
+/// default is 16 in ip5
+@property(nonatomic, assign) CGFloat pageControlHeight;
 
 /*! 是否显示PageControl default：Yes */
 @property(nonatomic) BOOL showPageControl;
 
-/*! 单页数据时是否隐藏PageControl default：Yes */
-@property(nonatomic) BOOL hidePageControlForSinglePage;
-
 /*! 注册Cell 默认注册了SZScrollBannerCell，identifier：self.defaultCellIdentifier */
 - (void)registerClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier;
 /*! 如果不自定义SZScrollBannerCell 可传入self.defaultCellIdentifier */
-- (__kindof SZScrollBannerCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier forIndex:(NSUInteger)index;
+- (SZScrollBannerCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier forIndex:(NSUInteger)index;
 
 - (void)reloadData;
 
