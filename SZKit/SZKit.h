@@ -25,3 +25,4 @@
 #import "SZFPSLabel.h"
 #import "SZScrollBanner.h"
 #import "SZStarView.h"
+#import "SZNavigationBar.h"

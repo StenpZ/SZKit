@@ -11,6 +11,7 @@
 		00022EDD1F41D2D30018749D /* UISearchBar+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00022EDC1F41D2D30018749D /* UISearchBar+SZKit.m */; };
 		001514DE1F162469008314CB /* UIViewController+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 001514DD1F162469008314CB /* UIViewController+SZKit.m */; };
 		001514E41F162E41008314CB /* SZUnicodeLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 001514E31F162E41008314CB /* SZUnicodeLog.m */; };
+		002FDB981F945827009FDD0B /* SZNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 002FDB971F945827009FDD0B /* SZNavigationBar.m */; };
 		004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 004D0C731F1764CF0040090E /* UILabel+SZKit.m */; };
 		0052BF481F1638BE0032793E /* UIColor+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0052BF471F1638BE0032793E /* UIColor+SZKit.m */; };
 		0052BF4B1F164F990032793E /* UIImage+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0052BF4A1F164F990032793E /* UIImage+SZKit.m */; };
@@ -43,6 +44,8 @@
 		001514DD1F162469008314CB /* UIViewController+SZKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SZKit.m"; sourceTree = "<group>"; };
 		001514E21F162E41008314CB /* SZUnicodeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZUnicodeLog.h; sourceTree = "<group>"; };
 		001514E31F162E41008314CB /* SZUnicodeLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZUnicodeLog.m; sourceTree = "<group>"; };
+		002FDB961F945827009FDD0B /* SZNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZNavigationBar.h; sourceTree = "<group>"; };
+		002FDB971F945827009FDD0B /* SZNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZNavigationBar.m; sourceTree = "<group>"; };
 		004D0C721F1764CF0040090E /* UILabel+SZKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SZKit.h"; sourceTree = "<group>"; };
 		004D0C731F1764CF0040090E /* UILabel+SZKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SZKit.m"; sourceTree = "<group>"; };
 		0052BF461F1638BE0032793E /* UIColor+SZKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SZKit.h"; sourceTree = "<group>"; };
@@ -174,6 +177,8 @@
 				0B505EB91F38271D0079AC8D /* SZScrollBanner.m */,
 				0B505EBB1F3827870079AC8D /* SZStarView.h */,
 				0B505EBC1F3827870079AC8D /* SZStarView.m */,
+				002FDB961F945827009FDD0B /* SZNavigationBar.h */,
+				002FDB971F945827009FDD0B /* SZNavigationBar.m */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -357,6 +362,7 @@
 				001514E41F162E41008314CB /* SZUnicodeLog.m in Sources */,
 				007135D71F35FE8500E8EB03 /* SZTimer.m in Sources */,
 				001514DE1F162469008314CB /* UIViewController+SZKit.m in Sources */,
+				002FDB981F945827009FDD0B /* SZNavigationBar.m in Sources */,
 				0B505EBA1F38271D0079AC8D /* SZScrollBanner.m in Sources */,
 				0052BF4E1F164FAB0032793E /* UIImageView+SZKit.m in Sources */,
 				0064DC6C1F161A65003130E1 /* ViewController.m in Sources */,
