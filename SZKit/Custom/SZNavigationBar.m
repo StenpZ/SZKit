@@ -30,8 +30,13 @@
 - (instancetype)initWithImage:(UIImage *)image title:(NSString *)title target:(id)target action:(SEL)action {
     self = [SZBarButtonItem buttonWithType:UIButtonTypeSystem];
     if (self) {
-        [self setImage:image forState:UIControlStateNormal];
-        [self setTitle:title forState:UIControlStateNormal];
+        if (image) {
+            [self setImage:image forState:UIControlStateNormal];
+            self.imageEdgeInsets = UIEdgeInsetsMake(5, 0, 5, 0);
+        }
+        if (title) {
+            [self setTitle:title forState:UIControlStateNormal];
+        }
         self.titleLabel.font = [UIFont systemFontOfSize:14];
         [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     }
@@ -136,7 +141,7 @@
             [item sizeToFit];
             wid = item.frame.size.width;
         } else {
-            wid = 44;
+            wid = 30;
         }
     }
     return wid;
@@ -145,7 +150,6 @@
 - (void)setRightButtonItem:(SZBarButtonItem *)rightButtonItem {
     [_rightButtonItem removeFromSuperview];
     _rightButtonItem = rightButtonItem;
-    _rightButtonItem.tintColor = self.tintColor;
     [self.contentView addSubview:_rightButtonItem];
     [_rightButtonItem mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.offset(-_spacing);
@@ -314,3 +318,4 @@
 }
 
 @end
+
