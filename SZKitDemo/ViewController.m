@@ -32,20 +32,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.fd_prefersNavigationBarHidden = YES;
-    self.navigationBar.tintColor = UIColorRandom();
-    self.navigationBar.barTintColor = UIColorRandom();
-    self.navigationBar.leftButtonItem = [[SZBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] target:self action:@selector(sz_popAction)];
-//    self.navigationBar.title = @"首页";
-
-    self.navigationBar.rightButtonItems = @[[[SZBarButtonItem alloc] initWithTitle:@"更多" target:self action:@selector(nextAction)], [[SZBarButtonItem alloc] initWithTitle:@"关闭" target:self action:@selector(nextAction)]];
-    self.navigationBar.titleView = ({
-        UISearchBar *searchBar = [[UISearchBar alloc] init];
-        
-        searchBar.placeholder = @"咔咔咔咔";
-        
-        searchBar;
-    });
+    self.view.backgroundColor = [UIColor redColor];
+//    self.fd_prefersNavigationBarHidden = YES;
+//    self.navigationBar.tintColor = UIColorRandom();
+//    self.navigationBar.barTintColor = [UIColor whiteColor];
+//    self.navigationBar.leftButtonItem = [[SZBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] target:self action:@selector(sz_popAction)];
+////    self.navigationBar.title = @"首页";
+//
+//    self.navigationBar.rightButtonItems = @[[[SZBarButtonItem alloc] initWithTitle:@"更多" target:self action:@selector(nextAction)], [[SZBarButtonItem alloc] initWithTitle:@"关闭" target:self action:@selector(nextAction)]];
+//    self.navigationBar.titleView = ({
+//        UISearchBar *searchBar = [[UISearchBar alloc] init];
+//
+//        searchBar.placeholder = @"咔咔咔咔";
+//
+//        searchBar;
+//    });
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(nextAction)];
     // Do any additional setup after loading the view, typically from a nib.
     NSArray *list = @[@"http://img2.woyaogexing.com/2017/07/06/3ddbfdc42a6563a9!400x400_big.jpg",
                       @"http://img2.woyaogexing.com/2017/07/06/78d64b63b5f5523f!400x400_big.jpg",
