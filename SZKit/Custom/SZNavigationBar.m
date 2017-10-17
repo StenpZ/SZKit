@@ -61,7 +61,7 @@
         [self addSubview:self.maskView];
         self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth(), 44)];
         [self addSubview:self.contentView];
-        self.separator = [[UIView alloc] initWithFrame:CGRectMake(0, 63, kScreenWidth(), 1)];
+        self.separator = [[UIView alloc] initWithFrame:CGRectMake(0, 63.5, kScreenWidth(), 0.5)];
         [self addSubview:self.separator];
         self.tintColor = [UIColor blackColor];
         self.barTintColor = [UIColor whiteColor];
@@ -129,11 +129,15 @@
     [self updateConstraintsCustom];
 }
 
-- (CGFloat)getItemWidth:(UIView *)item {
+- (CGFloat)getItemWidth:(SZBarButtonItem *)item {
     CGFloat wid = item.frame.size.width;
     if (!wid) {
-        [item sizeToFit];
-        wid = item.frame.size.width;
+        if (item.titleLabel.text) {
+            [item sizeToFit];
+            wid = item.frame.size.width;
+        } else {
+            wid = 44;
+        }
     }
     return wid;
 }
