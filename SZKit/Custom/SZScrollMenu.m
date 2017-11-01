@@ -64,7 +64,7 @@
     });
     [self.textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.contentView);
-        make.bottom.offset(-kRealLength(10));
+        make.bottom.offset(-kRealLength(5));
         make.height.offset(kRealLength(16));
         make.left.mas_greaterThanOrEqualTo(0).priorityHigh();
         make.right.mas_lessThanOrEqualTo(0).priorityHigh();

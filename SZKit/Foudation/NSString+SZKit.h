@@ -3,7 +3,7 @@
 // github地址：https://github.com/StenpZ/SZKit
 // 用着顺手还望给个Star。Thank you！
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface NSString (SZKit)
 
@@ -30,5 +30,7 @@
  @return YES/NO
  */
 - (BOOL)sz_isEmoji;
+
+- (CGFloat)heightWithFont:(UIFont *)font maxWidth:(CGFloat)maxWidth;
 
 @end

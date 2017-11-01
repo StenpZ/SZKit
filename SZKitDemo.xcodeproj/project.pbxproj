@@ -11,6 +11,7 @@
 		00022EDD1F41D2D30018749D /* UISearchBar+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00022EDC1F41D2D30018749D /* UISearchBar+SZKit.m */; };
 		001514DE1F162469008314CB /* UIViewController+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 001514DD1F162469008314CB /* UIViewController+SZKit.m */; };
 		001514E41F162E41008314CB /* SZUnicodeLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 001514E31F162E41008314CB /* SZUnicodeLog.m */; };
+		001765301F9891660000FEE4 /* SZConditionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0017652F1F9891660000FEE4 /* SZConditionMenu.m */; };
 		002FDB981F945827009FDD0B /* SZNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 002FDB971F945827009FDD0B /* SZNavigationBar.m */; };
 		004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 004D0C731F1764CF0040090E /* UILabel+SZKit.m */; };
 		0052BF481F1638BE0032793E /* UIColor+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0052BF471F1638BE0032793E /* UIColor+SZKit.m */; };
@@ -44,6 +45,8 @@
 		001514DD1F162469008314CB /* UIViewController+SZKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SZKit.m"; sourceTree = "<group>"; };
 		001514E21F162E41008314CB /* SZUnicodeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZUnicodeLog.h; sourceTree = "<group>"; };
 		001514E31F162E41008314CB /* SZUnicodeLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZUnicodeLog.m; sourceTree = "<group>"; };
+		0017652E1F9891660000FEE4 /* SZConditionMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZConditionMenu.h; sourceTree = "<group>"; };
+		0017652F1F9891660000FEE4 /* SZConditionMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZConditionMenu.m; sourceTree = "<group>"; };
 		002FDB961F945827009FDD0B /* SZNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZNavigationBar.h; sourceTree = "<group>"; };
 		002FDB971F945827009FDD0B /* SZNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZNavigationBar.m; sourceTree = "<group>"; };
 		004D0C721F1764CF0040090E /* UILabel+SZKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SZKit.h"; sourceTree = "<group>"; };
@@ -179,6 +182,8 @@
 				0B505EBC1F3827870079AC8D /* SZStarView.m */,
 				002FDB961F945827009FDD0B /* SZNavigationBar.h */,
 				002FDB971F945827009FDD0B /* SZNavigationBar.m */,
+				0017652E1F9891660000FEE4 /* SZConditionMenu.h */,
+				0017652F1F9891660000FEE4 /* SZConditionMenu.m */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 				007135DD1F36100B00E8EB03 /* SZFPSLabel.m in Sources */,
 				009977FD1F1708FF00846923 /* SZAdapter.m in Sources */,
 				00DC149F1F34AF9C000F707A /* SZScrollRadio.m in Sources */,
+				001765301F9891660000FEE4 /* SZConditionMenu.m in Sources */,
 				0052BF481F1638BE0032793E /* UIColor+SZKit.m in Sources */,
 				00DC14991F34936B000F707A /* SZScrollMenu.m in Sources */,
 			);

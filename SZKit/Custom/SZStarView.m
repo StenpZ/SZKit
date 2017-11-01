@@ -84,7 +84,6 @@
  *  @param completion 动画完成block
  */
 - (void)setScore:(float)score completion:(void (^)(BOOL finished))completion {
-    NSAssert((score >= 0.0)&&(score <= 1.0), @"score must be between 0 and 1");
     
     if (score < 0) {
         score = 0;
@@ -171,6 +170,15 @@
     
     NSString * str = [NSString stringWithFormat:@"%0.2f",p.x / self.starBackgroundView.sz_width];
     float score = [str floatValue];
+    if (score < self.minimumScore) {
+        score = self.minimumScore;
+    }
+    if (self.shouldIntScore) {
+        int a = ceilf(score * self.starsCount);
+        score = (float)a / self.starsCount;
+        NSString *str = [NSString stringWithFormat:@"%0.2f", score];
+        score = [str floatValue];
+    }
     p.x = score * self.starBackgroundView.sz_width;
     self.starForegroundView.frame = CGRectMake(0, 0, p.x, self.starBackgroundView.sz_height);
     

@@ -90,7 +90,7 @@
 
 - (void)setTintColor:(UIColor *)tintColor {
     [super setTintColor:tintColor];
-    for (UIView *view in self.subviews) {
+    for (UIView *view in self.contentView.subviews) {
         if ([view isKindOfClass:[UIButton class]]) {
             view.tintColor = tintColor;
             continue;

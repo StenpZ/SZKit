@@ -29,6 +29,9 @@
 
 @property(nonatomic) BOOL animated;
 
+@property(nonatomic) float minimumScore;
+@property(nonatomic) BOOL shouldIntScore;
+
 @property(nonatomic) float score;
 
 /*! default img_star_normal */

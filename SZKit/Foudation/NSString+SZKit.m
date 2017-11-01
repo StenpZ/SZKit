@@ -92,4 +92,15 @@
     return isEomji;
 }
 
+- (CGFloat)heightWithFont:(UIFont *)font maxWidth:(CGFloat)maxWidth {
+    UILabel *label = [[UILabel alloc] init];
+    
+    label.numberOfLines = 0;
+    label.font = font;
+    label.preferredMaxLayoutWidth = maxWidth;
+    label.text = self;
+    [label sizeToFit];
+    return label.bounds.size.height;
+}
+
 @end
