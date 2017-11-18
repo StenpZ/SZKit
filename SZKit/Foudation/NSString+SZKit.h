@@ -31,6 +31,14 @@
  */
 - (BOOL)sz_isEmoji;
 
+/// 获取文字高度
 - (CGFloat)heightWithFont:(UIFont *)font maxWidth:(CGFloat)maxWidth;
+
+- (CGFloat)heightWithFont:(UIFont *)font maxWidth:(CGFloat)maxWidth lineSpace:(CGFloat)lineSpace;
+
+- (CGFloat)widthWithFont:(UIFont *)font;
+
+/// 时间戳转时间
+- (NSString *)stringWithFormatter:(NSString *)formatter;
 
 @end

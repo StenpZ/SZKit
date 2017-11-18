@@ -61,12 +61,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         _spacing = 10;
-        self.frame = CGRectMake(0, 0, kScreenWidth(), 64);
+        self.frame = CGRectMake(0, 0, kScreenWidth(), HEIGHT_NAVI());
         self.maskView = [[UIView alloc] initWithFrame:self.bounds];
         [self addSubview:self.maskView];
-        self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, kScreenWidth(), 44)];
+        self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_STATUSBAR(), kScreenWidth(), HEIGHT_NAVI_BAR())];
         [self addSubview:self.contentView];
-        self.separator = [[UIView alloc] initWithFrame:CGRectMake(0, 63.5, kScreenWidth(), 0.5)];
+        self.separator = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVI() - 0.5, kScreenWidth(), 0.5)];
         [self addSubview:self.separator];
         self.tintColor = [UIColor blackColor];
         self.barTintColor = [UIColor whiteColor];
@@ -83,6 +83,7 @@
         [self.contentView addSubview:_titleLabel];
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.centerY.mas_equalTo(self.contentView);
+            make.width.mas_lessThanOrEqualTo(100);
         }];
     }
     return _titleLabel;
@@ -318,4 +319,3 @@
 }
 
 @end
-

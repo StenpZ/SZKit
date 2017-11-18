@@ -33,13 +33,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor redColor];
-//    self.fd_prefersNavigationBarHidden = YES;
-//    self.navigationBar.tintColor = UIColorRandom();
-//    self.navigationBar.barTintColor = [UIColor whiteColor];
-//    self.navigationBar.leftButtonItem = [[SZBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] target:self action:@selector(sz_popAction)];
-////    self.navigationBar.title = @"首页";
+    self.fd_prefersNavigationBarHidden = YES;
+    self.navigationBar.tintColor = UIColorRandom();
+    self.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationBar.leftButtonItem = [[SZBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] target:self action:@selector(sz_popAction)];
+    self.navigationBar.title = @"首页";
 //
-//    self.navigationBar.rightButtonItems = @[[[SZBarButtonItem alloc] initWithTitle:@"更多" target:self action:@selector(nextAction)], [[SZBarButtonItem alloc] initWithTitle:@"关闭" target:self action:@selector(nextAction)]];
+    self.navigationBar.rightButtonItems = @[[[SZBarButtonItem alloc] initWithTitle:@"更多" target:self action:@selector(nextAction)], [[SZBarButtonItem alloc] initWithTitle:@"关闭" target:self action:@selector(nextAction)]];
 //    self.navigationBar.titleView = ({
 //        UISearchBar *searchBar = [[UISearchBar alloc] init];
 //

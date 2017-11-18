@@ -93,14 +93,28 @@
 }
 
 - (CGFloat)heightWithFont:(UIFont *)font maxWidth:(CGFloat)maxWidth {
-    UILabel *label = [[UILabel alloc] init];
-    
-    label.numberOfLines = 0;
-    label.font = font;
-    label.preferredMaxLayoutWidth = maxWidth;
-    label.text = self;
-    [label sizeToFit];
-    return label.bounds.size.height;
+    return [self boundingRectWithSize:CGSizeMake(maxWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil].size.height;
+}
+
+- (CGFloat)heightWithFont:(UIFont *)font maxWidth:(CGFloat)maxWidth lineSpace:(CGFloat)lineSpace {
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+    style.lineSpacing = lineSpace;
+    return [self boundingRectWithSize:CGSizeMake(maxWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font, NSParagraphStyleAttributeName: style} context:nil].size.height;
+}
+
+- (CGFloat)widthWithFont:(UIFont *)font {
+    return [self boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil].size.width;
+}
+
+- (NSString *)stringWithFormatter:(NSString *)formatter {
+    NSDate *detaildate = [NSDate dateWithTimeIntervalSince1970:self.integerValue];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    if (formatter) {
+        format.dateFormat = formatter;
+    } else {
+        format.dateFormat = @"yyyy-MM-dd";
+    }
+    return [format stringFromDate:detaildate];
 }
 
 @end

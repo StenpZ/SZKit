@@ -8,10 +8,12 @@
 CGFloat const SCREEN_WIDTH_5 = 320.f;
 CGFloat const SCREEN_WIDTH_6 = 375.f;
 CGFloat const SCREEN_WIDTH_6p = 414.f;
+CGFloat const SCREEN_WIDTH_X = 375.f;
 
 CGFloat const SCREEN_HEIGHT_5 = 568.f;
 CGFloat const SCREEN_HEIGHT_6 = 667.f;
 CGFloat const SCREEN_HEIGHT_6p = 736.f;
+CGFloat const SCREEN_HEIGHT_X = 812.f;
 
 @implementation SZAdapter
 
@@ -49,6 +51,10 @@ CGFloat const SCREEN_HEIGHT_6p = 736.f;
             _defaultScreenWidth = SCREEN_WIDTH_6p;
             _defaultScreenHeight = SCREEN_HEIGHT_6p;
             break;
+        case SZAdapterPhoneTypeX:
+            _defaultScreenWidth = SCREEN_WIDTH_X;
+            _defaultScreenHeight = SCREEN_HEIGHT_X;
+            break;
             
         case SZAdapterPhoneTypeOther:
             break;
@@ -57,6 +63,31 @@ CGFloat const SCREEN_HEIGHT_6p = 736.f;
     }
 }
 
-@end
++ (SZAdapterPhoneType)currentType {
+    if (kScreenHeight() == SCREEN_HEIGHT_5) return SZAdapterPhoneType5;
+    
+    if (kScreenHeight() == SCREEN_HEIGHT_6) return SZAdapterPhoneType6;
+    
+    if (kScreenHeight() == SCREEN_HEIGHT_6p) return SZAdapterPhoneType6P;
+    
+    if (kScreenHeight() == SCREEN_HEIGHT_X) return SZAdapterPhoneTypeX;
+    
+    return SZAdapterPhoneTypeOther;
+}
 
-CGFloat const SZCollectionItemHeightComplexity = -0.5f;
++ (CGFloat)heightForNavigation {
+    return [self heightForStatusBar] + [self heightForNavigationBar];
+}
+
++ (CGFloat)heightForStatusBar {
+    if ([self currentType] == SZAdapterPhoneTypeX) {
+        return 30.f;
+    }
+    return 20.f;
+}
+
++ (CGFloat)heightForNavigationBar {
+    return 44.f;
+}
+
+@end

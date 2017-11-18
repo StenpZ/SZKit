@@ -18,6 +18,8 @@
 @end
 
 
+/// tips: 如果需要使用- (void)sz_pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
+/// 则需要#define SZNavigationBarEnabled
 @interface SZNavigationBar : UIView
 
 @property(nonatomic, strong) SZBarButtonItem *leftButtonItem;

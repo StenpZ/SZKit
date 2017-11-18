@@ -9,7 +9,11 @@
 @implementation UIViewController (SZKit)
 
 - (void)sz_pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+#ifdef SZNavigationBarEnabled
     viewController.navigationBar.leftButtonItem = [[SZBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] target:viewController action:@selector(sz_popAction)];
+#else
+    viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] style:UIBarButtonItemStylePlain target:viewController action:@selector(sz_popAction)];
+#endif
     viewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:animated];
 }

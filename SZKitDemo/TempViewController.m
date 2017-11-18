@@ -31,6 +31,9 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor lightGrayColor];
     
+    self.fd_prefersNavigationBarHidden = YES;
+    self.navigationBar.title = @"详情";
+    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth(), 20)];
     label.backgroundColor = [UIColor redColor];
     label.sz_lineSpace = 5;
