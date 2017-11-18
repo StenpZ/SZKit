@@ -7,6 +7,8 @@
 
 @interface UIButton (SZKit)
 
+- (void)sz_layoutWithMargin:(CGFloat)margin;
+
 - (void)sz_layoutImageRightWithMargin:(CGFloat)margin;
 
 - (void)sz_layoutImageTopWithMargin:(CGFloat)margin;

@@ -5,15 +5,16 @@
 
 #import "UIViewController+SZKit.h"
 #import "SZNavigationBar.h"
+#import "SZAdapter.h"
 
 @implementation UIViewController (SZKit)
 
 - (void)sz_pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-#ifdef SZNavigationBarEnabled
-    viewController.navigationBar.leftButtonItem = [[SZBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] target:viewController action:@selector(sz_popAction)];
-#else
-    viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] style:UIBarButtonItemStylePlain target:viewController action:@selector(sz_popAction)];
-#endif
+    if ([SZAdapter shareAdapter].useSZNavigationBar) {
+        viewController.navigationBar.leftButtonItem = [[SZBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] target:viewController action:@selector(sz_popAction)];
+    } else {
+        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] style:UIBarButtonItemStylePlain target:viewController action:@selector(sz_popAction)];
+    }
     viewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:animated];
 }

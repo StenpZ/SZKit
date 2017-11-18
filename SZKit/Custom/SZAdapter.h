@@ -42,6 +42,8 @@ static inline CGFloat kScreenHeight() {
 @property(nonatomic, readonly) CGFloat defaultScreenWidth;
 @property(nonatomic, readonly) CGFloat defaultScreenHeight;
 
+@property(nonatomic) BOOL useSZNavigationBar;
+
 + (instancetype)shareAdapter;
 
 + (SZAdapterPhoneType)currentType;

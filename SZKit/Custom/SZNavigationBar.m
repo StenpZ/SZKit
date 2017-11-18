@@ -308,6 +308,14 @@
 
 @implementation UIViewController(SZNavigationBar)
 
+- (BOOL)navigationBarNeeded {
+    return [objc_getAssociatedObject(self, _cmd) boolValue];
+}
+
+- (void)setNavigationBarNeeded:(BOOL)navigationBarNeeded {
+    objc_setAssociatedObject(self, @selector(navigationBarNeeded), @(navigationBarNeeded), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (SZNavigationBar *)navigationBar {
     if (objc_getAssociatedObject(self, _cmd)) {
         return objc_getAssociatedObject(self, _cmd);
@@ -319,3 +327,4 @@
 }
 
 @end
+
