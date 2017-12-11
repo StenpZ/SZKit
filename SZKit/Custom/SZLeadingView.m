@@ -56,17 +56,6 @@
 @implementation SZLeadingView
 
 
-+ (void)load {
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
-    
-    NSString *flag = [def valueForKey:[NSString stringWithFormat:@"star.leading.%@", version]];
-    if (flag.length) {
-        return;
-    }
-    [SZLeadingView shareInstance];
-}
-
 + (instancetype)shareInstance {
     static SZLeadingView *_instance = nil;
     static dispatch_once_t onceToken;
@@ -86,10 +75,19 @@
 }
 
 - (void)showLeading:(NSNotification *)noti {
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+    
+    NSString *showedKey = [NSString stringWithFormat:@"star.leading.%@", version];
+    
+    NSString *flag = [def valueForKey:showedKey];
+    if (flag.length) {
+        return;
+    }
     [self prepareUI];
-    self.collectionView.dataSource = self;
-    self.collectionView.delegate = self;
     [self show];
+    [def setValue:@"showed" forKey:showedKey];
+    [def synchronize];
 }
 
 - (void)prepareUI {
@@ -107,6 +105,9 @@
         collectionView.showsHorizontalScrollIndicator = NO;
         collectionView.pagingEnabled = YES;
         
+        collectionView.dataSource = self;
+        collectionView.delegate = self;
+        
         [collectionView registerClass:[SZLeadingViewCell class] forCellWithReuseIdentifier:@"reuseCell"];
         
         [self addSubview:collectionView];
@@ -120,10 +121,6 @@
 
 - (void)show {
     [[UIApplication sharedApplication].delegate.window addSubview:self];
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
-    [def setValue:@"showed" forKey:[NSString stringWithFormat:@"star.leading.%@", version]];
-    [def synchronize];
 }
 
 - (void)hide {
@@ -152,3 +149,4 @@
 }
 
 @end
+

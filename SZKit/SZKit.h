@@ -26,4 +26,5 @@
 #import "SZScrollBanner.h"
 #import "SZStarView.h"
 #import "SZNavigationBar.h"
+#import "SZLeadingView.h"
 
