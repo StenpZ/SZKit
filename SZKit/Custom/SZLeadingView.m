@@ -7,7 +7,6 @@
 //
 
 #import "SZLeadingView.h"
-#import "AppDelegate.h"
 
 #if __has_include(<Masonry/Masonry.h>)
 #import <Masonry/Masonry.h>
@@ -120,9 +119,7 @@
 }
 
 - (void)show {
-    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [delegate.window addSubview:self];
-    
+    [[UIApplication sharedApplication].delegate.window addSubview:self];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
     [def setValue:@"showed" forKey:[NSString stringWithFormat:@"star.leading.%@", version]];
