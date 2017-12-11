@@ -29,6 +29,7 @@
 		007135DD1F36100B00E8EB03 /* SZFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135DC1F36100B00E8EB03 /* SZFPSLabel.m */; };
 		007135E01F36102100E8EB03 /* SZWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135DF1F36102100E8EB03 /* SZWeakProxy.m */; };
 		009977FD1F1708FF00846923 /* SZAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 009977FC1F1708FF00846923 /* SZAdapter.m */; };
+		00D3731C1FDE63290027C62E /* SZLeadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D3731B1FDE63290027C62E /* SZLeadingView.m */; };
 		00DC14991F34936B000F707A /* SZScrollMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DC14981F34936B000F707A /* SZScrollMenu.m */; };
 		00DC149F1F34AF9C000F707A /* SZScrollRadio.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DC149E1F34AF9C000F707A /* SZScrollRadio.m */; };
 		0B505EBA1F38271D0079AC8D /* SZScrollBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B505EB91F38271D0079AC8D /* SZScrollBanner.m */; };
@@ -82,6 +83,8 @@
 		007135DF1F36102100E8EB03 /* SZWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZWeakProxy.m; sourceTree = "<group>"; };
 		009977FB1F1708FF00846923 /* SZAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZAdapter.h; sourceTree = "<group>"; };
 		009977FC1F1708FF00846923 /* SZAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZAdapter.m; sourceTree = "<group>"; };
+		00D3731A1FDE63290027C62E /* SZLeadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZLeadingView.h; sourceTree = "<group>"; };
+		00D3731B1FDE63290027C62E /* SZLeadingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZLeadingView.m; sourceTree = "<group>"; };
 		00DC14971F34936B000F707A /* SZScrollMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZScrollMenu.h; sourceTree = "<group>"; };
 		00DC14981F34936B000F707A /* SZScrollMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZScrollMenu.m; sourceTree = "<group>"; };
 		00DC149D1F34AF9C000F707A /* SZScrollRadio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZScrollRadio.h; sourceTree = "<group>"; };
@@ -186,6 +189,8 @@
 				002FDB971F945827009FDD0B /* SZNavigationBar.m */,
 				0017652E1F9891660000FEE4 /* SZConditionMenu.h */,
 				0017652F1F9891660000FEE4 /* SZConditionMenu.m */,
+				00D3731A1FDE63290027C62E /* SZLeadingView.h */,
+				00D3731B1FDE63290027C62E /* SZLeadingView.m */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -385,6 +390,7 @@
 				00DC149F1F34AF9C000F707A /* SZScrollRadio.m in Sources */,
 				001765301F9891660000FEE4 /* SZConditionMenu.m in Sources */,
 				0052BF481F1638BE0032793E /* UIColor+SZKit.m in Sources */,
+				00D3731C1FDE63290027C62E /* SZLeadingView.m in Sources */,
 				00DC14991F34936B000F707A /* SZScrollMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

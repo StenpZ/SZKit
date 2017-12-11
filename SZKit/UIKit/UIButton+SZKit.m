@@ -10,8 +10,8 @@
 - (void)sz_layoutWithMargin:(CGFloat)margin {
     self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    self.imageEdgeInsets = UIEdgeInsetsMake(0, margin, 0, -margin);
-    self.titleEdgeInsets = UIEdgeInsetsMake(0, -margin, 0, margin);
+    self.imageEdgeInsets = UIEdgeInsetsMake(0, -margin, 0, margin);
+    self.titleEdgeInsets = UIEdgeInsetsMake(0, margin, 0, -margin);
     if (!self.frame.size.width) {
         [self sizeToFit];
     }

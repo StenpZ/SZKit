@@ -51,6 +51,7 @@ static inline CGFloat kScreenHeight() {
 + (CGFloat)heightForNavigation;
 + (CGFloat)heightForStatusBar;
 + (CGFloat)heightForNavigationBar;
++ (CGFloat)heightForBottomBar;
 
 @end
 
@@ -70,6 +71,10 @@ static inline CGFloat HEIGHT_NAVI_BAR() {
 
 static inline CGFloat HEIGHT_STATUSBAR() {
     return [SZAdapter heightForStatusBar];
+}
+
+static inline CGFloat HEIGHT_BOTTOM() {
+    return [SZAdapter heightForBottomBar];
 }
 
 //注：屏幕及字体是以屏幕宽度来适配的
