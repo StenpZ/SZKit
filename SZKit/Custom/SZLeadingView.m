@@ -119,7 +119,7 @@
 }
 
 - (void)show {
-    [[UIApplication sharedApplication].delegate.window addSubview:self];
+    [[UIApplication sharedApplication].keyWindow addSubview:self];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
     [def setValue:@"showed" forKey:[NSString stringWithFormat:@"star.leading.%@", version]];
