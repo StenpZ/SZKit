@@ -82,10 +82,10 @@
         _titleLabel.textColor = self.tintColor;
         [self.contentView addSubview:_titleLabel];
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.centerY.mas_equalTo(self.contentView);
-            make.width.mas_lessThanOrEqualTo(100);
+            make.center.mas_equalTo(self.contentView);
         }];
     }
+    [self updateConstraintsCustom];
     return _titleLabel;
 }
 
@@ -125,6 +125,11 @@
 
 - (void)setLeftButtonItem:(SZBarButtonItem *)leftButtonItem {
     [_leftButtonItem removeFromSuperview];
+    if (self.leftButtonItems.count) {
+        for (UIView *v in self.leftButtonItems) {
+            [v removeFromSuperview];
+        }
+    }
     _leftButtonItem = leftButtonItem;
     [self.contentView addSubview:_leftButtonItem];
     [_leftButtonItem mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -136,6 +141,9 @@
 }
 
 - (CGFloat)getItemWidth:(SZBarButtonItem *)item {
+    if (!item) {
+        return 0;
+    }
     CGFloat wid = item.frame.size.width;
     if (!wid) {
         if (item.titleLabel.text) {
@@ -150,6 +158,11 @@
 
 - (void)setRightButtonItem:(SZBarButtonItem *)rightButtonItem {
     [_rightButtonItem removeFromSuperview];
+    if (self.rightButtonItems.count) {
+        for (UIView *v in self.rightButtonItems) {
+            [v removeFromSuperview];
+        }
+    }
     _rightButtonItem = rightButtonItem;
     [self.contentView addSubview:_rightButtonItem];
     [_rightButtonItem mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -185,6 +198,35 @@
     return wid;
 }
 
+- (CGFloat)getTitleWidth {
+    CGFloat wid = kScreenWidth();
+    wid -= 2 * _spacing;
+    
+    if (!self.leftButtonItems.count && !self.rightButtonItems.count) {
+        if (_leftButtonItem || _rightButtonItem) {
+            wid -= 2 * (MAX([self getItemWidth:_leftButtonItem], [self getItemWidth:_rightButtonItem]) + _spacing);
+        }
+        return wid;
+    }
+    
+    CGFloat widL = 0;
+    CGFloat widR = 0;
+    if (self.leftButtonItems) {
+        for (SZBarButtonItem *item in self.leftButtonItems) {
+            widL += [self getItemWidth:item] + _spacing;
+        }
+    }
+    
+    if (self.rightButtonItems) {
+        for (SZBarButtonItem *item in self.rightButtonItems) {
+            widR += [self getItemWidth:item] + _spacing;
+        }
+    }
+    wid -= 2 * MAX(widL, widR);
+    
+    return wid;
+}
+
 - (void)setTitleView:(UIView *)titleView {
     [_titleView removeFromSuperview];
     [_titleLabel removeFromSuperview];
@@ -199,6 +241,8 @@
 }
 
 - (void)setLeftButtonItems:(NSArray<SZBarButtonItem *> *)leftButtonItems {
+    [_leftButtonItem removeFromSuperview];
+    _leftButtonItem = nil;
     for (SZBarButtonItem *item in _leftButtonItems) {
         [item removeFromSuperview];
     }
@@ -210,6 +254,8 @@
 }
 
 - (void)setRightButtonItems:(NSArray<SZBarButtonItem *> *)rightButtonItems {
+    [_rightButtonItem removeFromSuperview];
+    _rightButtonItem = nil;
     for (SZBarButtonItem *item in _rightButtonItems) {
         [item removeFromSuperview];
     }
@@ -301,6 +347,12 @@
             }];
         }
     }
+    if (_titleLabel) {
+        [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(self.contentView);
+            make.width.mas_lessThanOrEqualTo([self getTitleWidth]).priorityHigh();
+        }];
+    }
 }
 
 @end
@@ -327,4 +379,3 @@
 }
 
 @end
-

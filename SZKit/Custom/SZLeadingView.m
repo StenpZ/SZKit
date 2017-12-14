@@ -7,6 +7,7 @@
 //
 
 #import "SZLeadingView.h"
+#import "UIView+SZKit.h"
 
 #if __has_include(<Masonry/Masonry.h>)
 #import <Masonry/Masonry.h>
@@ -124,7 +125,11 @@
 }
 
 - (void)hide {
-    [self removeFromSuperview];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.sz_orgin_x = - [UIScreen mainScreen].bounds.size.width;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -146,6 +151,12 @@
         return;
     }
     [self hide];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (scrollView.contentOffset.x > 2.15 * [UIScreen mainScreen].bounds.size.width) {
+        [self hide];
+    }
 }
 
 @end

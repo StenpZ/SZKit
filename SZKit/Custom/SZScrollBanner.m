@@ -59,7 +59,7 @@
     [self.contentView addSubview:self.textBackgroundView];
     
     self.textLabel = ({
-       
+        
         UILabel *label = [[UILabel alloc] init];
         label.font = [UIFont systemFontOfSize:kRealLength(12)];
         label.textColor = [UIColor whiteColor];
@@ -202,7 +202,7 @@ static NSUInteger initIndex = 0;
     });
     
     self.collectionView = ({
-       
+        
         UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.layout];
         collectionView.backgroundColor = [UIColor clearColor];
         collectionView.pagingEnabled = YES;
@@ -219,11 +219,11 @@ static NSUInteger initIndex = 0;
     [self addSubview:self.collectionView];
     
     self.pageControl = ({
-       
+        
         UIPageControl *pageControl = [[UIPageControl alloc] init];
         pageControl.userInteractionEnabled = NO;
         pageControl.currentPage = 0;
-
+        
         pageControl;
     });
     [self addSubview:self.pageControl];
@@ -246,11 +246,18 @@ static NSUInteger initIndex = 0;
 
 - (void)reloadData {
     
+    if (self.superview) {
+        [self.superview layoutIfNeeded];
+        self.layout.itemSize = self.bounds.size;
+    }
     if ([self.delegate respondsToSelector:@selector(numbersofPageAtScrollBanner:)]) {
         
         self.numbersofPage = [self.delegate numbersofPageAtScrollBanner:self];
     }
     [self.collectionView reloadData];
+    if (self.numbersofPage > 1) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    }
     [self beginScroll];
 }
 
@@ -264,19 +271,6 @@ static NSUInteger initIndex = 0;
     }
 }
 
-- (void)layoutSubviews {
-    
-    [super layoutSubviews];
-    self.layout.itemSize = ({
-        CGSize size = self.bounds.size;
-        
-        size.height = (NSInteger)size.height;
-        
-        size;
-    });
-    self.collectionView.contentOffset = CGPointMake(self.frame.size.width, 0);
-}
-
 - (void)beginScroll {
     if (self.numbersofPage <= 1) {
         return;
@@ -288,14 +282,14 @@ static NSUInteger initIndex = 0;
                                                     repeats:YES
                                                actionOption:SZTaskOptionAbandonPrevious
                                                      action:^{
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            __strong typeof(self)strongSelf = weakSelf;
-            
-            [strongSelf automaticScroll];
-        });
-    }];
+                                                         
+                                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                                             
+                                                             __strong typeof(self)strongSelf = weakSelf;
+                                                             
+                                                             [strongSelf automaticScroll];
+                                                         });
+                                                     }];
 }
 
 - (void)automaticScroll {
@@ -350,6 +344,9 @@ static NSUInteger initIndex = 0;
 }
 
 - (NSInteger)currentIndex {
+    if (self.numbersofPage <= 1) {
+        return 0;
+    }
     NSIndexPath *visibleIndexPath = self.collectionView.indexPathsForVisibleItems.firstObject;
     return [self indexFromIndexPath:visibleIndexPath];
 }
@@ -369,7 +366,7 @@ static NSUInteger initIndex = 0;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-
+    
     if ([self.delegate respondsToSelector:@selector(scrollBanner:cellForPageAtIndex:)] && self.numbersofPage) {
         
         return [self.delegate scrollBanner:self cellForPageAtIndex:[self indexFromIndexPath:indexPath]];
@@ -417,3 +414,4 @@ static NSUInteger initIndex = 0;
 }
 
 @end
+
