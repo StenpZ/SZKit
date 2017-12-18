@@ -115,6 +115,8 @@
 
 @property(nonatomic) NSInteger currentIndex;
 
+@property(nonatomic, copy, readonly) NSString *defaultCellIdentifier;
+
 @end
 
 static NSUInteger initIndex = 0;
@@ -234,14 +236,14 @@ static NSUInteger initIndex = 0;
     }];
 }
 
-- (void)registerClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier {
+- (void)registerClass:(Class)cellClass {
     
-    [self.collectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
+    [self.collectionView registerClass:cellClass forCellWithReuseIdentifier:self.defaultCellIdentifier];
 }
 
-- (SZScrollBannerCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier forIndex:(NSUInteger)index {
+- (SZScrollBannerCell *)dequeueReusableCellForIndex:(NSUInteger)index {
     
-    return [self.collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+    return [self.collectionView dequeueReusableCellWithReuseIdentifier:self.defaultCellIdentifier forIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
 }
 
 - (void)reloadData {

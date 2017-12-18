@@ -142,7 +142,7 @@
 }
 
 - (SZScrollBannerCell *)scrollBanner:(SZScrollBanner *)scrollBanner cellForPageAtIndex:(NSUInteger)index {
-    SZScrollBannerCell *cell = [scrollBanner dequeueReusableCellWithIdentifier:scrollBanner.defaultCellIdentifier forIndex:index];
+    SZScrollBannerCell *cell = [scrollBanner dequeueReusableCellForIndex:index];
     cell.backgroundColor = [UIColor lightGrayColor];
     cell.textLabel.text = [NSString stringWithFormat:@"%ld", index];
     return cell;

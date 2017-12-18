@@ -135,7 +135,7 @@
 }
 
 - (SZScrollBannerCell *)scrollBanner:(SZScrollBanner *)scrollBanner cellForPageAtIndex:(NSUInteger)index {
-    SZScrollBannerCell *cell = [scrollBanner dequeueReusableCellWithIdentifier:scrollBanner.defaultCellIdentifier forIndex:index];
+    SZScrollBannerCell *cell = [scrollBanner dequeueReusableCellForIndex:index];
 //    cell.backgroundColor = [UIColor lightGrayColor];
     cell.textLabel.text = [NSString stringWithFormat:@"%ld", index];
     return cell;
@@ -155,7 +155,7 @@
 }
 
 - (SZScrollRadioCell *)scrollRadio:(SZScrollRadio *)scrollRadio cellForRowAtIndex:(NSUInteger)index {
-    SZScrollRadioCell *cell = [scrollRadio dequeueReusableCellWithIdentifier:scrollRadio.defaultCellIdentifier];
+    SZScrollRadioCell *cell = [scrollRadio dequeueReusableCell];
     
     cell.textLabel.text = [NSString stringWithFormat:@"测试eqwfowoefqwiofqwoifjqoiwjfeiqwjeiofjqwifjiqwfjeiqowfeqwefqwefqw数据：%ld", (unsigned long)index];
     

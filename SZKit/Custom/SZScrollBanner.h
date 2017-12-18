@@ -26,8 +26,6 @@
 
 @property(nonatomic, weak) id<SZScrollBannerProtocol> delegate;
 
-@property(nonatomic, copy, readonly) NSString *defaultCellIdentifier;
-
 @property(nonatomic, readonly) NSUInteger numbersofPage;
 
 /*! 间隔时间 default：3s */
@@ -45,10 +43,10 @@
 /*! 是否显示PageControl default：Yes */
 @property(nonatomic) BOOL showPageControl;
 
-/*! 注册Cell 默认注册了SZScrollBannerCell，identifier：self.defaultCellIdentifier */
-- (void)registerClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier;
+/*! 注册Cell 默认注册了SZScrollBannerCell */
+- (void)registerClass:(Class)cellClass;
 /*! 如果不自定义SZScrollBannerCell 可传入self.defaultCellIdentifier */
-- (SZScrollBannerCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier forIndex:(NSUInteger)index;
+- (SZScrollBannerCell *)dequeueReusableCellForIndex:(NSUInteger)index;
 
 - (void)reloadData;
 

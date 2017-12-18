@@ -74,6 +74,8 @@
 @property(nonatomic, strong) NSMutableDictionary *reuseCells;
 @property(nonatomic, copy) NSString *scrollRadioTimerName;
 
+@property(nonatomic, copy, readonly) NSString *defaultCellIdentifier;
+
 @end
 
 static NSUInteger initIndex = 0;
@@ -158,14 +160,15 @@ static NSUInteger initIndex = 0;
 
 - (void)prepareUI {
     self.backgroundColor = [UIColor lightGrayColor];
-    [self registerClass:[SZScrollRadioCell class] forCellReuseIdentifier:self.defaultCellIdentifier];
+    [self registerClass:[SZScrollRadioCell class]];
 }
 
-- (void)registerClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier {
-    [self.cellRegisterInfo setValue:cellClass forKey:identifier];
+- (void)registerClass:(Class)cellClass {
+    [self.cellRegisterInfo setValue:cellClass forKey:self.defaultCellIdentifier];
 }
 
-- (SZScrollRadioCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier {
+- (SZScrollRadioCell *)dequeueReusableCell {
+    NSString *identifier = self.defaultCellIdentifier;
     if (![self.reuseCells objectForKey:identifier]) {
         SZScrollRadioCell *cell = [[self.cellRegisterInfo[identifier] alloc] initWithFrame:CGRectZero reuseIdentifier:identifier];
         [self.reuseCells setObject:cell forKey:identifier];
