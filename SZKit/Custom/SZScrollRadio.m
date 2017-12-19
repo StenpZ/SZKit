@@ -15,22 +15,14 @@
 
 @interface SZScrollRadioCell ()
 
-@property(nonatomic, copy) NSString *reuseIdentifier;
-@property(nonatomic) NSUInteger index;
-@property(nonatomic, copy) void (^TapBlock)(NSUInteger index);
-
 @end
 
 @implementation SZScrollRadioCell
 
-- (instancetype)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
-    
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.reuseIdentifier = reuseIdentifier;
         [self prepareUI];
-        
-        [self sz_addTapTarget:self action:@selector(tapAction)];
     }
     return self;
 }
@@ -40,38 +32,30 @@
         UILabel *label = [[UILabel alloc] init];
         
         label.font = [UIFont systemFontOfSize:12];
-        [self addSubview:label];
+        [self.contentView addSubview:label];
         label;
     });
     [self.textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(10);
-        make.centerY.mas_equalTo(self);
+        make.centerY.mas_equalTo(self.contentView);
         make.right.offset(0);
     }];
-}
-
-- (void)tapAction {
-    if (self.TapBlock) {
-        self.TapBlock(self.index);
-    }
 }
 
 @end
 
 
-@interface SZScrollRadio ()
+@interface SZScrollRadio ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
+@property(nonatomic, strong) UICollectionView *collectionView;
 
 @property(nonatomic) NSUInteger numbersOfRow;
 @property(nonatomic) NSUInteger countsOfItem;
 
-@property(nonatomic) CGFloat itemHeight;
+@property(nonatomic, strong) UICollectionViewFlowLayout *layout;
 
 @property(nonatomic) NSUInteger finalIndex;
 
-@property(nonatomic, strong) NSMutableDictionary *cellRegisterInfo;
-
-@property(nonatomic, strong) NSMutableArray *visualCells;
-@property(nonatomic, strong) NSMutableDictionary *reuseCells;
 @property(nonatomic, copy) NSString *scrollRadioTimerName;
 
 @property(nonatomic, copy, readonly) NSString *defaultCellIdentifier;
@@ -84,27 +68,6 @@ static NSUInteger initIndex = 0;
 
 - (void)dealloc {
     [self stopScroll];
-}
-
-- (NSMutableDictionary *)cellRegisterInfo {
-    if (!_cellRegisterInfo) {
-        _cellRegisterInfo = [NSMutableDictionary dictionary];
-    }
-    return _cellRegisterInfo;
-}
-
-- (NSMutableArray *)visualCells {
-    if (!_visualCells) {
-        _visualCells = [NSMutableArray array];
-    }
-    return _visualCells;
-}
-
-- (NSMutableDictionary *)reuseCells {
-    if (!_reuseCells) {
-        _reuseCells = [NSMutableDictionary dictionary];
-    }
-    return _reuseCells;
 }
 
 - (void)setFinalIndex:(NSUInteger)finalIndex {
@@ -159,30 +122,47 @@ static NSUInteger initIndex = 0;
 }
 
 - (void)prepareUI {
-    self.backgroundColor = [UIColor lightGrayColor];
+    self.backgroundColor = [UIColor whiteColor];
+    
+    self.layout = ({
+        
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        layout.minimumLineSpacing = 0;
+        layout.minimumInteritemSpacing = 0;
+        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        
+        layout;
+    });
+    
+    self.collectionView = ({
+        
+        UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.layout];
+        collectionView.backgroundColor = [UIColor whiteColor];
+//        collectionView.pagingEnabled = YES;
+        collectionView.scrollEnabled = NO;
+        collectionView.showsHorizontalScrollIndicator = NO;
+        collectionView.showsVerticalScrollIndicator = NO;
+        
+        collectionView.dataSource = self;
+        collectionView.delegate = self;
+        collectionView.scrollsToTop = NO;
+        
+        collectionView;
+    });
+    [self addSubview:self.collectionView];
+    
     [self registerClass:[SZScrollRadioCell class]];
 }
 
 - (void)registerClass:(Class)cellClass {
-    [self.cellRegisterInfo setValue:cellClass forKey:self.defaultCellIdentifier];
+    [self.collectionView registerClass:cellClass forCellWithReuseIdentifier:self.defaultCellIdentifier];
 }
 
-- (SZScrollRadioCell *)dequeueReusableCell {
-    NSString *identifier = self.defaultCellIdentifier;
-    if (![self.reuseCells objectForKey:identifier]) {
-        SZScrollRadioCell *cell = [[self.cellRegisterInfo[identifier] alloc] initWithFrame:CGRectZero reuseIdentifier:identifier];
-        [self.reuseCells setObject:cell forKey:identifier];
-    }
-    return [self.reuseCells objectForKey:identifier];
+- (__kindof SZScrollRadioCell *)dequeueReusableCellForIndex:(NSUInteger)index {
+    return [self.collectionView dequeueReusableCellWithReuseIdentifier:self.defaultCellIdentifier forIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
 }
-
 
 - (void)reloadData {
-    
-    for (UIView *view in self.visualCells) {
-        [view removeFromSuperview];
-    }
-    [self.visualCells removeAllObjects];
     
     if ([self.delegate respondsToSelector:@selector(numbersOfRowAtScrollRadio:)]) {
         self.numbersOfRow = [self.delegate numbersOfRowAtScrollRadio:self];
@@ -195,28 +175,17 @@ static NSUInteger initIndex = 0;
     if (![self.delegate respondsToSelector:@selector(scrollRadio:cellForRowAtIndex:)]) {
         return;
     }
-    for (NSInteger index = 0; index < self.numbersOfRow * 2; index ++) {
-        self.finalIndex = index;
-        SZScrollRadioCell *cell = [self.delegate scrollRadio:self
-                                             cellForRowAtIndex:self.finalIndex];
-        cell.index = self.finalIndex;
-        __weak typeof(self)weakSelf = self;
-        [cell setTapBlock:^(NSUInteger selectedIndex){
-            __strong typeof(self)strongSelf = weakSelf;
-            if ([strongSelf.delegate respondsToSelector:@selector(scrollRadio:didSelectedAtIndex:)]) {
-                [strongSelf.delegate scrollRadio:strongSelf didSelectedAtIndex:selectedIndex];
-            }
-        }];
-        self.itemHeight = CGRectGetHeight(self.bounds)/self.numbersOfRow;
-        CGFloat orginX = self.leftView ? CGRectGetWidth(self.leftView.frame): 0;
-        CGFloat marginR = self.rightView ? CGRectGetWidth(self.rightView.frame): 0;
-        CGFloat width = CGRectGetWidth(self.frame) - orginX - marginR;
-
-        cell.frame = CGRectMake(orginX, self.finalIndex * self.itemHeight, width, self.itemHeight);
-        [self addSubview:cell];
-        [self.visualCells addObject:cell];
-        [self.reuseCells removeObjectForKey:cell.reuseIdentifier];
-    }
+    CGFloat itemHeight = (NSInteger)CGRectGetHeight(self.bounds)/self.numbersOfRow;
+    CGFloat orginY = (self.bounds.size.height - self.numbersOfRow * itemHeight) / 2;
+    CGFloat orginX = self.leftView ? CGRectGetWidth(self.leftView.frame): 0;
+    CGFloat marginR = self.rightView ? CGRectGetWidth(self.rightView.frame): 0;
+    CGFloat width = CGRectGetWidth(self.frame) - orginX - marginR;
+    
+    self.layout.itemSize = CGSizeMake(width, itemHeight);
+    self.collectionView.frame = CGRectMake(orginX, orginY, width, itemHeight * self.numbersOfRow);
+    
+    [self.collectionView reloadData];
+    
     [self beginScroll];
 }
 
@@ -234,36 +203,73 @@ static NSUInteger initIndex = 0;
 }
 
 - (void)scroll {
+    NSUInteger index = self.collectionView.contentOffset.y / self.layout.itemSize.height;
+    index += self.numbersOfRow;
     
-    [UIView animateWithDuration:0.5 animations:^{
-        for (SZScrollRadioCell *cell in self.visualCells) {
-            cell.sz_orgin_y -= CGRectGetHeight(self.bounds);
-        }
-    } completion:^(BOOL finished) {
-        
-        NSArray *cells = [NSArray arrayWithArray:self.visualCells];
-        
-        for (SZScrollRadioCell *cell in cells) {
-            if (cell.sz_orgin_y + cell.sz_height <= 0) {
-                [cell removeFromSuperview];
-                cell.sz_orgin_y += CGRectGetHeight(self.bounds) * 2;
-                self.finalIndex ++;
-                [self.visualCells removeObject:cell];
-                [self.reuseCells setObject:cell forKey:cell.reuseIdentifier];
-                if ([self.delegate respondsToSelector:@selector(scrollRadio:cellForRowAtIndex:)]) {
-                    SZScrollRadioCell *cell = [self.delegate scrollRadio:self cellForRowAtIndex:self.finalIndex];
-                    cell.index = self.finalIndex;
-                    [self addSubview:cell];
-                    [self.visualCells addObject:cell];
-                    [self.reuseCells removeObjectForKey:cell.reuseIdentifier];
-                }
-            }
-        }
-    }];
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
 }
 
 - (void)stopScroll {
     [[SZTimer shareInstance] cancelTimerWithName:self.scrollRadioTimerName];
+}
+
+- (NSIndexPath *)indexFromIndexPath:(NSIndexPath *)indexPath {
+    if (self.countsOfItem % self.numbersOfRow == 0) {
+        if (indexPath.row < self.countsOfItem) {
+            return indexPath;
+        }
+        return [NSIndexPath indexPathForItem:indexPath.row - self.countsOfItem inSection:0];
+    } else {
+        if (indexPath.row < self.countsOfItem) {
+            return indexPath;
+        }
+        if (indexPath.row > (self.countsOfItem / self.numbersOfRow + 1) * self.numbersOfRow) {
+            return [NSIndexPath indexPathForItem:indexPath.row - (self.countsOfItem / self.numbersOfRow + 1) * self.numbersOfRow inSection:0];
+        }
+        return nil;
+    }
+}
+
+#pragma - mark UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (self.countsOfItem % self.numbersOfRow == 0) {
+        return (self.countsOfItem / self.numbersOfRow + 1) * self.numbersOfRow;
+    }
+    return (self.countsOfItem / self.numbersOfRow + 2) * self.numbersOfRow;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    if ([self.delegate respondsToSelector:@selector(scrollRadio:cellForRowAtIndex:)] && self.countsOfItem) {
+        NSIndexPath *idx = [self indexFromIndexPath:indexPath];
+        if (idx) {
+            return [self.delegate scrollRadio:self cellForRowAtIndex:idx.row];
+        }
+    }
+    SZScrollRadioCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.defaultCellIdentifier forIndexPath:indexPath];
+    cell.textLabel.text = @"";
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.delegate respondsToSelector:@selector(scrollRadio:didSelectedAtIndex:)] && self.countsOfItem) {
+        NSIndexPath *idx = [self indexFromIndexPath:indexPath];
+        if (idx) {
+            [self.delegate scrollRadio:self didSelectedAtIndex:indexPath.row];
+        }
+    }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    NSUInteger index = self.collectionView.contentOffset.y / self.layout.itemSize.height;
+    if (self.countsOfItem % self.numbersOfRow == 0) {
+        if (index == self.countsOfItem) {
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+        }
+    } else {
+        if (index == (self.countsOfItem / self.numbersOfRow + 1) * self.numbersOfRow) {
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+        }
+    }
 }
 
 @end

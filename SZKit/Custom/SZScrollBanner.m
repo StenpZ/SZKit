@@ -248,10 +248,9 @@ static NSUInteger initIndex = 0;
 
 - (void)reloadData {
     
-    if (self.superview) {
-        [self.superview layoutIfNeeded];
-        self.layout.itemSize = self.bounds.size;
-    }
+    [self layoutIfNeeded];
+    self.layout.itemSize = self.bounds.size;
+    
     if ([self.delegate respondsToSelector:@selector(numbersofPageAtScrollBanner:)]) {
         
         self.numbersofPage = [self.delegate numbersofPageAtScrollBanner:self];
@@ -261,16 +260,6 @@ static NSUInteger initIndex = 0;
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
     }
     [self beginScroll];
-}
-
-- (void)adjustToFitWhenWillAppear {
-    if (!self.numbersofPage) return;
-    
-    float index = self.collectionView.contentOffset.x / self.layout.itemSize.width;
-    if (index != self.currentIndex) {
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-        [self configPageControl];
-    }
 }
 
 - (void)beginScroll {
@@ -301,26 +290,7 @@ static NSUInteger initIndex = 0;
     if (index > self.numbersofPage) {
         index = self.numbersofPage;
     }
-    
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
-    
-    __weak typeof(self)weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        __strong typeof(self)strongSelf = weakSelf;
-        
-        [strongSelf configPageControl];
-    });
-    if (index == self.numbersofPage) {
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            __strong typeof(self)strongSelf = weakSelf;
-            
-            [strongSelf.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-            [strongSelf configPageControl];
-        });
-    }
 }
 
 - (void)stopScroll {
@@ -346,11 +316,14 @@ static NSUInteger initIndex = 0;
 }
 
 - (NSInteger)currentIndex {
-    if (self.numbersofPage <= 1) {
+    NSUInteger index = self.collectionView.contentOffset.x / self.layout.itemSize.width;
+    if (index < 1) {
         return 0;
     }
-    NSIndexPath *visibleIndexPath = self.collectionView.indexPathsForVisibleItems.firstObject;
-    return [self indexFromIndexPath:visibleIndexPath];
+    if (index > self.numbersofPage) {
+        return self.numbersofPage - 1;
+    }
+    return index - 1;
 }
 
 - (void)configPageControl {
@@ -386,33 +359,25 @@ static NSUInteger initIndex = 0;
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    
-    [self stopScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    
     [self stopScroll];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    
-    NSUInteger index = self.collectionView.contentOffset.x / self.layout.itemSize.width;
-    
-    if (index > self.numbersofPage) {
-        
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-    } else if (index == 0) {
-        
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.numbersofPage inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-    }
-    [self configPageControl];
-    [self scrollViewDidEndScrollingAnimation:self.collectionView];
+    [self beginScroll];
+    [self scrollViewDidEndScrollingAnimation:scrollView];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     
-    [self beginScroll];
+    NSUInteger index = self.collectionView.contentOffset.x / self.layout.itemSize.width;
+    
+    if (index > self.numbersofPage) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    } else if (index == 0) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.numbersofPage inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    }
+    
+    [self configPageControl];
 }
 
 @end

@@ -45,9 +45,9 @@
 /*! 滚动一次的时间 default：2 */
 @property(nonatomic) NSTimeInterval changeInterval;
 
-/*! 默认注册SZScrollRadioCell identifier = self.defaultCellIdentifier */
+/*! 默认注册SZScrollRadioCell */
 - (void)registerClass:(Class)cellClass;
-- (__kindof SZScrollRadioCell *)dequeueReusableCell;
+- (__kindof SZScrollRadioCell *)dequeueReusableCellForIndex:(NSUInteger)index;
 
 - (void)reloadData;
 
@@ -57,10 +57,8 @@
 @end
 
 
-@interface SZScrollRadioCell : UIView
+@interface SZScrollRadioCell : UICollectionViewCell
 
 @property(nonatomic, strong) UILabel *textLabel;
-
-- (instancetype)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
 
 @end

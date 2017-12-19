@@ -55,7 +55,7 @@
     
     self.scrollRadio = ({
        
-        SZScrollRadio *scrollRadio = [[SZScrollRadio alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.label.frame) + 20, kScreenWidth() - 40, kRealLength(30))];
+        SZScrollRadio *scrollRadio = [[SZScrollRadio alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.label.frame) + 20, kScreenWidth() - 40, kRealLength(50))];
         scrollRadio.layer.cornerRadius = kRealLength(15);
         
         scrollRadio.backgroundColor = [UIColor whiteColor];
@@ -147,7 +147,7 @@
 
 #pragma mark - SZScrollRadioProtocol
 - (NSUInteger)numbersOfRowAtScrollRadio:(SZScrollRadio *)scrollRadio {
-    return 1;
+    return 3;
 }
 
 - (NSUInteger)countsOfItemAtScrollRadio:(SZScrollRadio *)scrollRadio {
@@ -155,9 +155,9 @@
 }
 
 - (SZScrollRadioCell *)scrollRadio:(SZScrollRadio *)scrollRadio cellForRowAtIndex:(NSUInteger)index {
-    SZScrollRadioCell *cell = [scrollRadio dequeueReusableCell];
+    SZScrollRadioCell *cell = [scrollRadio dequeueReusableCellForIndex:index];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"测试eqwfowoefqwiofqwoifjqoiwjfeiqwjeiofjqwifjiqwfjeiqowfeqwefqwefqw数据：%ld", (unsigned long)index];
+    cell.textLabel.text = [NSString stringWithFormat:@"测jqwadsfadsgasgsgasgasgsgasgdsgsefqwefqw数据：%ld", (unsigned long)index];
     
     return cell;
 }

@@ -25,10 +25,6 @@
     [[SZTimer shareInstance] cancelAllTimer];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.banner adjustToFitWhenWillAppear];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
