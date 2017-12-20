@@ -106,15 +106,57 @@
     return [self boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil].size.width;
 }
 
-- (NSString *)stringWithFormatter:(NSString *)formatter {
-    NSDate *detaildate = [NSDate dateWithTimeIntervalSince1970:self.integerValue];
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    if (formatter) {
-        format.dateFormat = formatter;
-    } else {
-        format.dateFormat = @"yyyy-MM-dd";
+
+- (NSArray<NSTextCheckingResult *> *)urlMatches {
+//    NSError *error;
+//    //可以识别url的正则表达式
+//    NSString *regulaStr = @"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)";
+//    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regulaStr
+//                                                                           options:NSRegularExpressionCaseInsensitive
+//                                                                             error:&error];
+//    NSArray *arrayOfAllMatches = [regex matchesInString:self options:0 range:NSMakeRange(0, [self length])];
+//    return arrayOfAllMatches;
+    
+    /// 如果网址和其他字符连在一起，用上面的正则识别的更准确一些但是还是有问题
+    
+    NSError *error;
+    NSDataDetector *dataDetector=[NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
+    
+    NSArray *arrayOfAllMatches=[dataDetector matchesInString:self options:NSMatchingReportProgress range:NSMakeRange(0, self.length)];
+    return arrayOfAllMatches;
+}
+
+- (NSArray<NSNumber *> *)locationsWithKeywords:(NSString *)keywords {
+    if (!self.length || !keywords.length) {
+        return nil;
     }
-    return [format stringFromDate:detaildate];
+    NSMutableArray *arrayRanges = [NSMutableArray array];
+
+    NSRange rang = [self rangeOfString:keywords];
+    if (rang.location != NSNotFound && rang.length != 0) {
+        [arrayRanges addObject:[NSNumber numberWithInteger:rang.location]];
+        NSRange rang1 = {0,0};
+        NSInteger location = 0;
+        NSInteger length = 0;
+        for (int i = 0;; i++) {
+            if (0 == i) {
+                location = rang.location + rang.length;
+                length = self.length - rang.location - rang.length;
+                rang1 = NSMakeRange(location, length);
+            } else {
+                location = rang1.location + rang1.length;
+                length = self.length - rang1.location - rang1.length;
+                rang1 = NSMakeRange(location, length);
+            }
+            rang1 = [self rangeOfString:keywords options:NSCaseInsensitiveSearch range:rang1];
+            if (rang1.location == NSNotFound && rang1.length == 0) {
+                break;
+            }
+            [arrayRanges addObject:[NSNumber numberWithInteger:rang1.location]];
+        }
+        return arrayRanges;
+    }
+    return nil;
 }
 
 @end

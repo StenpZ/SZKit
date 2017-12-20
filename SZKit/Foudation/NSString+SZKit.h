@@ -38,7 +38,10 @@
 
 - (CGFloat)widthWithFont:(UIFont *)font;
 
-/// 时间戳转时间
-- (NSString *)stringWithFormatter:(NSString *)formatter;
+/// 找出所有的链接
+- (NSArray<NSTextCheckingResult *> *)urlMatches;
+
+/// 找出所有的关键字
+- (NSArray<NSNumber *> *)locationsWithKeywords:(NSString *)keywords;
 
 @end

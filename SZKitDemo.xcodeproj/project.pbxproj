@@ -17,6 +17,7 @@
 		0052BF481F1638BE0032793E /* UIColor+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0052BF471F1638BE0032793E /* UIColor+SZKit.m */; };
 		0052BF4B1F164F990032793E /* UIImage+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0052BF4A1F164F990032793E /* UIImage+SZKit.m */; };
 		0052BF4E1F164FAB0032793E /* UIImageView+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0052BF4D1F164FAB0032793E /* UIImageView+SZKit.m */; };
+		00565A101FEA08EE007BC481 /* NSDate+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00565A0F1FEA08EE007BC481 /* NSDate+SZKit.m */; };
 		0064DC661F161A65003130E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0064DC651F161A65003130E1 /* main.m */; };
 		0064DC691F161A65003130E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0064DC681F161A65003130E1 /* AppDelegate.m */; };
 		0064DC6C1F161A65003130E1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0064DC6B1F161A65003130E1 /* ViewController.m */; };
@@ -59,6 +60,8 @@
 		0052BF4A1F164F990032793E /* UIImage+SZKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SZKit.m"; sourceTree = "<group>"; };
 		0052BF4C1F164FAB0032793E /* UIImageView+SZKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+SZKit.h"; sourceTree = "<group>"; };
 		0052BF4D1F164FAB0032793E /* UIImageView+SZKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+SZKit.m"; sourceTree = "<group>"; };
+		00565A0E1FEA08EE007BC481 /* NSDate+SZKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+SZKit.h"; sourceTree = "<group>"; };
+		00565A0F1FEA08EE007BC481 /* NSDate+SZKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+SZKit.m"; sourceTree = "<group>"; };
 		0064DC611F161A65003130E1 /* SZKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SZKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0064DC651F161A65003130E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0064DC671F161A65003130E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 				0064DC811F161B33003130E1 /* NSString+SZKit.m */,
 				001514E21F162E41008314CB /* SZUnicodeLog.h */,
 				001514E31F162E41008314CB /* SZUnicodeLog.m */,
+				00565A0E1FEA08EE007BC481 /* NSDate+SZKit.h */,
+				00565A0F1FEA08EE007BC481 /* NSDate+SZKit.m */,
 			);
 			path = Foudation;
 			sourceTree = "<group>";
@@ -379,6 +384,7 @@
 				0052BF4E1F164FAB0032793E /* UIImageView+SZKit.m in Sources */,
 				0064DC6C1F161A65003130E1 /* ViewController.m in Sources */,
 				004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */,
+				00565A101FEA08EE007BC481 /* NSDate+SZKit.m in Sources */,
 				0064DC691F161A65003130E1 /* AppDelegate.m in Sources */,
 				0052BF4B1F164F990032793E /* UIImage+SZKit.m in Sources */,
 				0064DC661F161A65003130E1 /* main.m in Sources */,

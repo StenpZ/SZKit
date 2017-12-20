@@ -58,14 +58,14 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(view.frame), kScreenWidth(), 20)];
     label.backgroundColor = [UIColor redColor];
     label.sz_lineSpace = 5;
-    label.sz_characterSpace = 5;
+//    label.sz_characterSpace = 5;
     label.sz_keywords = @"text";
     label.sz_keywordsFont = [UIFont boldSystemFontOfSize:kRealFontSize(20)];
     label.sz_keywordsFontColor = [UIColor blueColor];
     label.sz_keywordsBackGroundColor = [UIColor yellowColor];
     label.font = [UIFont systemFontOfSize:kRealFontSize(14)];
     label.numberOfLines = 0;
-    label.sz_text = @"ashfaifoadsfntextasjkfnjksdfnkatext";
+    label.sz_text = @"ashfai www.baidu.com foadsfntextasjkfnjksdfnkatext http://img2.woyaogexing.com/2017/07/06/3ddbfdc42a6563a9!400x400_big.jpg";
     [self.view addSubview:label];
     self.label = label;
     
@@ -113,7 +113,7 @@
 }
 
 - (NSUInteger)numberOfColumnsInScrollMenu:(SZScrollMenu *)scrollMenu {
-    return 5;
+    return 4;
 }
 
 - (NSUInteger)numberOfMenusInScrollMenu:(SZScrollMenu *)scrollMenu {

@@ -7,6 +7,7 @@
 #import <objc/runtime.h>
 #import <CoreText/CoreText.h>
 #import "UIView+SZKit.h"
+#import "NSString+SZKit.h"
 
 @implementation UILabel (SZKit)
 
@@ -91,17 +92,22 @@
     
     //关键字
     if (self.sz_keywords) {
-        NSRange itemRange = [self.text rangeOfString:self.sz_keywords options:NSLiteralSearch];
-        if (self.sz_keywordsFont) {
-            [attributedString addAttribute:NSFontAttributeName value:self.sz_keywordsFont range:itemRange];
-        }
-        
-        if (self.sz_keywordsFontColor) {
-            [attributedString addAttribute:NSForegroundColorAttributeName value:self.sz_keywordsFontColor range:itemRange];
-        }
-        
-        if (self.sz_keywordsBackGroundColor) {
-            [attributedString addAttribute:NSBackgroundColorAttributeName value:self.sz_keywordsBackGroundColor range:itemRange];
+        NSArray *ranges = [self.text locationsWithKeywords:self.sz_keywords];
+        if (ranges.count) {
+            for (NSNumber *loc in ranges) {
+                NSRange itemRange = NSMakeRange(loc.integerValue, self.sz_keywords.length);
+                if (self.sz_keywordsFont) {
+                    [attributedString addAttribute:NSFontAttributeName value:self.sz_keywordsFont range:itemRange];
+                }
+                
+                if (self.sz_keywordsFontColor) {
+                    [attributedString addAttribute:NSForegroundColorAttributeName value:self.sz_keywordsFontColor range:itemRange];
+                }
+                
+                if (self.sz_keywordsBackGroundColor) {
+                    [attributedString addAttribute:NSBackgroundColorAttributeName value:self.sz_keywordsBackGroundColor range:itemRange];
+                }
+            }
         }
     }
     
