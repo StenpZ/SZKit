@@ -29,6 +29,9 @@
 		007135DA1F36070E00E8EB03 /* TempViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135D91F36070E00E8EB03 /* TempViewController.m */; };
 		007135DD1F36100B00E8EB03 /* SZFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135DC1F36100B00E8EB03 /* SZFPSLabel.m */; };
 		007135E01F36102100E8EB03 /* SZWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135DF1F36102100E8EB03 /* SZWeakProxy.m */; };
+		0072DC731FF6223C00A46CEF /* FORScrollViewEmptyAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 0072DC6F1FF6223C00A46CEF /* FORScrollViewEmptyAssistant.m */; };
+		0072DC741FF6223C00A46CEF /* FOREmptyAssistantConfiger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0072DC721FF6223C00A46CEF /* FOREmptyAssistantConfiger.m */; };
+		0072DC771FF622E600A46CEF /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */; };
 		009977FD1F1708FF00846923 /* SZAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 009977FC1F1708FF00846923 /* SZAdapter.m */; };
 		00D3731C1FDE63290027C62E /* SZLeadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D3731B1FDE63290027C62E /* SZLeadingView.m */; };
 		00DC14991F34936B000F707A /* SZScrollMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DC14981F34936B000F707A /* SZScrollMenu.m */; };
@@ -84,6 +87,12 @@
 		007135DC1F36100B00E8EB03 /* SZFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZFPSLabel.m; sourceTree = "<group>"; };
 		007135DE1F36102100E8EB03 /* SZWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZWeakProxy.h; sourceTree = "<group>"; };
 		007135DF1F36102100E8EB03 /* SZWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZWeakProxy.m; sourceTree = "<group>"; };
+		0072DC6F1FF6223C00A46CEF /* FORScrollViewEmptyAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FORScrollViewEmptyAssistant.m; sourceTree = "<group>"; };
+		0072DC701FF6223C00A46CEF /* FOREmptyAssistantConfiger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOREmptyAssistantConfiger.h; sourceTree = "<group>"; };
+		0072DC711FF6223C00A46CEF /* FORScrollViewEmptyAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FORScrollViewEmptyAssistant.h; sourceTree = "<group>"; };
+		0072DC721FF6223C00A46CEF /* FOREmptyAssistantConfiger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOREmptyAssistantConfiger.m; sourceTree = "<group>"; };
+		0072DC751FF622E600A46CEF /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
+		0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		009977FB1F1708FF00846923 /* SZAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZAdapter.h; sourceTree = "<group>"; };
 		009977FC1F1708FF00846923 /* SZAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZAdapter.m; sourceTree = "<group>"; };
 		00D3731A1FDE63290027C62E /* SZLeadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZLeadingView.h; sourceTree = "<group>"; };
@@ -172,28 +181,32 @@
 		0064DC7D1F161B11003130E1 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				00DC14971F34936B000F707A /* SZScrollMenu.h */,
-				00DC14981F34936B000F707A /* SZScrollMenu.m */,
+				0072DC701FF6223C00A46CEF /* FOREmptyAssistantConfiger.h */,
+				0072DC721FF6223C00A46CEF /* FOREmptyAssistantConfiger.m */,
+				0072DC711FF6223C00A46CEF /* FORScrollViewEmptyAssistant.h */,
+				0072DC6F1FF6223C00A46CEF /* FORScrollViewEmptyAssistant.m */,
 				009977FB1F1708FF00846923 /* SZAdapter.h */,
 				009977FC1F1708FF00846923 /* SZAdapter.m */,
-				00DC149D1F34AF9C000F707A /* SZScrollRadio.h */,
-				00DC149E1F34AF9C000F707A /* SZScrollRadio.m */,
-				007135D51F35FE8500E8EB03 /* SZTimer.h */,
-				007135D61F35FE8500E8EB03 /* SZTimer.m */,
-				007135DB1F36100B00E8EB03 /* SZFPSLabel.h */,
-				007135DC1F36100B00E8EB03 /* SZFPSLabel.m */,
-				007135DE1F36102100E8EB03 /* SZWeakProxy.h */,
-				007135DF1F36102100E8EB03 /* SZWeakProxy.m */,
-				0B505EB81F38271D0079AC8D /* SZScrollBanner.h */,
-				0B505EB91F38271D0079AC8D /* SZScrollBanner.m */,
-				0B505EBB1F3827870079AC8D /* SZStarView.h */,
-				0B505EBC1F3827870079AC8D /* SZStarView.m */,
-				002FDB961F945827009FDD0B /* SZNavigationBar.h */,
-				002FDB971F945827009FDD0B /* SZNavigationBar.m */,
 				0017652E1F9891660000FEE4 /* SZConditionMenu.h */,
 				0017652F1F9891660000FEE4 /* SZConditionMenu.m */,
+				007135DB1F36100B00E8EB03 /* SZFPSLabel.h */,
+				007135DC1F36100B00E8EB03 /* SZFPSLabel.m */,
 				00D3731A1FDE63290027C62E /* SZLeadingView.h */,
 				00D3731B1FDE63290027C62E /* SZLeadingView.m */,
+				002FDB961F945827009FDD0B /* SZNavigationBar.h */,
+				002FDB971F945827009FDD0B /* SZNavigationBar.m */,
+				0B505EB81F38271D0079AC8D /* SZScrollBanner.h */,
+				0B505EB91F38271D0079AC8D /* SZScrollBanner.m */,
+				00DC14971F34936B000F707A /* SZScrollMenu.h */,
+				00DC14981F34936B000F707A /* SZScrollMenu.m */,
+				00DC149D1F34AF9C000F707A /* SZScrollRadio.h */,
+				00DC149E1F34AF9C000F707A /* SZScrollRadio.m */,
+				0B505EBB1F3827870079AC8D /* SZStarView.h */,
+				0B505EBC1F3827870079AC8D /* SZStarView.m */,
+				007135D51F35FE8500E8EB03 /* SZTimer.h */,
+				007135D61F35FE8500E8EB03 /* SZTimer.m */,
+				007135DE1F36102100E8EB03 /* SZWeakProxy.h */,
+				007135DF1F36102100E8EB03 /* SZWeakProxy.m */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -230,6 +243,8 @@
 				00022ED91F41D2C30018749D /* UIButton+SZKit.m */,
 				00022EDB1F41D2D30018749D /* UISearchBar+SZKit.h */,
 				00022EDC1F41D2D30018749D /* UISearchBar+SZKit.m */,
+				0072DC751FF622E600A46CEF /* UIScrollView+EmptyDataSet.h */,
+				0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -375,12 +390,14 @@
 				007135DA1F36070E00E8EB03 /* TempViewController.m in Sources */,
 				00022EDD1F41D2D30018749D /* UISearchBar+SZKit.m in Sources */,
 				00022EDA1F41D2C30018749D /* UIButton+SZKit.m in Sources */,
+				0072DC771FF622E600A46CEF /* UIScrollView+EmptyDataSet.m in Sources */,
 				0B505EBD1F3827870079AC8D /* SZStarView.m in Sources */,
 				001514E41F162E41008314CB /* SZUnicodeLog.m in Sources */,
 				007135D71F35FE8500E8EB03 /* SZTimer.m in Sources */,
 				001514DE1F162469008314CB /* UIViewController+SZKit.m in Sources */,
 				002FDB981F945827009FDD0B /* SZNavigationBar.m in Sources */,
 				0B505EBA1F38271D0079AC8D /* SZScrollBanner.m in Sources */,
+				0072DC731FF6223C00A46CEF /* FORScrollViewEmptyAssistant.m in Sources */,
 				0052BF4E1F164FAB0032793E /* UIImageView+SZKit.m in Sources */,
 				0064DC6C1F161A65003130E1 /* ViewController.m in Sources */,
 				004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */,
@@ -394,6 +411,7 @@
 				007135DD1F36100B00E8EB03 /* SZFPSLabel.m in Sources */,
 				009977FD1F1708FF00846923 /* SZAdapter.m in Sources */,
 				00DC149F1F34AF9C000F707A /* SZScrollRadio.m in Sources */,
+				0072DC741FF6223C00A46CEF /* FOREmptyAssistantConfiger.m in Sources */,
 				001765301F9891660000FEE4 /* SZConditionMenu.m in Sources */,
 				0052BF481F1638BE0032793E /* UIColor+SZKit.m in Sources */,
 				00D3731C1FDE63290027C62E /* SZLeadingView.m in Sources */,

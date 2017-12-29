@@ -260,6 +260,7 @@ static NSUInteger initIndex = 0;
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
     }
     [self beginScroll];
+    [self configPageControl];
 }
 
 - (void)beginScroll {
