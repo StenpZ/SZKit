@@ -312,14 +312,6 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
     return YES;
 }
 
-- (BOOL)dzn_isScrollAllowed
-{
-    if (self.emptyDataSetDelegate && [self.emptyDataSetDelegate respondsToSelector:@selector(emptyDataSetShouldAllowScroll:)]) {
-        return [self.emptyDataSetDelegate emptyDataSetShouldAllowScroll:self];
-    }
-    return NO;
-}
-
 - (BOOL)dzn_isImageViewAnimateAllowed
 {
     if (self.emptyDataSetDelegate && [self.emptyDataSetDelegate respondsToSelector:@selector(emptyDataSetShouldAnimateImageView:)]) {
@@ -531,9 +523,6 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
             [view layoutIfNeeded];
         }];
         
-        // Configure scroll permission
-        self.scrollEnabled = [self dzn_isScrollAllowed];
-        
         // Configure image view animation
         if ([self dzn_isImageViewAnimateAllowed])
         {
@@ -566,8 +555,6 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
         
         [self setEmptyDataSetView:nil];
     }
-    
-    self.scrollEnabled = [self dzn_isScrollAllowed];
     
     // Notifies that the empty dataset view did disappear
     [self dzn_didDisappear];

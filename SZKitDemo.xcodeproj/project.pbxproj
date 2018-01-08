@@ -29,8 +29,6 @@
 		007135DA1F36070E00E8EB03 /* TempViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135D91F36070E00E8EB03 /* TempViewController.m */; };
 		007135DD1F36100B00E8EB03 /* SZFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135DC1F36100B00E8EB03 /* SZFPSLabel.m */; };
 		007135E01F36102100E8EB03 /* SZWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135DF1F36102100E8EB03 /* SZWeakProxy.m */; };
-		0072DC731FF6223C00A46CEF /* FORScrollViewEmptyAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 0072DC6F1FF6223C00A46CEF /* FORScrollViewEmptyAssistant.m */; };
-		0072DC741FF6223C00A46CEF /* FOREmptyAssistantConfiger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0072DC721FF6223C00A46CEF /* FOREmptyAssistantConfiger.m */; };
 		0072DC771FF622E600A46CEF /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */; };
 		009977FD1F1708FF00846923 /* SZAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 009977FC1F1708FF00846923 /* SZAdapter.m */; };
 		00D3731C1FDE63290027C62E /* SZLeadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D3731B1FDE63290027C62E /* SZLeadingView.m */; };
@@ -87,10 +85,6 @@
 		007135DC1F36100B00E8EB03 /* SZFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZFPSLabel.m; sourceTree = "<group>"; };
 		007135DE1F36102100E8EB03 /* SZWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZWeakProxy.h; sourceTree = "<group>"; };
 		007135DF1F36102100E8EB03 /* SZWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZWeakProxy.m; sourceTree = "<group>"; };
-		0072DC6F1FF6223C00A46CEF /* FORScrollViewEmptyAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FORScrollViewEmptyAssistant.m; sourceTree = "<group>"; };
-		0072DC701FF6223C00A46CEF /* FOREmptyAssistantConfiger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOREmptyAssistantConfiger.h; sourceTree = "<group>"; };
-		0072DC711FF6223C00A46CEF /* FORScrollViewEmptyAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FORScrollViewEmptyAssistant.h; sourceTree = "<group>"; };
-		0072DC721FF6223C00A46CEF /* FOREmptyAssistantConfiger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOREmptyAssistantConfiger.m; sourceTree = "<group>"; };
 		0072DC751FF622E600A46CEF /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		009977FB1F1708FF00846923 /* SZAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZAdapter.h; sourceTree = "<group>"; };
@@ -181,10 +175,6 @@
 		0064DC7D1F161B11003130E1 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				0072DC701FF6223C00A46CEF /* FOREmptyAssistantConfiger.h */,
-				0072DC721FF6223C00A46CEF /* FOREmptyAssistantConfiger.m */,
-				0072DC711FF6223C00A46CEF /* FORScrollViewEmptyAssistant.h */,
-				0072DC6F1FF6223C00A46CEF /* FORScrollViewEmptyAssistant.m */,
 				009977FB1F1708FF00846923 /* SZAdapter.h */,
 				009977FC1F1708FF00846923 /* SZAdapter.m */,
 				0017652E1F9891660000FEE4 /* SZConditionMenu.h */,
@@ -397,7 +387,6 @@
 				001514DE1F162469008314CB /* UIViewController+SZKit.m in Sources */,
 				002FDB981F945827009FDD0B /* SZNavigationBar.m in Sources */,
 				0B505EBA1F38271D0079AC8D /* SZScrollBanner.m in Sources */,
-				0072DC731FF6223C00A46CEF /* FORScrollViewEmptyAssistant.m in Sources */,
 				0052BF4E1F164FAB0032793E /* UIImageView+SZKit.m in Sources */,
 				0064DC6C1F161A65003130E1 /* ViewController.m in Sources */,
 				004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */,
@@ -411,7 +400,6 @@
 				007135DD1F36100B00E8EB03 /* SZFPSLabel.m in Sources */,
 				009977FD1F1708FF00846923 /* SZAdapter.m in Sources */,
 				00DC149F1F34AF9C000F707A /* SZScrollRadio.m in Sources */,
-				0072DC741FF6223C00A46CEF /* FOREmptyAssistantConfiger.m in Sources */,
 				001765301F9891660000FEE4 /* SZConditionMenu.m in Sources */,
 				0052BF481F1638BE0032793E /* UIColor+SZKit.m in Sources */,
 				00D3731C1FDE63290027C62E /* SZLeadingView.m in Sources */,

@@ -259,6 +259,7 @@ static NSUInteger initIndex = 0;
     if (self.numbersofPage > 1) {
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
     }
+    self.collectionView.scrollEnabled = self.numbersofPage < 2 ? NO: YES;
     [self beginScroll];
     [self configPageControl];
 }

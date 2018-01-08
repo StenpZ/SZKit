@@ -195,14 +195,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)emptyDataSetShouldAllowTouch:(UIScrollView *)scrollView;
 
 /**
- Asks the delegate for scroll permission. Default is NO.
- 
- @param scrollView A scrollView subclass object informing the delegate.
- @return YES if the empty dataset is allowed to be scrollable.
- */
-- (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView;
-
-/**
  Asks the delegate for image view animation permission. Default is NO.
  Make sure to return a valid CAAnimation object from imageAnimationForEmptyDataSet:
  
@@ -272,3 +264,4 @@ NS_ASSUME_NONNULL_BEGIN
 #undef DZNEmptyDataSetDeprecated
 
 NS_ASSUME_NONNULL_END
+
