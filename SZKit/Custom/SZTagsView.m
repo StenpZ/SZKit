@@ -179,8 +179,7 @@ static CGFloat kDefaultCellHeight = 24;
 @implementation SZTagsView
 
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.itemFontSize = 12;
@@ -190,12 +189,21 @@ static CGFloat kDefaultCellHeight = 24;
     return self;
 }
 
-#pragma mark - Layout
-/** 适应布局变换 */
-- (void) layoutSubviews
-{
-    [super layoutSubviews];
+- (CGSize)intrinsicContentSize {
+    return _collectionView.collectionViewLayout.collectionViewContentSize;
+}
+
+#pragma mark - Actions
+
+- (void)reloadData {
+    [self.collectionView reloadData];
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateLayout];
+    });
+}
+
+- (void)updateLayout {
     UICollectionViewLeftAlignedLayout *layout = (UICollectionViewLeftAlignedLayout *)_collectionView.collectionViewLayout;
     [layout invalidateLayout];
     
@@ -213,19 +221,6 @@ static CGFloat kDefaultCellHeight = 24;
             [self.delegate tagsView:self heightUpdated:height];
         }
     }
-    
-}
-
-- (CGSize)intrinsicContentSize
-{
-    NSLog(@"height---%f",_collectionView.collectionViewLayout.collectionViewContentSize.height);
-    return _collectionView.collectionViewLayout.collectionViewContentSize;
-}
-
-#pragma mark - Actions
-
-- (void)reloadData {
-    [self.collectionView reloadData];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -249,28 +244,6 @@ static CGFloat kDefaultCellHeight = 24;
         cell.sz_cornerRadius = self.tagCornerRadius;
     }
     return cell;
-}
-
-#pragma mark - UI_Style
-
-/** 绘画圆角 解决卡顿*/
--(UIView *)drawConnerView:(CGFloat)cornerRadius rect:(CGRect)frame backgroudColor:(UIColor *)backgroud_color borderColor:(UIColor *)borderColor{
-    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-    CGMutablePathRef pathRef = CGPathCreateMutable();
-    CGRect bounds = CGRectInset(frame, 0, 0);
-    CGPathMoveToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMinY(bounds));
-    CGPathAddArcToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMaxY(bounds), CGRectGetMaxX(bounds), CGRectGetMaxY(bounds), cornerRadius);
-    CGPathAddArcToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMaxY(bounds), CGRectGetMaxX(bounds), CGRectGetMinY(bounds), cornerRadius);
-    CGPathAddArcToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMinY(bounds), CGRectGetMinX(bounds), CGRectGetMinY(bounds), cornerRadius);
-    CGPathAddArcToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMinY(bounds), CGRectGetMinX(bounds), CGRectGetMaxY(bounds), cornerRadius);
-    layer.path = pathRef;
-    CFRelease(pathRef);
-    layer.strokeColor = [borderColor CGColor];
-    layer.fillColor = backgroud_color.CGColor;
-    UIView *roundView = [[UIView alloc] initWithFrame:bounds];
-    [roundView.layer insertSublayer:layer atIndex:0];
-    roundView.backgroundColor = UIColor.clearColor;
-    return roundView;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -305,6 +278,11 @@ static CGFloat kDefaultCellHeight = 24;
     return [UIFont systemFontOfSize:self.itemFontSize];
 }
 
+- (void)setDelegate:(id<SZTagsViewProtocol>)delegate {
+    _delegate = delegate;
+    [self reloadData];
+}
+
 - (CGSize)getSizeWithContent:(NSString *)content maxWidth:(CGFloat)maxWidth customHeight:(CGFloat)cellHeight {
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -313,3 +291,4 @@ static CGFloat kDefaultCellHeight = 24;
 }
 
 @end
+
