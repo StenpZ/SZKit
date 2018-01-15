@@ -11,13 +11,13 @@
 #import <Masonry.h>
 #import <UINavigationController+FDFullscreenPopGesture.h>
 
-@interface TempViewController ()<SZScrollRadioProtocol, SZScrollBannerProtocol>
+@interface TempViewController ()<SZScrollRadioProtocol, SZTagsViewProtocol>
 
 @property(nonatomic, weak) UILabel *label;
 
 @property(nonatomic, strong) SZScrollRadio *scrollRadio;
 @property(nonatomic, strong) SZStarView *starView;
-@property(nonatomic, strong) SZScrollBanner *banner;
+@property(nonatomic, strong) SZTagsView *tagsView;
 
 @end
 
@@ -106,14 +106,17 @@
         make.top.equalTo(self.scrollRadio.mas_bottom);
     }];
     
-    self.banner = ({
+    self.tagsView = ({
        
-        SZScrollBanner *banner = [[SZScrollBanner alloc] initWithFrame:CGRectMake(0, 300, kScreenWidth(), kRealLength(190))];
+        SZTagsView *banner = [[SZTagsView alloc] initWithFrame:CGRectMake(0, 300, kScreenWidth(), kRealLength(190))];
+        banner.backgroundColor = [UIColor redColor];
+        banner.backgroundColor = [UIColor sz_randomColor];
+        banner.tagCornerRadius = banner.cellHeight / 2;
         banner.delegate = self;
         
         banner;
     });
-    [self.view addSubview:self.banner];
+    [self.view addSubview:self.tagsView];
     
     // Do any additional setup after loading the view.
 }
@@ -129,21 +132,15 @@
     NSLog(@"更多");
 }
 
-#pragma mark - SZScrollBannerProtocol
-- (NSUInteger)numbersofPageAtScrollBanner:(SZScrollBanner *)scrollBanner {
+#pragma mark - SZTagsViewProtocol
+- (NSInteger)numberOfItemsInTagsView:(SZTagsView *)tagsView {
     return 6;
 }
 
-- (SZScrollBannerCell *)scrollBanner:(SZScrollBanner *)scrollBanner cellForPageAtIndex:(NSUInteger)index {
-    SZScrollBannerCell *cell = [scrollBanner dequeueReusableCellForIndex:index];
-//    cell.backgroundColor = [UIColor lightGrayColor];
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld", index];
-    return cell;
+- (NSString *)tagsView:(SZTagsView *)tagsView titleForItemAtIndex:(NSInteger)index {
+    return [NSString stringWithFormat:@"第%ld条数据sfdfass", (long)index];
 }
 
-- (void)scrollBanner:(SZScrollBanner *)scrollBanner didSelectedAtIndex:(NSUInteger)index {
-    NSLog(@"点击:%ld", index);
-}
 
 #pragma mark - SZScrollRadioProtocol
 - (NSUInteger)numbersOfRowAtScrollRadio:(SZScrollRadio *)scrollRadio {

@@ -14,6 +14,7 @@
 #import "UILabel+SZKit.h"
 #import "UIButton+SZKit.h"
 #import "UISearchBar+SZKit.h"
+#import "UIScrollView+EmptyDataSet.h"
 
 #import "SZUnicodeLog.h"
 #import "SZAdapter.h"
@@ -27,5 +28,5 @@
 #import "SZStarView.h"
 #import "SZNavigationBar.h"
 #import "SZLeadingView.h"
-#import "UIScrollView+EmptyDataSet.h"
+#import "SZTagsView.h"
 

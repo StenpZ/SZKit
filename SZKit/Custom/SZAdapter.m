@@ -81,7 +81,7 @@ CGFloat const SCREEN_HEIGHT_X = 812.f;
 
 + (CGFloat)heightForStatusBar {
     if ([self currentType] == SZAdapterPhoneTypeX) {
-        return 30.f;// system is 88px
+        return 44.f;// system is 88px
     }
     return 20.f;
 }

@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
     s.name          = "SZKit"
-    s.version       = "1.2.3"
+    s.version       = "1.2.4"
     s.summary       = "a set for convenient develop."
 
     s.homepage      = "https://github.com/StenpZ/SZKit"
