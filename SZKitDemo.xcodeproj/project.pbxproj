@@ -30,13 +30,8 @@
 		007135E01F36102100E8EB03 /* SZWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135DF1F36102100E8EB03 /* SZWeakProxy.m */; };
 		0072DC771FF622E600A46CEF /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */; };
 		009824882092CCDE0054D0D6 /* SZItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 009824752092CCDA0054D0D6 /* SZItemModel.m */; };
-		009824892092CCDE0054D0D6 /* SZTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 009824762092CCDA0054D0D6 /* SZTableViewCell.m */; };
-		0098248A2092CCDE0054D0D6 /* SZCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 009824772092CCDA0054D0D6 /* SZCollectionViewCell.m */; };
-		0098248B2092CCDE0054D0D6 /* SZCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009824792092CCDA0054D0D6 /* SZCollectionViewController.m */; };
 		0098248C2092CCDE0054D0D6 /* SZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0098247F2092CCDB0054D0D6 /* SZViewController.m */; };
 		0098248D2092CCDE0054D0D6 /* SZEmptySetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 009824832092CCDC0054D0D6 /* SZEmptySetModel.m */; };
-		0098248E2092CCDE0054D0D6 /* SZTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009824862092CCDD0054D0D6 /* SZTableViewController.m */; };
-		0098248F2092CCDE0054D0D6 /* SZWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009824872092CCDD0054D0D6 /* SZWebViewController.m */; };
 		009977FD1F1708FF00846923 /* SZAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 009977FC1F1708FF00846923 /* SZAdapter.m */; };
 		00C4D9EC200C5EEB00B3E4AF /* SZTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C4D9EB200C5EEB00B3E4AF /* SZTagsView.m */; };
 		00D3731C1FDE63290027C62E /* SZLeadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D3731B1FDE63290027C62E /* SZLeadingView.m */; };
@@ -94,21 +89,11 @@
 		0072DC751FF622E600A46CEF /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		009824752092CCDA0054D0D6 /* SZItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZItemModel.m; sourceTree = "<group>"; };
-		009824762092CCDA0054D0D6 /* SZTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZTableViewCell.m; sourceTree = "<group>"; };
-		009824772092CCDA0054D0D6 /* SZCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZCollectionViewCell.m; sourceTree = "<group>"; };
-		009824782092CCDA0054D0D6 /* SZTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZTableViewController.h; sourceTree = "<group>"; };
-		009824792092CCDA0054D0D6 /* SZCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZCollectionViewController.m; sourceTree = "<group>"; };
 		0098247A2092CCDA0054D0D6 /* SZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZViewController.h; sourceTree = "<group>"; };
-		0098247B2092CCDB0054D0D6 /* SZCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZCollectionViewController.h; sourceTree = "<group>"; };
-		0098247C2092CCDB0054D0D6 /* SZWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZWebViewController.h; sourceTree = "<group>"; };
 		0098247F2092CCDB0054D0D6 /* SZViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZViewController.m; sourceTree = "<group>"; };
 		009824812092CCDC0054D0D6 /* SZEmptySetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZEmptySetModel.h; sourceTree = "<group>"; };
-		009824822092CCDC0054D0D6 /* SZCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZCollectionViewCell.h; sourceTree = "<group>"; };
 		009824832092CCDC0054D0D6 /* SZEmptySetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZEmptySetModel.m; sourceTree = "<group>"; };
 		009824842092CCDC0054D0D6 /* SZItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZItemModel.h; sourceTree = "<group>"; };
-		009824852092CCDC0054D0D6 /* SZTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZTableViewCell.h; sourceTree = "<group>"; };
-		009824862092CCDD0054D0D6 /* SZTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZTableViewController.m; sourceTree = "<group>"; };
-		009824872092CCDD0054D0D6 /* SZWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZWebViewController.m; sourceTree = "<group>"; };
 		009977FB1F1708FF00846923 /* SZAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZAdapter.h; sourceTree = "<group>"; };
 		009977FC1F1708FF00846923 /* SZAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZAdapter.m; sourceTree = "<group>"; };
 		00C4D9EA200C5EEB00B3E4AF /* SZTagsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZTagsView.h; sourceTree = "<group>"; };
@@ -275,23 +260,11 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		0098247D2092CCDB0054D0D6 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				009824852092CCDC0054D0D6 /* SZTableViewCell.h */,
-				009824762092CCDA0054D0D6 /* SZTableViewCell.m */,
-				009824822092CCDC0054D0D6 /* SZCollectionViewCell.h */,
-				009824772092CCDA0054D0D6 /* SZCollectionViewCell.m */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		0098247E2092CCDB0054D0D6 /* Project */ = {
 			isa = PBXGroup;
 			children = (
 				009824802092CCDB0054D0D6 /* Controller */,
 				009824742092CCD90054D0D6 /* Model */,
-				0098247D2092CCDB0054D0D6 /* View */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -299,14 +272,8 @@
 		009824802092CCDB0054D0D6 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				009824782092CCDA0054D0D6 /* SZTableViewController.h */,
-				009824862092CCDD0054D0D6 /* SZTableViewController.m */,
 				0098247A2092CCDA0054D0D6 /* SZViewController.h */,
 				0098247F2092CCDB0054D0D6 /* SZViewController.m */,
-				0098247C2092CCDB0054D0D6 /* SZWebViewController.h */,
-				009824872092CCDD0054D0D6 /* SZWebViewController.m */,
-				0098247B2092CCDB0054D0D6 /* SZCollectionViewController.h */,
-				009824792092CCDA0054D0D6 /* SZCollectionViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -450,14 +417,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				007135DA1F36070E00E8EB03 /* TempViewController.m in Sources */,
-				0098248B2092CCDE0054D0D6 /* SZCollectionViewController.m in Sources */,
 				00022EDD1F41D2D30018749D /* UISearchBar+SZKit.m in Sources */,
 				00022EDA1F41D2C30018749D /* UIButton+SZKit.m in Sources */,
 				0072DC771FF622E600A46CEF /* UIScrollView+EmptyDataSet.m in Sources */,
 				0B505EBD1F3827870079AC8D /* SZStarView.m in Sources */,
 				009824882092CCDE0054D0D6 /* SZItemModel.m in Sources */,
 				001514E41F162E41008314CB /* SZUnicodeLog.m in Sources */,
-				0098248A2092CCDE0054D0D6 /* SZCollectionViewCell.m in Sources */,
 				007135D71F35FE8500E8EB03 /* SZTimer.m in Sources */,
 				002FDB981F945827009FDD0B /* SZNavigationBar.m in Sources */,
 				0B505EBA1F38271D0079AC8D /* SZScrollBanner.m in Sources */,
@@ -471,11 +436,8 @@
 				0064DC661F161A65003130E1 /* main.m in Sources */,
 				0064DC871F161B9D003130E1 /* UIView+SZKit.m in Sources */,
 				007135E01F36102100E8EB03 /* SZWeakProxy.m in Sources */,
-				0098248E2092CCDE0054D0D6 /* SZTableViewController.m in Sources */,
 				0064DC821F161B33003130E1 /* NSString+SZKit.m in Sources */,
-				0098248F2092CCDE0054D0D6 /* SZWebViewController.m in Sources */,
 				007135DD1F36100B00E8EB03 /* SZFPSLabel.m in Sources */,
-				009824892092CCDE0054D0D6 /* SZTableViewCell.m in Sources */,
 				009977FD1F1708FF00846923 /* SZAdapter.m in Sources */,
 				0098248C2092CCDE0054D0D6 /* SZViewController.m in Sources */,
 				00C4D9EC200C5EEB00B3E4AF /* SZTagsView.m in Sources */,
