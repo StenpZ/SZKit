@@ -217,9 +217,9 @@ static CGFloat kDefaultCellHeight = 24;
         frame.size.height = height;
         self.frame = frame;
         _collectionView.frame = self.bounds;
-        if ([self.delegate respondsToSelector:@selector(tagsView:heightUpdated:)]) {
-            [self.delegate tagsView:self heightUpdated:height];
-        }
+    }
+    if ([self.delegate respondsToSelector:@selector(tagsView:heightUpdated:)]) {
+        [self.delegate tagsView:self heightUpdated:height];
     }
 }
 

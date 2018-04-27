@@ -64,13 +64,13 @@ CGFloat const SCREEN_HEIGHT_X = 812.f;
 }
 
 + (SZAdapterPhoneType)currentType {
-    if (kScreenHeight() == SCREEN_HEIGHT_5) return SZAdapterPhoneType5;
+    if (ScreenHeight() == SCREEN_HEIGHT_5) return SZAdapterPhoneType5;
     
-    if (kScreenHeight() == SCREEN_HEIGHT_6) return SZAdapterPhoneType6;
+    if (ScreenHeight() == SCREEN_HEIGHT_6) return SZAdapterPhoneType6;
     
-    if (kScreenHeight() == SCREEN_HEIGHT_6p) return SZAdapterPhoneType6P;
+    if (ScreenHeight() == SCREEN_HEIGHT_6p) return SZAdapterPhoneType6P;
     
-    if (kScreenHeight() == SCREEN_HEIGHT_X) return SZAdapterPhoneTypeX;
+    if (ScreenHeight() == SCREEN_HEIGHT_X) return SZAdapterPhoneTypeX;
     
     return SZAdapterPhoneTypeOther;
 }

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SZViewController.h"
 
-@interface TempViewController : UIViewController
+@interface TempViewController : SZViewController
 
 @end

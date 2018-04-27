@@ -35,12 +35,3 @@
 @property(nonatomic) CGFloat spacing;
 
 @end
-
-
-@interface UIViewController (SZNavigationBar)
-
-@property(nonatomic) BOOL navigationBarNeeded;
-@property(nonatomic, strong, readonly) SZNavigationBar *navigationBar;
-
-@end
-

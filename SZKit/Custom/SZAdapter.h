@@ -24,12 +24,12 @@ UIKIT_EXTERN CGFloat const SCREEN_HEIGHT_6p;
 UIKIT_EXTERN CGFloat const SCREEN_HEIGHT_X;
 
 /*! 屏幕宽度 */
-static inline CGFloat kScreenWidth() {
+static inline CGFloat ScreenWidth() {
     return [UIScreen mainScreen].bounds.size.width;
 }
 
 /*! 屏幕高度 */
-static inline CGFloat kScreenHeight() {
+static inline CGFloat ScreenHeight() {
     return [UIScreen mainScreen].bounds.size.height;
 }
 
@@ -41,8 +41,6 @@ static inline CGFloat kScreenHeight() {
 
 @property(nonatomic, readonly) CGFloat defaultScreenWidth;
 @property(nonatomic, readonly) CGFloat defaultScreenHeight;
-
-@property(nonatomic) BOOL useSZNavigationBar;
 
 + (instancetype)shareAdapter;
 
@@ -88,7 +86,7 @@ static inline CGFloat HEIGHT_BOTTOM() {
 static inline CGFloat kRealFontSize(CGFloat defaultSize) {
     if ([SZAdapter shareAdapter].defaultType == kCurrentType()) return defaultSize;
     
-    return kScreenWidth() / [SZAdapter shareAdapter].defaultScreenWidth * defaultSize;
+    return ScreenWidth() / [SZAdapter shareAdapter].defaultScreenWidth * defaultSize;
 }
 
 
@@ -101,6 +99,6 @@ static inline CGFloat kRealFontSize(CGFloat defaultSize) {
 static inline CGFloat kRealLength(CGFloat defaultLength) {
     if ([SZAdapter shareAdapter].defaultType == kCurrentType()) return defaultLength;
     
-    return kScreenWidth() / [SZAdapter shareAdapter].defaultScreenWidth * defaultLength;
+    return ScreenWidth() / [SZAdapter shareAdapter].defaultScreenWidth * defaultLength;
 }
 

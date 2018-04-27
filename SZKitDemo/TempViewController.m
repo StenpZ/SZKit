@@ -31,10 +31,9 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor lightGrayColor];
     
-    self.fd_prefersNavigationBarHidden = YES;
     self.navigationBar.title = @"详情";
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth(), 20)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth(), 20)];
     label.backgroundColor = [UIColor redColor];
     label.sz_lineSpace = 5;
     label.sz_characterSpace = 5;
@@ -55,7 +54,7 @@
     
     self.scrollRadio = ({
        
-        SZScrollRadio *scrollRadio = [[SZScrollRadio alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.label.frame) + 20, kScreenWidth() - 40, kRealLength(30))];
+        SZScrollRadio *scrollRadio = [[SZScrollRadio alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.label.frame) + 20, ScreenWidth() - 40, kRealLength(30))];
         scrollRadio.layer.cornerRadius = kRealLength(15);
         
         scrollRadio.backgroundColor = [UIColor whiteColor];
@@ -108,7 +107,7 @@
     
     self.tagsView = ({
        
-        SZTagsView *banner = [[SZTagsView alloc] initWithFrame:CGRectMake(0, 300, kScreenWidth(), kRealLength(190))];
+        SZTagsView *banner = [[SZTagsView alloc] initWithFrame:CGRectMake(0, 300, ScreenWidth(), kRealLength(190))];
         banner.backgroundColor = [UIColor redColor];
         banner.backgroundColor = [UIColor sz_randomColor];
         banner.tagCornerRadius = banner.cellHeight / 2;

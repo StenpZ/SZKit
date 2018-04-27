@@ -29,10 +29,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor redColor];
-    self.fd_prefersNavigationBarHidden = YES;
     self.navigationBar.tintColor = UIColorRandom();
     self.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationBar.leftButtonItem = [[SZBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"img_back"] target:self action:@selector(sz_popAction)];
+    self.navigationBar.leftButtonItem = [[SZBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navi_back"] target:self action:@selector(popAction)];
     self.navigationBar.title = @"首页";
 //
     self.navigationBar.rightButtonItems = @[[[SZBarButtonItem alloc] initWithTitle:@"更多" target:self action:@selector(nextAction)], [[SZBarButtonItem alloc] initWithTitle:@"关闭" target:self action:@selector(nextAction)]];
@@ -43,7 +42,7 @@
 //
 //        searchBar;
 //    });
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(nextAction)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(nextAction)];
     // Do any additional setup after loading the view, typically from a nib.
     NSArray *list = @[@"http://img2.woyaogexing.com/2017/07/06/3ddbfdc42a6563a9!400x400_big.jpg",
                       @"http://img2.woyaogexing.com/2017/07/06/78d64b63b5f5523f!400x400_big.jpg",
@@ -55,7 +54,7 @@
     [self.view addSubview:view];
     
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(view.frame), kScreenWidth(), 20)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(view.frame), ScreenWidth(), 20)];
     label.backgroundColor = [UIColor redColor];
     label.sz_lineSpace = 5;
 //    label.sz_characterSpace = 5;
@@ -71,7 +70,7 @@
     
     self.scrollMenu = ({
        
-        SZScrollMenu *menu = [[SZScrollMenu alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(label.frame), kScreenWidth(), 100)];
+        SZScrollMenu *menu = [[SZScrollMenu alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(label.frame), ScreenWidth(), 100)];
         
         menu.delegate = self;
         
@@ -86,7 +85,7 @@
     
     self.banner = ({
         
-        SZScrollBanner *banner = [[SZScrollBanner alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.scrollMenu.frame), kScreenWidth(), kRealLength(100))];
+        SZScrollBanner *banner = [[SZScrollBanner alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.scrollMenu.frame), ScreenWidth(), kRealLength(100))];
         banner.delegate = self;
         
         banner;
@@ -96,8 +95,8 @@
 
 #pragma mark - Action
 - (void)nextAction {
-    UIViewController *vc = [[NSClassFromString(@"TempViewController") alloc] init];
-    [self sz_pushViewController:vc animated:YES];
+    SZViewController *vc = [[NSClassFromString(@"TempViewController") alloc] init];
+    [self pushViewController:vc animated:YES];
 //    [self.scrollMenu reloadData];
 }
 

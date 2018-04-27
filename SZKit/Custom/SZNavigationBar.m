@@ -9,8 +9,6 @@
 #import "SZNavigationBar.h"
 #import "SZAdapter.h"
 
-#import <objc/runtime.h>
-
 #if __has_include(<Masonry/Masonry.h>)
 #import <Masonry/Masonry.h>
 #else
@@ -61,12 +59,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         _spacing = 10;
-        self.frame = CGRectMake(0, 0, kScreenWidth(), HEIGHT_NAVI());
+        self.frame = CGRectMake(0, 0, ScreenWidth(), HEIGHT_NAVI());
         self.maskView = [[UIView alloc] initWithFrame:self.bounds];
         [self addSubview:self.maskView];
-        self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_STATUSBAR(), kScreenWidth(), HEIGHT_NAVI_BAR())];
+        self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_STATUSBAR(), ScreenWidth(), HEIGHT_NAVI_BAR())];
         [self addSubview:self.contentView];
-        self.separator = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVI() - 0.5, kScreenWidth(), 0.5)];
+        self.separator = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVI() - 0.5, ScreenWidth(), 0.5)];
         [self addSubview:self.separator];
         self.tintColor = [UIColor blackColor];
         self.barTintColor = [UIColor whiteColor];
@@ -80,6 +78,8 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:kRealFontSize(15)];
         _titleLabel.textColor = self.tintColor;
+        [_titleView removeFromSuperview];
+        _titleView = nil;
         [self.contentView addSubview:_titleLabel];
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.contentView);
@@ -174,7 +174,7 @@
 }
 
 - (CGFloat)getTitleViewWidth {
-    CGFloat wid = kScreenWidth();
+    CGFloat wid = ScreenWidth();
     wid -= 2 * _spacing;
     if (self.leftButtonItem) {
         wid -= [self getItemWidth:self.leftButtonItem] + _spacing;
@@ -199,7 +199,7 @@
 }
 
 - (CGFloat)getTitleWidth {
-    CGFloat wid = kScreenWidth();
+    CGFloat wid = ScreenWidth();
     wid -= 2 * _spacing;
     
     if (!self.leftButtonItems.count && !self.rightButtonItems.count) {
@@ -230,6 +230,7 @@
 - (void)setTitleView:(UIView *)titleView {
     [_titleView removeFromSuperview];
     [_titleLabel removeFromSuperview];
+    _titleLabel = nil;
     _titleView = titleView;
     [self.contentView addSubview:_titleView];
     
@@ -356,27 +357,3 @@
 }
 
 @end
-
-
-@implementation UIViewController(SZNavigationBar)
-
-- (BOOL)navigationBarNeeded {
-    return [objc_getAssociatedObject(self, _cmd) boolValue];
-}
-
-- (void)setNavigationBarNeeded:(BOOL)navigationBarNeeded {
-    objc_setAssociatedObject(self, @selector(navigationBarNeeded), @(navigationBarNeeded), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (SZNavigationBar *)navigationBar {
-    if (objc_getAssociatedObject(self, _cmd)) {
-        return objc_getAssociatedObject(self, _cmd);
-    }
-    SZNavigationBar *bar = [[SZNavigationBar alloc] init];
-    objc_setAssociatedObject(self, @selector(navigationBar), bar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.view addSubview:bar];
-    return bar;
-}
-
-@end
-
