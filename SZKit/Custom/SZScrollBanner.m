@@ -219,6 +219,9 @@ static NSUInteger initIndex = 0;
         collectionView;
     });
     [self addSubview:self.collectionView];
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self);
+    }];
     
     self.pageControl = ({
         
@@ -331,6 +334,9 @@ static NSUInteger initIndex = 0;
 - (void)configPageControl {
     
     self.pageControl.currentPage = self.currentIndex;
+    if ([self.delegate respondsToSelector:@selector(scrollBanner:didScrollToIndex:)]) {
+        [self.delegate scrollBanner:self didScrollToIndex:self.pageControl.currentPage];
+    }
 }
 
 #pragma - mark UICollectionViewDataSource

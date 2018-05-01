@@ -19,6 +19,8 @@
 @optional
 - (void)scrollBanner:(SZScrollBanner *)scrollBanner didSelectedAtIndex:(NSUInteger)index;
 
+- (void)scrollBanner:(SZScrollBanner *)scrollBanner didScrollToIndex:(NSUInteger)index;
+
 @end
 
 /*! 滚动Banner */
