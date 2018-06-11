@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "SZKit.h"
 #import <UINavigationController+FDFullscreenPopGesture.h>
+#import <Masonry.h>
 
 @interface ViewController ()<SZScrollMenuProtocol, SZScrollBannerProtocol>
 
@@ -52,6 +53,20 @@
     UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, kRealLength(100), kRealLength(100))];
     [view sz_setImageWithUrls:list];
     [self.view addSubview:view];
+    
+    UITextView *tv = [[UITextView alloc] init];
+    tv.maxLengthOfText = 20;
+    tv.placeholder = @"测试placeholder";
+    tv.scrollEnabled = NO;
+    [self.view addSubview:tv];
+    [tv mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(view.mas_right);
+        make.top.equalTo(view.mas_top);
+        make.width.offset(100);
+    }];
+    [tv setTextChangeBlock:^(NSString *text) {
+        NSLog(@"%@", text);
+    }];
     
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(view.frame), ScreenWidth(), 20)];

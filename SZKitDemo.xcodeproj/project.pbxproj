@@ -10,6 +10,8 @@
 		00022EDA1F41D2C30018749D /* UIButton+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00022ED91F41D2C30018749D /* UIButton+SZKit.m */; };
 		00022EDD1F41D2D30018749D /* UISearchBar+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00022EDC1F41D2D30018749D /* UISearchBar+SZKit.m */; };
 		001514E41F162E41008314CB /* SZUnicodeLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 001514E31F162E41008314CB /* SZUnicodeLog.m */; };
+		00157D6B20CE17F1007EF2FC /* UITextView+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00157D6A20CE17F1007EF2FC /* UITextView+SZKit.m */; };
+		0015EAB720CB916D00B04C10 /* SZVersionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0015EAB620CB916D00B04C10 /* SZVersionTool.m */; };
 		001765301F9891660000FEE4 /* SZConditionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0017652F1F9891660000FEE4 /* SZConditionMenu.m */; };
 		002FDB981F945827009FDD0B /* SZNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 002FDB971F945827009FDD0B /* SZNavigationBar.m */; };
 		004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 004D0C731F1764CF0040090E /* UILabel+SZKit.m */; };
@@ -49,6 +51,10 @@
 		00022EDC1F41D2D30018749D /* UISearchBar+SZKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+SZKit.m"; sourceTree = "<group>"; };
 		001514E21F162E41008314CB /* SZUnicodeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZUnicodeLog.h; sourceTree = "<group>"; };
 		001514E31F162E41008314CB /* SZUnicodeLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZUnicodeLog.m; sourceTree = "<group>"; };
+		00157D6920CE17F1007EF2FC /* UITextView+SZKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+SZKit.h"; sourceTree = "<group>"; };
+		00157D6A20CE17F1007EF2FC /* UITextView+SZKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+SZKit.m"; sourceTree = "<group>"; };
+		0015EAB520CB916D00B04C10 /* SZVersionTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZVersionTool.h; sourceTree = "<group>"; };
+		0015EAB620CB916D00B04C10 /* SZVersionTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZVersionTool.m; sourceTree = "<group>"; };
 		0017652E1F9891660000FEE4 /* SZConditionMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZConditionMenu.h; sourceTree = "<group>"; };
 		0017652F1F9891660000FEE4 /* SZConditionMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZConditionMenu.m; sourceTree = "<group>"; };
 		0020C87D1FBC1BD100B72D78 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -209,6 +215,8 @@
 				007135DF1F36102100E8EB03 /* SZWeakProxy.m */,
 				00C4D9EA200C5EEB00B3E4AF /* SZTagsView.h */,
 				00C4D9EB200C5EEB00B3E4AF /* SZTagsView.m */,
+				0015EAB520CB916D00B04C10 /* SZVersionTool.h */,
+				0015EAB620CB916D00B04C10 /* SZVersionTool.m */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -245,6 +253,8 @@
 				00022EDC1F41D2D30018749D /* UISearchBar+SZKit.m */,
 				0072DC751FF622E600A46CEF /* UIScrollView+EmptyDataSet.h */,
 				0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */,
+				00157D6920CE17F1007EF2FC /* UITextView+SZKit.h */,
+				00157D6A20CE17F1007EF2FC /* UITextView+SZKit.m */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -427,12 +437,14 @@
 				002FDB981F945827009FDD0B /* SZNavigationBar.m in Sources */,
 				0B505EBA1F38271D0079AC8D /* SZScrollBanner.m in Sources */,
 				0052BF4E1F164FAB0032793E /* UIImageView+SZKit.m in Sources */,
+				00157D6B20CE17F1007EF2FC /* UITextView+SZKit.m in Sources */,
 				0064DC6C1F161A65003130E1 /* ViewController.m in Sources */,
 				004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */,
 				0098248D2092CCDE0054D0D6 /* SZEmptySetModel.m in Sources */,
 				00565A101FEA08EE007BC481 /* NSDate+SZKit.m in Sources */,
 				0064DC691F161A65003130E1 /* AppDelegate.m in Sources */,
 				0052BF4B1F164F990032793E /* UIImage+SZKit.m in Sources */,
+				0015EAB720CB916D00B04C10 /* SZVersionTool.m in Sources */,
 				0064DC661F161A65003130E1 /* main.m in Sources */,
 				0064DC871F161B9D003130E1 /* UIView+SZKit.m in Sources */,
 				007135E01F36102100E8EB03 /* SZWeakProxy.m in Sources */,

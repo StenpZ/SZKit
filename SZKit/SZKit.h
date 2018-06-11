@@ -14,11 +14,13 @@
 #import "UIButton+SZKit.h"
 #import "UISearchBar+SZKit.h"
 #import "UIScrollView+EmptyDataSet.h"
+#import "UITextView+SZKit.h"
 
 #import "SZUnicodeLog.h"
 #import "SZAdapter.h"
 #import "SZTimer.h"
 #import "SZWeakProxy.h"
+#import "SZVersionTool.h"
 
 #import "SZScrollMenu.h"
 #import "SZScrollRadio.h"
