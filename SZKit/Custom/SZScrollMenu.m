@@ -40,7 +40,7 @@
 #pragma mark - Prepare UI
 - (void)prepareUI {
     
-    self.contentView.backgroundColor = [UIColor whiteColor];
+    self.contentView.backgroundColor = [UIColor clearColor];
     
     self.imageView = ({
         
@@ -103,7 +103,7 @@
 
 /**
  SZMenuItem
-
+ 
  @param menuSection SZMenuSection
  @param indexPath NSIndexPath
  @return SZMenuItem
@@ -187,7 +187,7 @@
         
         UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         
-        collectionView.backgroundColor = [UIColor whiteColor];
+        collectionView.backgroundColor = [UIColor clearColor];
         collectionView.showsVerticalScrollIndicator = NO;
         collectionView.showsHorizontalScrollIndicator = NO;
         collectionView.pagingEnabled = YES;
@@ -324,6 +324,9 @@
 
 - (void)setPageControlHeight:(CGFloat)pageControlHeight {
     _pageControlHeight = (NSInteger)pageControlHeight;
+    [self.pageControl mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.offset(_pageControlHeight);
+    }];
 }
 
 - (void)setDelegate:(id<SZScrollMenuProtocol>)delegate {
@@ -346,7 +349,7 @@
         
         UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         
-        collectionView.backgroundColor = [UIColor whiteColor];
+        collectionView.backgroundColor = [UIColor clearColor];
         collectionView.showsVerticalScrollIndicator = NO;
         collectionView.showsHorizontalScrollIndicator = NO;
         collectionView.pagingEnabled = YES;
@@ -362,7 +365,7 @@
     self.pageControl = ({
         
         UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectZero];
-
+        
         [pageControl addTarget:self action:@selector(pageTurn:) forControlEvents:UIControlEventValueChanged];
         
         pageControl;
@@ -372,7 +375,7 @@
     [self addSubview:self.pageControl];
     [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.offset(0);
-        make.height.mas_equalTo(self.pageControlHeight);
+        make.height.offset(self.pageControlHeight);
     }];
     
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -400,7 +403,7 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     CGFloat rows = (CGFloat)_numberOfMenus / _maxColumn;
-
+    
     return ceil(rows);
 }
 
@@ -425,7 +428,7 @@
 }
 
 - (NSUInteger)numberOfItemsInMenuSection:(SZMenuSection *)menuSection {
-
+    
     NSUInteger number = _numberOfMenus - _maxColumn * menuSection.section;
     
     return MIN(number, _maxColumn);

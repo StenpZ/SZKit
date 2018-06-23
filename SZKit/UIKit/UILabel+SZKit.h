@@ -18,7 +18,13 @@
 @property(nonatomic, strong) UIColor *sz_keywordsBackGroundColor;
 @property(nonatomic, strong) UIFont *sz_keywordsFont;
 
+///自动识别链接
+@property(nonatomic) BOOL autoDistinguishLinks;
+@property(nonatomic, strong) UIColor *linkColor;
+@property(nonatomic, copy) void(^SZLabelLinkTapBlock) (NSURL *url);
+
 /*! 设置这个就可以了，不需要设置.text */
 @property(nonatomic, copy) NSString *sz_text;
 
 @end
+

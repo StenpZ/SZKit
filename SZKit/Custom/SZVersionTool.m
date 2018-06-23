@@ -28,6 +28,14 @@
     return _instance;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [self loadVersion];
+    }
+    return self;
+}
+
 - (void)setAppId:(NSString *)appId {
     _appId = appId;
     if (!_appId) {
