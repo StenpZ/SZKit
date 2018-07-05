@@ -23,6 +23,11 @@
 @property(nonatomic, strong) UIColor *linkColor;
 @property(nonatomic, copy) void(^SZLabelLinkTapBlock) (NSURL *url);
 
+/// 处理可点击的文字
+@property(nonatomic, strong) NSArray<NSString *> *handleWords;
+@property(nonatomic, strong) UIColor *handleWordColor;
+@property(nonatomic, copy) void(^SZLabelHandleBlock) (NSString *text, NSInteger index);
+
 /*! 设置这个就可以了，不需要设置.text */
 @property(nonatomic, copy) NSString *sz_text;
 

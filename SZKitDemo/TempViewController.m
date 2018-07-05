@@ -29,22 +29,40 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     self.navigationBar.title = @"详情";
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth(), 20)];
-    label.backgroundColor = [UIColor redColor];
+    UILabel *label = [[UILabel alloc] init];
+//    label.backgroundColor = [UIColor redColor];
     label.sz_lineSpace = 5;
     label.sz_characterSpace = 5;
-    label.sz_keywords = @"text";
-    label.sz_keywordsFont = [UIFont boldSystemFontOfSize:kRealFontSize(20)];
-    label.sz_keywordsFontColor = [UIColor blueColor];
-    label.sz_keywordsBackGroundColor = [UIColor yellowColor];
+//    label.sz_keywords = @"text";
+//    label.sz_keywordsFont = [UIFont boldSystemFontOfSize:kRealFontSize(20)];
+//    label.sz_keywordsFontColor = [UIColor blueColor];
+//    label.sz_keywordsBackGroundColor = [UIColor yellowColor];
     label.font = [UIFont systemFontOfSize:kRealFontSize(14)];
     label.numberOfLines = 0;
-    label.sz_text = @"ashfaifoadsfntextasjkfnjksdfnkatextsafdsfdsfsdfas";
+    
+//    label.handleWords = @[@"星", @"耗子", @"龙", @"翔", @"小龙"];
+//    label.SZLabelHandleBlock = ^(NSString *text, NSInteger index) {
+//        NSLog(@"%@___%ld", text, index);
+//    };
+//
+//    label.sz_text = [[label.handleWords componentsJoinedByString:@","] stringByAppendingString:@",星星,小龙"];
+    label.handleWords = @[@"星"];
+    label.handleWordColor = [UIColor redColor];
+    
+    label.SZLabelHandleBlock = ^(NSString *text, NSInteger index) {
+        NSLog(@"%@___%ld", text, index);
+    };
+    
+    label.sz_text = [[label.handleWords componentsJoinedByString:@""] stringByAppendingString:@"：萨达是哒是哒AD发的啥发的啥，星,星星,小龙"];
     [self.view addSubview:label];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.offset(0);
+        make.top.offset(HEIGHT_NAVI());
+    }];
     self.label = label;
     
     __weak typeof(self)weakSelf = self;
@@ -54,7 +72,7 @@
     
     self.scrollRadio = ({
        
-        SZScrollRadio *scrollRadio = [[SZScrollRadio alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.label.frame) + 20, ScreenWidth() - 40, kRealLength(30))];
+        SZScrollRadio *scrollRadio = [[SZScrollRadio alloc] init];
         scrollRadio.layer.cornerRadius = kRealLength(15);
         
         scrollRadio.backgroundColor = [UIColor whiteColor];
@@ -90,6 +108,12 @@
     });
     
     [self.view addSubview:self.scrollRadio];
+    [self.scrollRadio mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.offset(kRealLength(20));
+        make.right.offset(-kRealLength(20));
+        make.top.equalTo(self.label.mas_bottom);
+        make.height.offset(kRealLength(30));
+    }];
     
     self.starView = ({
        
@@ -122,9 +146,9 @@
 
 #pragma mark - Action
 - (void)changeColor {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.label.backgroundColor = [UIColor sz_randomColor];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        self.label.backgroundColor = [UIColor sz_randomColor];
+//    });
 }
 
 - (void)moreAction:(UIButton *)sender {

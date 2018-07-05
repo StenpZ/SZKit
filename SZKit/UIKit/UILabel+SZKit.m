@@ -20,6 +20,13 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
     SZLinkTypeURL,
 };
 
+@interface UILabel (SZKitHandle)
+
+@property(nonatomic, strong) NSArray *handles;
+
+@end
+
+
 @implementation UILabel (SZKit)
 
 - (CGFloat)sz_characterSpace {
@@ -94,6 +101,39 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
     objc_setAssociatedObject(self, @selector(SZLabelLinkTapBlock), SZLabelLinkTapBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
+
+- (NSArray<NSString *> *)handleWords {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setHandleWords:(NSArray<NSString *> *)handleWords {
+    objc_setAssociatedObject(self, @selector(handleWords), handleWords, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (UIColor *)handleWordColor {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setHandleWordColor:(UIColor *)handleWordColor {
+    objc_setAssociatedObject(self, @selector(handleWordColor), handleWordColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void (^)(NSString *, NSInteger))SZLabelHandleBlock {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setSZLabelHandleBlock:(void (^)(NSString *, NSInteger))SZLabelHandleBlock {
+    objc_setAssociatedObject(self, @selector(SZLabelHandleBlock), SZLabelHandleBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (NSArray *)handles {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setHandles:(NSArray *)handles {
+    objc_setAssociatedObject(self, @selector(handles), handles, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (NSString *)sz_text {
     return self.text;
 }
@@ -159,6 +199,32 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
             self.attributedText = att;
         }
     }
+    
+    if (self.handleWords) {
+        self.userInteractionEnabled = YES;
+        NSMutableArray *handles = [NSMutableArray array];
+        for (NSString *text in self.handleWords) {
+            NSArray *ranges = [self.text locationsWithKeywords:text];
+            for (NSNumber *loc in ranges) {
+                NSRange itemRange = NSMakeRange(loc.integerValue, text.length);
+                NSDictionary *last = handles.lastObject;
+                if (loc.integerValue >= [last[SZLabelRangeKey] rangeValue].location) {
+                    [handles addObject:@{SZLabelLinkKey: text,
+                                         SZLabelRangeKey: [NSValue valueWithRange:itemRange]}];
+                    break;
+                }
+            }
+        }
+        self.handles = [handles copy];
+        NSArray *ranges = self.handles;
+        if (ranges.count) {
+            NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
+            for (NSDictionary *handle in ranges) {
+                [att addAttributes:@{NSForegroundColorAttributeName: self.handleWordColor ? self.handleWordColor: [UIColor blueColor]} range:[handle[SZLabelRangeKey] rangeValue]];
+            }
+            self.attributedText = att;
+        }
+    }
 }
 
 - (CGFloat)sz_height {
@@ -204,39 +270,84 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
 
 #pragma mark - Interactions
 
+- (void)changeBackColorWhenTouch:(NSSet *)touches helighted:(BOOL)helighted {
+    CGPoint p = [[touches anyObject] locationInView:self];
+    CFIndex inx = [self characterIndexAtPoint:p];
+    NSRange range = NSMakeRange(0, 0);
+    if (self.autoDistinguishLinks) {
+        NSArray *urls = [self getRangesForURLs];
+        
+        if (urls.count > 0) {
+            for (NSDictionary *url in urls) {
+                if ([self isIndex:inx inRange:[url[SZLabelRangeKey] rangeValue]]) {
+                    range = [url[SZLabelRangeKey] rangeValue];
+                    break;
+                }
+            }
+        }
+    }
+    for (NSDictionary *handle in self.handles) {
+        if ([self isIndex:inx inRange:[handle[SZLabelRangeKey] rangeValue]]) {
+            range = [handle[SZLabelRangeKey] rangeValue];
+            break;
+        }
+    }
+    NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
+    UIColor *color = helighted ? [UIColor lightGrayColor]: [UIColor clearColor];
+    [att addAttribute:NSBackgroundColorAttributeName value:color range:range];
+    self.attributedText = att;
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
+    [self changeBackColorWhenTouch:touches helighted:YES];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesMoved:touches withEvent:event];
+    [self changeBackColorWhenTouch:touches helighted:NO];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesEnded:touches withEvent:event];
-    NSArray *urls = [self getRangesForURLs];
-    
-    if (urls.count > 0) {
-        CGPoint p = [[touches anyObject] locationInView:self];
-        CFIndex inx = [self characterIndexAtPoint:p];
-        for (NSDictionary *url in urls) {
-            if ([self isIndex:inx inRange:[url[SZLabelRangeKey] rangeValue]]) {
-                if (self.SZLabelLinkTapBlock) {
-                    self.SZLabelLinkTapBlock([NSURL URLWithString:url[SZLabelLinkKey]]);
+    [self changeBackColorWhenTouch:touches helighted:NO];
+    CGPoint p = [[touches anyObject] locationInView:self];
+    CFIndex inx = [self characterIndexAtPoint:p];
+    if (self.autoDistinguishLinks) {
+        NSArray *urls = [self getRangesForURLs];
+        
+        if (urls.count > 0) {
+            for (NSDictionary *url in urls) {
+                if ([self isIndex:inx inRange:[url[SZLabelRangeKey] rangeValue]]) {
+                    if (self.SZLabelLinkTapBlock) {
+                        self.SZLabelLinkTapBlock([NSURL URLWithString:url[SZLabelLinkKey]]);
+                    }
+                    break;
                 }
-                break;
             }
         }
+    }
+    NSInteger index = 0;
+    for (NSDictionary *handle in self.handles) {
+        if ([self isIndex:inx inRange:[handle[SZLabelRangeKey] rangeValue]]) {
+            if (self.SZLabelHandleBlock) {
+                self.SZLabelHandleBlock(handle[SZLabelLinkKey], index);
+            }
+            break;
+        }
+        index ++;
     }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesCancelled:touches withEvent:event];
+    [self changeBackColorWhenTouch:touches helighted:NO];
 }
 
 - (BOOL)isIndex:(CFIndex)index inRange:(NSRange)range {
     return index >= range.location && index <= range.location+range.length;
 }
+
 #pragma mark -****获取lable中的点击位置的字符的index
 - (CFIndex)characterIndexAtPoint:(CGPoint)point {
     [self layoutIfNeeded];
@@ -274,11 +385,11 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
         return NSNotFound;
     }
     
-    CGRect textRect = self.frame;
+    CGRect textRect = self.bounds;
     
-    if (!CGRectContainsPoint(textRect, point)) {
-        return NSNotFound;
-    }
+//    if (!CGRectContainsPoint(textRect, point)) {
+//        return NSNotFound;
+//    }
     
     // Offset tap coordinates by textRect origin to make them relative to the origin of frame
     point = CGPointMake(point.x - textRect.origin.x, point.y - textRect.origin.y);
