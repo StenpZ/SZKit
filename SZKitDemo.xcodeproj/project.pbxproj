@@ -13,6 +13,7 @@
 		00157D6B20CE17F1007EF2FC /* UITextView+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00157D6A20CE17F1007EF2FC /* UITextView+SZKit.m */; };
 		0015EAB720CB916D00B04C10 /* SZVersionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0015EAB620CB916D00B04C10 /* SZVersionTool.m */; };
 		001765301F9891660000FEE4 /* SZConditionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0017652F1F9891660000FEE4 /* SZConditionMenu.m */; };
+		0022B1E320ECC8D4006CBC82 /* UIScrollView+ScalableCover.m in Sources */ = {isa = PBXBuildFile; fileRef = 0022B1E220ECC8D4006CBC82 /* UIScrollView+ScalableCover.m */; };
 		002FDB981F945827009FDD0B /* SZNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 002FDB971F945827009FDD0B /* SZNavigationBar.m */; };
 		004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 004D0C731F1764CF0040090E /* UILabel+SZKit.m */; };
 		0052BF481F1638BE0032793E /* UIColor+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0052BF471F1638BE0032793E /* UIColor+SZKit.m */; };
@@ -58,6 +59,8 @@
 		0017652E1F9891660000FEE4 /* SZConditionMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZConditionMenu.h; sourceTree = "<group>"; };
 		0017652F1F9891660000FEE4 /* SZConditionMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZConditionMenu.m; sourceTree = "<group>"; };
 		0020C87D1FBC1BD100B72D78 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		0022B1E120ECC8D4006CBC82 /* UIScrollView+ScalableCover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+ScalableCover.h"; sourceTree = "<group>"; };
+		0022B1E220ECC8D4006CBC82 /* UIScrollView+ScalableCover.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+ScalableCover.m"; sourceTree = "<group>"; };
 		002FDB961F945827009FDD0B /* SZNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZNavigationBar.h; sourceTree = "<group>"; };
 		002FDB971F945827009FDD0B /* SZNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZNavigationBar.m; sourceTree = "<group>"; };
 		004D0C721F1764CF0040090E /* UILabel+SZKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SZKit.h"; sourceTree = "<group>"; };
@@ -255,6 +258,8 @@
 				0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */,
 				00157D6920CE17F1007EF2FC /* UITextView+SZKit.h */,
 				00157D6A20CE17F1007EF2FC /* UITextView+SZKit.m */,
+				0022B1E120ECC8D4006CBC82 /* UIScrollView+ScalableCover.h */,
+				0022B1E220ECC8D4006CBC82 /* UIScrollView+ScalableCover.m */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -449,6 +454,7 @@
 				0064DC871F161B9D003130E1 /* UIView+SZKit.m in Sources */,
 				007135E01F36102100E8EB03 /* SZWeakProxy.m in Sources */,
 				0064DC821F161B33003130E1 /* NSString+SZKit.m in Sources */,
+				0022B1E320ECC8D4006CBC82 /* UIScrollView+ScalableCover.m in Sources */,
 				007135DD1F36100B00E8EB03 /* SZFPSLabel.m in Sources */,
 				009977FD1F1708FF00846923 /* SZAdapter.m in Sources */,
 				0098248C2092CCDE0054D0D6 /* SZViewController.m in Sources */,

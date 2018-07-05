@@ -15,6 +15,7 @@
 #import "UISearchBar+SZKit.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UITextView+SZKit.h"
+#import "UIScrollView+ScalableCover.h"
 
 #import "SZUnicodeLog.h"
 #import "SZAdapter.h"

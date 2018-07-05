@@ -23,7 +23,6 @@
 
 @interface SZTagsView : UIView
 
-
 @property(nonatomic) CGFloat itemFontSize;
 @property(nonatomic, strong) UIColor *itemTextColor;
 @property(nonatomic, strong) UIColor *itemBackgroundColor;
