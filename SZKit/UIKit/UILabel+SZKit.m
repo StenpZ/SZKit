@@ -24,6 +24,8 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
 
 @property(nonatomic, strong) NSArray *handles;
 
+- (void)handleTouches:(NSSet *)touches helighted:(BOOL)helighted complent:(void (^)(BOOL superHandle, NSString *handleText, NSInteger index))complentBlock;
+
 @end
 
 
@@ -270,10 +272,12 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
 
 #pragma mark - Interactions
 
-- (void)changeBackColorWhenTouch:(NSSet *)touches helighted:(BOOL)helighted {
+- (void)handleTouches:(NSSet *)touches helighted:(BOOL)helighted complent:(void (^)(BOOL, NSString *, NSInteger))complentBlock {
     CGPoint p = [[touches anyObject] locationInView:self];
     CFIndex inx = [self characterIndexAtPoint:p];
     NSRange range = NSMakeRange(0, 0);
+    BOOL superHandle = YES;
+    NSString *handleText = @"";
     if (self.autoDistinguishLinks) {
         NSArray *urls = [self getRangesForURLs];
         
@@ -281,47 +285,8 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
             for (NSDictionary *url in urls) {
                 if ([self isIndex:inx inRange:[url[SZLabelRangeKey] rangeValue]]) {
                     range = [url[SZLabelRangeKey] rangeValue];
-                    break;
-                }
-            }
-        }
-    }
-    for (NSDictionary *handle in self.handles) {
-        if ([self isIndex:inx inRange:[handle[SZLabelRangeKey] rangeValue]]) {
-            range = [handle[SZLabelRangeKey] rangeValue];
-            break;
-        }
-    }
-    NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
-    UIColor *color = helighted ? [UIColor lightGrayColor]: [UIColor clearColor];
-    [att addAttribute:NSBackgroundColorAttributeName value:color range:range];
-    self.attributedText = att;
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesBegan:touches withEvent:event];
-    [self changeBackColorWhenTouch:touches helighted:YES];
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesMoved:touches withEvent:event];
-    [self changeBackColorWhenTouch:touches helighted:NO];
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesEnded:touches withEvent:event];
-    [self changeBackColorWhenTouch:touches helighted:NO];
-    CGPoint p = [[touches anyObject] locationInView:self];
-    CFIndex inx = [self characterIndexAtPoint:p];
-    if (self.autoDistinguishLinks) {
-        NSArray *urls = [self getRangesForURLs];
-        
-        if (urls.count > 0) {
-            for (NSDictionary *url in urls) {
-                if ([self isIndex:inx inRange:[url[SZLabelRangeKey] rangeValue]]) {
-                    if (self.SZLabelLinkTapBlock) {
-                        self.SZLabelLinkTapBlock([NSURL URLWithString:url[SZLabelLinkKey]]);
-                    }
+                    superHandle = NO;
+                    handleText = url[SZLabelLinkKey];
                     break;
                 }
             }
@@ -330,18 +295,61 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
     NSInteger index = 0;
     for (NSDictionary *handle in self.handles) {
         if ([self isIndex:inx inRange:[handle[SZLabelRangeKey] rangeValue]]) {
-            if (self.SZLabelHandleBlock) {
-                self.SZLabelHandleBlock(handle[SZLabelLinkKey], index);
-            }
+            superHandle = NO;
+            handleText = handle[SZLabelLinkKey];
+            range = [handle[SZLabelRangeKey] rangeValue];
             break;
         }
         index ++;
     }
+    NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
+    UIColor *color = helighted ? [UIColor lightGrayColor]: [UIColor clearColor];
+    [att addAttribute:NSBackgroundColorAttributeName value:color range:range];
+    self.attributedText = att;
+    if (complentBlock) {
+        complentBlock(superHandle, handleText, index);
+    }
+    complentBlock = nil;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self handleTouches:touches helighted:YES complent:^(BOOL superHandle, NSString *handleText, NSInteger index) {
+        if (superHandle) {
+            [super touchesBegan:touches withEvent:event];
+        }
+    }];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self handleTouches:touches helighted:YES complent:^(BOOL superHandle, NSString *handleText, NSInteger index) {
+        if (superHandle) {
+            [super touchesMoved:touches withEvent:event];
+        }
+    }];
+}
+
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self handleTouches:touches helighted:NO complent:^(BOOL superHandle, NSString *handleText, NSInteger index) {
+        if (superHandle) {
+            [super touchesEnded:touches withEvent:event];
+        } else {
+            if (self.SZLabelHandleBlock) {
+                self.SZLabelHandleBlock(handleText, index);
+            }
+            if (self.SZLabelLinkTapBlock) {
+                self.SZLabelLinkTapBlock([NSURL URLWithString:handleText]);
+            }
+        }
+    }];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesCancelled:touches withEvent:event];
-    [self changeBackColorWhenTouch:touches helighted:NO];
+    [self handleTouches:touches helighted:NO complent:^(BOOL superHandle, NSString *handleText, NSInteger index) {
+        if (superHandle) {
+            [super touchesCancelled:touches withEvent:event];
+        }
+    }];
 }
 
 - (BOOL)isIndex:(CFIndex)index inRange:(NSRange)range {
@@ -387,9 +395,9 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
     
     CGRect textRect = self.bounds;
     
-//    if (!CGRectContainsPoint(textRect, point)) {
-//        return NSNotFound;
-//    }
+    //    if (!CGRectContainsPoint(textRect, point)) {
+    //        return NSNotFound;
+    //    }
     
     // Offset tap coordinates by textRect origin to make them relative to the origin of frame
     point = CGPointMake(point.x - textRect.origin.x, point.y - textRect.origin.y);
@@ -462,4 +470,3 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
 }
 
 @end
-
