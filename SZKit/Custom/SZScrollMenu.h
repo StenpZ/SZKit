@@ -11,6 +11,11 @@
 @property(nonatomic, strong) UIImageView *imageView;
 @property(nonatomic, strong) UILabel *textLabel;
 
+@property(nonatomic, strong) id model;
+
+- (void)prepareUI;
+- (void)configUI;
+
 @end;
 
 
@@ -97,7 +102,7 @@
  @param indexPath indexPath
  @return SZMenuItem
  */
-- (SZMenuItem *)dequeueReusableItemForIndexPath:(NSIndexPath *)indexPath;
+- (__kindof SZMenuItem *)dequeueReusableItemForIndexPath:(NSIndexPath *)indexPath;
 
 /// 刷新数据
 - (void)reloadData;

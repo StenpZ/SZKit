@@ -5,11 +5,12 @@
 
 #import <Foundation/Foundation.h>
 
-#ifndef __OPTIMIZE__
-    #define NSLog(...) NSLog(__VA_ARGS__)
-#else
-    #define NSLog(...) {}
-#endif
+/// 将这一段copy到pch文件
+//#ifndef __OPTIMIZE__
+//    #define NSLog(Xformat, ...) printf("[%s][%d]{%s}\n%s\n", [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __PRETTY_FUNCTION__, [[NSString stringWithFormat:(format), ##__VA_ARGS__] UTF8String])
+//#else
+//    #define NSLog(...) {}
+//#endif
 
 
 #ifndef weakify

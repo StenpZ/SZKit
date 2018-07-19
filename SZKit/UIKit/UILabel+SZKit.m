@@ -10,6 +10,18 @@
 #import "NSString+SZKit.h"
 #import "SZUnicodeLog.h"
 
+static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignment) {
+    switch (textAlignment) {
+        case NSTextAlignmentCenter:
+            return 0.5f;
+        case NSTextAlignmentRight:
+            return 1.0f;
+        case NSTextAlignmentLeft:
+        default:
+            return 0.0f;
+    }
+}
+
 NSString * const SZLabelLinkTypeKey = @"linkType";
 NSString * const SZLabelRangeKey = @"range";
 NSString * const SZLabelLinkKey = @"link";
@@ -270,8 +282,7 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
     return rangesForURLs;
 }
 
-#pragma mark - Interactions
-
+#pragma mark - TapHandles
 - (void)handleTouches:(NSSet *)touches helighted:(BOOL)helighted complent:(void (^)(BOOL, NSString *, NSInteger))complentBlock {
     CGPoint p = [[touches anyObject] locationInView:self];
     CFIndex inx = [self characterIndexAtPoint:p];
@@ -328,7 +339,6 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
     }];
 }
 
-
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self handleTouches:touches helighted:NO complent:^(BOOL superHandle, NSString *handleText, NSInteger index) {
         if (superHandle) {
@@ -356,116 +366,118 @@ typedef NS_ENUM(NSUInteger, SZLinkType) {
     return index >= range.location && index <= range.location+range.length;
 }
 
+- (CGRect)sz_textRectForBounds:(CGRect)bounds
+        limitedToNumberOfLines:(NSInteger)numberOfLines {
+    bounds = UIEdgeInsetsInsetRect(bounds, UIEdgeInsetsZero);
+    if (!self.attributedText) {
+        return [self textRectForBounds:bounds limitedToNumberOfLines:numberOfLines];
+    }
+    CGRect textRect = bounds;
+    
+    // Calculate height with a minimum of double the font pointSize, to ensure that CTFramesetterSuggestFrameSizeWithConstraints doesn't return CGSizeZero, as it would if textRect height is insufficient.
+    textRect.size.height = MAX(self.font.lineHeight * MAX(2, numberOfLines), bounds.size.height);
+    
+    // Adjust the text to be in the center vertically, if the text size is smaller than bounds
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.attributedText);
+    
+    CGSize textSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, (CFIndex)[self.attributedText length]), NULL, textRect.size, NULL);
+    textSize = CGSizeMake(ceil(textSize.width), ceil(textSize.height)); // Fix for iOS 4, CTFramesetterSuggestFrameSizeWithConstraints sometimes returns fractional sizes
+    
+    if (textSize.height < bounds.size.height) {
+        CGFloat yOffset = 0.0f;
+        switch (0) {
+            case 0:
+                yOffset = floor((bounds.size.height - textSize.height) / 2.0f);
+                break;
+            case 1:
+                yOffset = bounds.size.height - textSize.height;
+                break;
+            case 2:
+            default:
+                break;
+        }
+        
+        textRect.origin.y += yOffset;
+    }
+    CFRelease(framesetter);
+    return textRect;
+}
+
 #pragma mark -****获取lable中的点击位置的字符的index
-- (CFIndex)characterIndexAtPoint:(CGPoint)point {
+- (CFIndex)characterIndexAtPoint:(CGPoint)p {
     [self layoutIfNeeded];
-    NSMutableAttributedString *optimizedAttributedText = [self.attributedText mutableCopy];
-    
-    // use label's font and lineBreakMode properties in case the attributedText does not contain such attributes
-    @weakify(self);
-    [self.attributedText enumerateAttributesInRange:NSMakeRange(0, [self.attributedText length]) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-        @strongify(self);
-        if (!attrs[(NSString*)kCTFontAttributeName]) {
-            [optimizedAttributedText addAttribute:(NSString*)kCTFontAttributeName value:self.font range:NSMakeRange(0, [self.attributedText length])];
-        }
-        
-        if (!attrs[(NSString*)kCTParagraphStyleAttributeName]) {
-            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-            [paragraphStyle setLineBreakMode:self.lineBreakMode];
-            
-            [optimizedAttributedText addAttribute:(NSString*)kCTParagraphStyleAttributeName value:paragraphStyle range:range];
-        }
-    }];
-    
-    // modify kCTLineBreakByTruncatingTail lineBreakMode to kCTLineBreakByWordWrapping
-    [optimizedAttributedText enumerateAttribute:(NSString*)kCTParagraphStyleAttributeName inRange:NSMakeRange(0, [optimizedAttributedText length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-        NSMutableParagraphStyle* paragraphStyle = [value mutableCopy];
-        
-        if ([paragraphStyle lineBreakMode] == NSLineBreakByTruncatingTail) {
-            [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
-        }
-        
-        [optimizedAttributedText removeAttribute:(NSString*)kCTParagraphStyleAttributeName range:range];
-        [optimizedAttributedText addAttribute:(NSString*)kCTParagraphStyleAttributeName value:paragraphStyle range:range];
-    }];
-    
-    if (!CGRectContainsPoint(self.bounds, point)) {
+    if (!CGRectContainsPoint(self.bounds, p)) {
         return NSNotFound;
     }
     
-    CGRect textRect = self.bounds;
-    
-    //    if (!CGRectContainsPoint(textRect, point)) {
-    //        return NSNotFound;
-    //    }
+    CGRect textRect = [self sz_textRectForBounds:self.bounds limitedToNumberOfLines:self.numberOfLines];
+    if (!CGRectContainsPoint(textRect, p)) {
+        return NSNotFound;
+    }
     
     // Offset tap coordinates by textRect origin to make them relative to the origin of frame
-    point = CGPointMake(point.x - textRect.origin.x, point.y - textRect.origin.y);
+    p = CGPointMake(p.x - textRect.origin.x, p.y - textRect.origin.y);
     // Convert tap coordinates (start at top left) to CT coordinates (start at bottom left)
-    point = CGPointMake(point.x, textRect.size.height - point.y);
-    
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)optimizedAttributedText);
+    p = CGPointMake(p.x, textRect.size.height - p.y);
     
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathAddRect(path, NULL, textRect);
     
-    CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, [self.attributedText length]), path, NULL);
-    CFRelease(framesetter);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.attributedText);
     
+    CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, (CFIndex)[self.attributedText length]), path, NULL);
     if (frame == NULL) {
-        CFRelease(path);
+        CGPathRelease(path);
         return NSNotFound;
     }
     
     CFArrayRef lines = CTFrameGetLines(frame);
-    
-    NSInteger numberOfLines = self.numberOfLines > 0 ? MIN(self.numberOfLines, CFArrayGetCount(lines)) : CFArrayGetCount(lines);
-    
+    NSInteger numberOfLines = (self.numberOfLines > 0 ? MIN(self.numberOfLines, CFArrayGetCount(lines)) : CFArrayGetCount(lines));
     if (numberOfLines == 0) {
         CFRelease(frame);
-        CFRelease(path);
+        CGPathRelease(path);
         return NSNotFound;
     }
     
-    NSUInteger idx = NSNotFound;
+    CFIndex idx = NSNotFound;
     
     CGPoint lineOrigins[numberOfLines];
     CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), lineOrigins);
     
     for (CFIndex lineIndex = 0; lineIndex < numberOfLines; lineIndex++) {
-        
         CGPoint lineOrigin = lineOrigins[lineIndex];
+        //lineOrigin.y-=(numberOfLines-1)*[self lineSp];
         CTLineRef line = CFArrayGetValueAtIndex(lines, lineIndex);
         
         // Get bounding information of line
-        CGFloat ascent, descent, leading, width;
-        width = CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
-        CGFloat yMin = floor(lineOrigin.y - descent);
-        CGFloat yMax = ceil(lineOrigin.y + ascent);
+        CGFloat ascent = 0.0f, descent = 0.0f, leading = 0.0f;
+        CGFloat width = (CGFloat)CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+        CGFloat yMin = (CGFloat)floor(lineOrigin.y - descent);
+        CGFloat yMax = (CGFloat)ceil(lineOrigin.y + ascent);
+        // Apply penOffset using flushFactor for horizontal alignment to set lineOrigin since this is the horizontal offset from drawFramesetter
+        CGFloat flushFactor = TTTFlushFactorForTextAlignment(self.textAlignment);
+        CGFloat penOffset = (CGFloat)CTLineGetPenOffsetForFlush(line, flushFactor, textRect.size.width);
+        lineOrigin.x = penOffset;
         
         // Check if we've already passed the line
-        if (point.y > yMax) {
+        if (p.y > yMax) {
             break;
         }
-        
         // Check if the point is within this line vertically
-        if (point.y >= yMin) {
-            
+        if (p.y >= yMin) {
             // Check if the point is within this line horizontally
-            if (point.x >= lineOrigin.x && point.x <= lineOrigin.x + width) {
-                
+            if (p.x >= lineOrigin.x && p.x <= lineOrigin.x + width) {
                 // Convert CT coordinates to line-relative coordinates
-                CGPoint relativePoint = CGPointMake(point.x - lineOrigin.x, point.y - lineOrigin.y);
+                CGPoint relativePoint = CGPointMake(p.x - lineOrigin.x, p.y - lineOrigin.y);
                 idx = CTLineGetStringIndexForPosition(line, relativePoint);
-                
                 break;
             }
         }
+        
     }
-    
+    CFRelease(framesetter);
     CFRelease(frame);
-    CFRelease(path);
-    
+    CGPathRelease(path);
     return idx;
 }
 

@@ -21,10 +21,6 @@
 
 @implementation SZMenuItem
 
-
-- (void)dealloc {
-    NSLog(@"dealloc menuItem");
-}
 #pragma mark - Life Cycle
 - (instancetype)initWithFrame:(CGRect)frame {
     
@@ -76,6 +72,15 @@
         make.bottom.equalTo(self.textLabel.mas_top);
         make.width.equalTo(self.imageView.mas_height);
     }];
+}
+
+- (void)setModel:(id)model {
+    _model = model;
+    [self configUI];
+}
+
+- (void)configUI {
+    
 }
 
 @end
@@ -147,11 +152,6 @@
 @end
 
 @implementation SZMenuSection
-
-
-- (void)dealloc {
-    NSLog(@"dealloc menuSection");
-}
 
 #pragma mark - Life Cycle
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -272,10 +272,6 @@
 @end
 
 @implementation SZScrollMenu
-
-- (void)dealloc {
-    NSLog(@"dealloc menu");
-}
 
 #pragma mark - Life Cycle
 - (instancetype)initWithFrame:(CGRect)frame {

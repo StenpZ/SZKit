@@ -73,7 +73,7 @@
         return;
     }
     NSURLSession *session = [NSURLSession sharedSession];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/lookup?id=%@", self.appId]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/cn/lookup?id=%@", self.appId]];
     // 通过URL初始化task,在block内部可以直接对返回的数据进行处理
     @weakify(self);
     NSURLSessionTask *task = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -102,6 +102,9 @@
 
 - (BOOL)appStore_testing {
     if (_isOnStore) {
+        if (self.version_appStore != self.version_local) {
+            [self loadVersion];
+        }
         return self.version_appStore < self.version_local;
     }
     return NO;

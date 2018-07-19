@@ -101,4 +101,3 @@ static inline CGFloat kRealLength(CGFloat defaultLength) {
     
     return ScreenWidth() / [SZAdapter shareAdapter].defaultScreenWidth * defaultLength;
 }
-

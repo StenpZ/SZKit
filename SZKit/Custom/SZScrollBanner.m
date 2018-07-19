@@ -250,6 +250,7 @@ static NSUInteger initIndex = 0;
 }
 
 - (void)reloadData {
+    [self stopScroll];
     
     [self layoutIfNeeded];
     self.layout.itemSize = self.bounds.size;
