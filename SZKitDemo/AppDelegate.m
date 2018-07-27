@@ -25,6 +25,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+//    [SZTimer shareInstance].logEnabled = YES;
+    
     UIViewController *vc = [[NSClassFromString(@"ViewController") alloc] init];
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:vc];
     

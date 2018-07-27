@@ -12,10 +12,13 @@
 @property(nonatomic) CGFloat sz_orgin_x;
 @property(nonatomic) CGFloat sz_orgin_y;
 
+@property(nonatomic, readonly) BOOL showOnScreen;
 /*! 设置圆角 同时会设置clipsToBounds = YES */
 @property(nonatomic) CGFloat sz_cornerRadius;
 
 - (void)sz_addTapTarget:(id)target action:(SEL)action;
 - (void)sz_removeTapTarget:(id)target action:(SEL)action;
+
++ (UIViewController *)viewControllerOnScreen;
 
 @end

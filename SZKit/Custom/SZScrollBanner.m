@@ -290,7 +290,6 @@ static NSUInteger initIndex = 0;
 }
 
 - (void)automaticScroll {
-    
     NSUInteger index = self.collectionView.contentOffset.x / self.layout.itemSize.width;
     
     if (index > self.numbersofPage) {
@@ -300,7 +299,6 @@ static NSUInteger initIndex = 0;
 }
 
 - (void)stopScroll {
-    
     [[SZTimer shareInstance] cancelTimerWithName:self.scrollBannerTimerName];
 }
 

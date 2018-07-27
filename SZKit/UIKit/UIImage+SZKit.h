@@ -7,6 +7,8 @@
 
 @interface UIImage (SZKit)
 
+/// 改变着色
+- (UIImage *)sz_drawWithColor:(UIColor *)color;
 
 /**
  通过颜色生成图片

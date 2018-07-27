@@ -32,6 +32,9 @@
 		007135DD1F36100B00E8EB03 /* SZFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135DC1F36100B00E8EB03 /* SZFPSLabel.m */; };
 		007135E01F36102100E8EB03 /* SZWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 007135DF1F36102100E8EB03 /* SZWeakProxy.m */; };
 		0072DC771FF622E600A46CEF /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */; };
+		0086D455210AC54C00971952 /* SZPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0086D454210AC54C00971952 /* SZPageView.m */; };
+		0086D458210B0C7F00971952 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0086D457210B0C7F00971952 /* PageViewController.m */; };
+		0086D45B210B1EA700971952 /* TempView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0086D45A210B1EA700971952 /* TempView.m */; };
 		009824882092CCDE0054D0D6 /* SZItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 009824752092CCDA0054D0D6 /* SZItemModel.m */; };
 		0098248C2092CCDE0054D0D6 /* SZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0098247F2092CCDB0054D0D6 /* SZViewController.m */; };
 		0098248D2092CCDE0054D0D6 /* SZEmptySetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 009824832092CCDC0054D0D6 /* SZEmptySetModel.m */; };
@@ -97,6 +100,12 @@
 		007135DF1F36102100E8EB03 /* SZWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZWeakProxy.m; sourceTree = "<group>"; };
 		0072DC751FF622E600A46CEF /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		0072DC761FF622E600A46CEF /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
+		0086D453210AC54C00971952 /* SZPageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZPageView.h; sourceTree = "<group>"; };
+		0086D454210AC54C00971952 /* SZPageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZPageView.m; sourceTree = "<group>"; };
+		0086D456210B0C7F00971952 /* PageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
+		0086D457210B0C7F00971952 /* PageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
+		0086D459210B1EA700971952 /* TempView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempView.h; sourceTree = "<group>"; };
+		0086D45A210B1EA700971952 /* TempView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TempView.m; sourceTree = "<group>"; };
 		009824752092CCDA0054D0D6 /* SZItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZItemModel.m; sourceTree = "<group>"; };
 		0098247A2092CCDA0054D0D6 /* SZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZViewController.h; sourceTree = "<group>"; };
 		0098247F2092CCDB0054D0D6 /* SZViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZViewController.m; sourceTree = "<group>"; };
@@ -168,6 +177,10 @@
 				007135D81F36070E00E8EB03 /* TempViewController.h */,
 				007135D91F36070E00E8EB03 /* TempViewController.m */,
 				0020C87D1FBC1BD100B72D78 /* PrefixHeader.pch */,
+				0086D456210B0C7F00971952 /* PageViewController.h */,
+				0086D457210B0C7F00971952 /* PageViewController.m */,
+				0086D459210B1EA700971952 /* TempView.h */,
+				0086D45A210B1EA700971952 /* TempView.m */,
 			);
 			path = SZKitDemo;
 			sourceTree = "<group>";
@@ -220,6 +233,8 @@
 				00C4D9EB200C5EEB00B3E4AF /* SZTagsView.m */,
 				0015EAB520CB916D00B04C10 /* SZVersionTool.h */,
 				0015EAB620CB916D00B04C10 /* SZVersionTool.m */,
+				0086D453210AC54C00971952 /* SZPageView.h */,
+				0086D454210AC54C00971952 /* SZPageView.m */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -344,6 +359,7 @@
 				TargetAttributes = {
 					0064DC601F161A65003130E1 = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = RHTPK92VH2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -431,6 +447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0086D455210AC54C00971952 /* SZPageView.m in Sources */,
 				007135DA1F36070E00E8EB03 /* TempViewController.m in Sources */,
 				00022EDD1F41D2D30018749D /* UISearchBar+SZKit.m in Sources */,
 				00022EDA1F41D2C30018749D /* UIButton+SZKit.m in Sources */,
@@ -443,6 +460,7 @@
 				0B505EBA1F38271D0079AC8D /* SZScrollBanner.m in Sources */,
 				0052BF4E1F164FAB0032793E /* UIImageView+SZKit.m in Sources */,
 				00157D6B20CE17F1007EF2FC /* UITextView+SZKit.m in Sources */,
+				0086D458210B0C7F00971952 /* PageViewController.m in Sources */,
 				0064DC6C1F161A65003130E1 /* ViewController.m in Sources */,
 				004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */,
 				0098248D2092CCDE0054D0D6 /* SZEmptySetModel.m in Sources */,
@@ -463,6 +481,7 @@
 				001765301F9891660000FEE4 /* SZConditionMenu.m in Sources */,
 				0052BF481F1638BE0032793E /* UIColor+SZKit.m in Sources */,
 				00D3731C1FDE63290027C62E /* SZLeadingView.m in Sources */,
+				0086D45B210B1EA700971952 /* TempView.m in Sources */,
 				00DC14991F34936B000F707A /* SZScrollMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -591,11 +610,16 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RHTPK92VH2;
 				INFOPLIST_FILE = SZKitDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.star.SZKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -605,11 +629,15 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RHTPK92VH2;
 				INFOPLIST_FILE = SZKitDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.star.SZKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

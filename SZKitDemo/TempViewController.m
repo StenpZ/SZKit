@@ -11,6 +11,8 @@
 #import <Masonry.h>
 #import <UINavigationController+FDFullscreenPopGesture.h>
 
+#import "PageViewController.h"
+
 @interface TempViewController ()<SZScrollRadioProtocol, SZTagsViewProtocol>
 
 @property(nonatomic, weak) UILabel *label;
@@ -153,6 +155,8 @@
 
 - (void)moreAction:(UIButton *)sender {
     NSLog(@"更多");
+    PageViewController *vc = [PageViewController new];
+    [self pushViewController:vc animated:YES];
 }
 
 #pragma mark - SZTagsViewProtocol
