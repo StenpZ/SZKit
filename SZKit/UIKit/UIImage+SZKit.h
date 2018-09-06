@@ -43,4 +43,6 @@
 + (UIImage *)sz_imageWithImageUrls:(NSArray *)imageUrls;
 + (UIImage *)sz_imageWithImageUrls:(NSArray *)imageUrls backGroundColor:(UIColor *)color;
 
++ (UIImage *)sz_compressImage:(UIImage *)image toByte:(NSUInteger)maxLength;
+
 @end

@@ -243,4 +243,15 @@
     }
 }
 
++ (UIImage *)sz_compressImage:(UIImage *)image toByte:(NSUInteger)maxLength {
+    // Compress by quality
+    NSData *data = UIImageJPEGRepresentation(image, 1);
+    if (data.length < maxLength) return image;
+    
+    data = UIImageJPEGRepresentation(image, (float)maxLength / data.length);
+    
+    UIImage *resultImage = [UIImage imageWithData:data];
+    return resultImage;
+}
+
 @end
