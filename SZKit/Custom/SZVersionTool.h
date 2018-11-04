@@ -10,6 +10,7 @@
 @property(nonatomic, copy) NSString *appId;
 @property(nonatomic) BOOL isOnStore;
 
+@property(nonatomic, readonly) NSString *releaseNotes;
 @property(nonatomic, copy, readonly) NSString *appStore_version;
 @property(nonatomic, copy, readonly) NSString *local_version;
 

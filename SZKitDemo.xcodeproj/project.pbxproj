@@ -13,6 +13,7 @@
 		00157D6B20CE17F1007EF2FC /* UITextView+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 00157D6A20CE17F1007EF2FC /* UITextView+SZKit.m */; };
 		0015EAB720CB916D00B04C10 /* SZVersionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0015EAB620CB916D00B04C10 /* SZVersionTool.m */; };
 		001765301F9891660000FEE4 /* SZConditionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0017652F1F9891660000FEE4 /* SZConditionMenu.m */; };
+		0021A38E218C82040080B3D3 /* SZColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0021A38D218C82040080B3D3 /* SZColorPicker.m */; };
 		0022B1E320ECC8D4006CBC82 /* UIScrollView+ScalableCover.m in Sources */ = {isa = PBXBuildFile; fileRef = 0022B1E220ECC8D4006CBC82 /* UIScrollView+ScalableCover.m */; };
 		002FDB981F945827009FDD0B /* SZNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 002FDB971F945827009FDD0B /* SZNavigationBar.m */; };
 		004D0C741F1764CF0040090E /* UILabel+SZKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 004D0C731F1764CF0040090E /* UILabel+SZKit.m */; };
@@ -39,7 +40,7 @@
 		0098248C2092CCDE0054D0D6 /* SZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0098247F2092CCDB0054D0D6 /* SZViewController.m */; };
 		0098248D2092CCDE0054D0D6 /* SZEmptySetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 009824832092CCDC0054D0D6 /* SZEmptySetModel.m */; };
 		009977FD1F1708FF00846923 /* SZAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 009977FC1F1708FF00846923 /* SZAdapter.m */; };
-		00C4A22721417D3A0059D847 /* Xcode配置文件.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A22621417D3A0059D847 /* Xcode配置文件.strings */; };
+		00C4A22721417D3A0059D847 /* Xcode配置文件.txt in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A22621417D3A0059D847 /* Xcode配置文件.txt */; };
 		00C4D9EC200C5EEB00B3E4AF /* SZTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C4D9EB200C5EEB00B3E4AF /* SZTagsView.m */; };
 		00D3731C1FDE63290027C62E /* SZLeadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D3731B1FDE63290027C62E /* SZLeadingView.m */; };
 		00DC14991F34936B000F707A /* SZScrollMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DC14981F34936B000F707A /* SZScrollMenu.m */; };
@@ -63,6 +64,8 @@
 		0017652E1F9891660000FEE4 /* SZConditionMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZConditionMenu.h; sourceTree = "<group>"; };
 		0017652F1F9891660000FEE4 /* SZConditionMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZConditionMenu.m; sourceTree = "<group>"; };
 		0020C87D1FBC1BD100B72D78 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		0021A38C218C82040080B3D3 /* SZColorPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZColorPicker.h; sourceTree = "<group>"; };
+		0021A38D218C82040080B3D3 /* SZColorPicker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZColorPicker.m; sourceTree = "<group>"; };
 		0022B1E120ECC8D4006CBC82 /* UIScrollView+ScalableCover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+ScalableCover.h"; sourceTree = "<group>"; };
 		0022B1E220ECC8D4006CBC82 /* UIScrollView+ScalableCover.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+ScalableCover.m"; sourceTree = "<group>"; };
 		002FDB961F945827009FDD0B /* SZNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZNavigationBar.h; sourceTree = "<group>"; };
@@ -115,7 +118,7 @@
 		009824842092CCDC0054D0D6 /* SZItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZItemModel.h; sourceTree = "<group>"; };
 		009977FB1F1708FF00846923 /* SZAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZAdapter.h; sourceTree = "<group>"; };
 		009977FC1F1708FF00846923 /* SZAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZAdapter.m; sourceTree = "<group>"; };
-		00C4A22621417D3A0059D847 /* Xcode配置文件.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = "Xcode配置文件.strings"; sourceTree = "<group>"; };
+		00C4A22621417D3A0059D847 /* Xcode配置文件.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Xcode配置文件.txt"; sourceTree = "<group>"; };
 		00C4D9EA200C5EEB00B3E4AF /* SZTagsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZTagsView.h; sourceTree = "<group>"; };
 		00C4D9EB200C5EEB00B3E4AF /* SZTagsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZTagsView.m; sourceTree = "<group>"; };
 		00D3731A1FDE63290027C62E /* SZLeadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SZLeadingView.h; sourceTree = "<group>"; };
@@ -172,7 +175,7 @@
 				0064DC681F161A65003130E1 /* AppDelegate.m */,
 				0064DC6A1F161A65003130E1 /* ViewController.h */,
 				0064DC6B1F161A65003130E1 /* ViewController.m */,
-				00C4A22621417D3A0059D847 /* Xcode配置文件.strings */,
+				00C4A22621417D3A0059D847 /* Xcode配置文件.txt */,
 				0064DC701F161A65003130E1 /* Assets.xcassets */,
 				0064DC721F161A65003130E1 /* LaunchScreen.storyboard */,
 				0064DC751F161A65003130E1 /* Info.plist */,
@@ -238,6 +241,8 @@
 				0015EAB620CB916D00B04C10 /* SZVersionTool.m */,
 				0086D453210AC54C00971952 /* SZPageView.h */,
 				0086D454210AC54C00971952 /* SZPageView.m */,
+				0021A38C218C82040080B3D3 /* SZColorPicker.h */,
+				0021A38D218C82040080B3D3 /* SZColorPicker.m */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -392,7 +397,7 @@
 			files = (
 				0064DC741F161A65003130E1 /* LaunchScreen.storyboard in Resources */,
 				0064DC711F161A65003130E1 /* Assets.xcassets in Resources */,
-				00C4A22721417D3A0059D847 /* Xcode配置文件.strings in Resources */,
+				00C4A22721417D3A0059D847 /* Xcode配置文件.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +479,7 @@
 				0015EAB720CB916D00B04C10 /* SZVersionTool.m in Sources */,
 				0064DC661F161A65003130E1 /* main.m in Sources */,
 				0064DC871F161B9D003130E1 /* UIView+SZKit.m in Sources */,
+				0021A38E218C82040080B3D3 /* SZColorPicker.m in Sources */,
 				007135E01F36102100E8EB03 /* SZWeakProxy.m in Sources */,
 				0064DC821F161B33003130E1 /* NSString+SZKit.m in Sources */,
 				0022B1E320ECC8D4006CBC82 /* UIScrollView+ScalableCover.m in Sources */,

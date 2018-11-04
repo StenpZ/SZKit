@@ -11,6 +11,7 @@
 @property(nonatomic, copy, readwrite) NSString *appStore_version;
 @property(nonatomic, copy, readwrite) NSString *local_version;
 
+@property(nonatomic, copy) NSString *releaseNotes;
 @property(nonatomic, readonly) NSInteger version_appStore;
 @property(nonatomic, readonly) NSInteger version_local;
 
@@ -85,6 +86,7 @@
         if ([responseObject[@"resultCount"] integerValue]) {
             NSDictionary *result = [responseObject objectForKey:@"results"][0];
             self.appStore_version = result[@"version"];
+            self.releaseNotes = result[@"releaseNotes"];
             [self saveToDisk];
         }
     }];

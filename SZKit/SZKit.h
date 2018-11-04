@@ -31,3 +31,4 @@
 #import "SZLeadingView.h"
 #import "SZTagsView.h"
 #import "SZPageView.h"
+#import "SZColorPicker.h"

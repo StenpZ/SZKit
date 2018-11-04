@@ -18,9 +18,20 @@
 
 @property(nonatomic, strong) SZScrollBanner *banner;
 
+@property(nonatomic, strong) SZColorPicker *picker;
+
+@property(nonatomic, strong) NSMutableDictionary *scrollMenus;
+
 @end
 
 @implementation ViewController
+
+- (NSMutableDictionary *)scrollMenus {
+    if (!_scrollMenus) {
+        _scrollMenus = [NSMutableDictionary dictionary];
+    }
+    return _scrollMenus;
+}
 
 - (void)dealloc {
     [[SZTimer shareInstance] cancelAllTimer];
@@ -29,7 +40,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor redColor];
+//    self.view.backgroundColor = [UIColor redColor];
     self.navigationBar.tintColor = UIColorRandom();
     self.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationBar.leftButtonItem = [[SZBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navi_back"] target:self action:@selector(popAction)];
@@ -106,6 +117,15 @@
         banner;
     });
     [self.view addSubview:self.banner];
+    
+    @weakify(self);
+    self.picker = [SZColorPicker colorPickerWithBubbleWidth:20 completion:^(UIColor *color) {
+        @strongify(self);
+        self.view.backgroundColor = color;
+    }];
+    self.picker.frame = CGRectMake(20, ScreenHeight() - 220, 200, 200);
+    [self.view addSubview:self.picker];
+    self.view.backgroundColor = [UIColor sz_randomColor];
 }
 
 #pragma mark - Action
@@ -136,7 +156,10 @@
 
 - (SZMenuItem *)scrollMenu:(SZScrollMenu *)scrollMenu menuItemAtIndexPath:(NSIndexPath *)indexPath {
     SZMenuItem *menuItem = [scrollMenu dequeueReusableItemForIndexPath:indexPath];
-    menuItem.imageView.image = [UIImage sz_imageWithRandomColor];
+    if (!self.scrollMenus[indexPath]) {
+        self.scrollMenus[indexPath] = UIColor.sz_randomColor;
+    }
+    menuItem.imageView.image = [UIImage sz_imageWithColor:self.scrollMenus[indexPath]];
     NSUInteger index = indexPath.section * [self numberOfColumnsInScrollMenu:scrollMenu] + indexPath.row;
     menuItem.textLabel.text = [NSString stringWithFormat:@"item_%02ld", (unsigned long)index];
     return menuItem;
@@ -144,6 +167,7 @@
 
 - (void)scrollMenu:(SZScrollMenu *)scrollMenu didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"%@", indexPath);
+    [self.picker changeColor:self.scrollMenus[indexPath]];
 }
 
 #pragma mark - SZScrollBannerProtocol

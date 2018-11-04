@@ -1,0 +1,30 @@
+/* 
+  Xcode配置文件.strings
+  SZKitDemo
+
+  Created by StenpZ on 2018/9/6.
+  Copyright © 2018年 StenpZ. All rights reserved.
+*/
+
+1.mark标记
+#pragma mark - <#Descripation#>
+
+2.interface申明
+interface <#ClassName#> : <#SuperClassName#>
+
+@end
+
+3.protocol申明
+protocol <#ProtocolName#> <NSObject>
+
+@end
+
+4.implementation申明
+implementation <#Class#>
+
+@end
+
+5.property申明
+@property(nonatomic, <#strong#>) <#Type#> <#iVar#>;
+
+6.背景颜色 R:  204  G: 232 B: 207
