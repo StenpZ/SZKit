@@ -4,6 +4,7 @@
 // 用着顺手还望给个Star。Thank you！
 
 #import "UITextView+SZKit.h"
+#import "UIColor+SZKit.h"
 
 @implementation UITextView (SZKit)
 
@@ -81,14 +82,7 @@
 #pragma mark `defaultPlaceholderColor`
 
 + (UIColor *)defaultPlaceholderColor {
-    static UIColor *color = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        UITextField *textField = [[UITextField alloc] init];
-        textField.placeholder = @" ";
-        color = [textField valueForKeyPath:@"_placeholderLabel.textColor"];
-    });
-    return color;
+    return UIColorWithHex(0x999999);
 }
 
 
